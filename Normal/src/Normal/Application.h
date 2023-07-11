@@ -1,8 +1,7 @@
 #pragma once
 #include "Core.h"
 
-namespace Normal
-{
+namespace Normal {
 
 class NORMAL_API Application
 {

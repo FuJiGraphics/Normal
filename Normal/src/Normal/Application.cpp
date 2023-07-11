@@ -1,7 +1,7 @@
 #include "Application.h"
 
-namespace Normal 
-{
+namespace Normal {
+
 
 Application::Application()
 {
