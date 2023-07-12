@@ -1,5 +1,9 @@
 #pragma once
  
+// This macro is a for use a source line print
+// Should be defined this macro before spdlog/spdlog.h 
+#define SPDLOG_ACTICE_LEVEL SPDLOG_LEVEL_TRACE
+
 #include <memory>
 
 #include "Core.h"
@@ -20,6 +24,7 @@ private:
 	static std::shared_ptr<spdlog::logger> s_ClientLogger;
 
 };
+
 
 // Normal Engine Core log macros
 #define NR_CORE_TRACE(...)         Normal::Log::GetCoreLoger()->trace( __VA_ARGS__ );
