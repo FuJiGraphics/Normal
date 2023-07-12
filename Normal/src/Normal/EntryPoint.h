@@ -8,9 +8,12 @@ int main( int argc, char** argv )
 {
 	Normal::Log::init();
 
-	auto logger = Normal::Log::GetCoreLoger();
-
-	SPDLOG_LOGGER_INFO( logger, "log with source info" ); // Use console.
+	NR_LINE_TRACE( "core trace" ); 
+	NR_LINE_DEBUG( "core debug" );
+	NR_LINE_INFO( "core info" ); 
+	NR_LINE_WARN( "core warning" ); 
+	NR_LINE_ERROR( "core error" ); 
+	NR_LINE_CRITICAL( "core critical" );
 
 	auto app = Normal::CreateApplication();
 	app->Run();

@@ -4,8 +4,6 @@
 #include "Normal\Application.h"
 #include "Normal\Log.h"
 
-
- 
 // ----------------Entry Point----------------
 #include "Normal\EntryPoint.h"
 // -------------------------------------------
