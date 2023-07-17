@@ -24,14 +24,14 @@ project "Normal"
 
     files
     {
-        "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "Normal/src/**.h",
+        "Normal/src/**.cpp"
     }
 
     includedirs
     {
-        "%{prj.name}/vendor/spdlog/include",
-        "%{prj.name}/src"
+        "Normal/vendor/spdlog/include",
+        "Normal/src"
     }
 
     filter "system:Windows"
@@ -66,7 +66,7 @@ project "Normal"
 
 
 project "SandBox"
-    location "Normal"
+    location "SandBox"
     kind "ConsoleApp"
     language "C++"
 
@@ -81,8 +81,8 @@ project "SandBox"
 
     includedirs
     {
-        "%{prj.name}/vendor/spdlog/include",
-        "SandBox/src"
+        "Normal/vendor/spdlog/include",
+        "Normal/src"
     }
 
     links
