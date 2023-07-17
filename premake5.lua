@@ -31,7 +31,7 @@ project "Normal"
     includedirs
     {
         "%{prj.name}/vendor/spdlog/include",
-        "%{prj.name}/src/"
+        "%{prj.name}/src"
     }
 
     filter "system:Windows"
@@ -75,14 +75,14 @@ project "SandBox"
 
     files
     {
-        "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "SandBox/src/**.h",
+        "SandBox/src/**.cpp"
     }
 
     includedirs
     {
-        "Normal/vendor/spdlog/include",
-        "Normal/src"
+        "%{prj.name}/vendor/spdlog/include",
+        "SandBox/src"
     }
 
     links
@@ -93,7 +93,7 @@ project "SandBox"
     filter "system:Windows"
         cppdialect "C++20"
         staticruntime "On"
-        systemversion "10.0" -- If this version is not defined, automatically define a Windows 8 version.  
+        systemversion "latest" -- If this version is not defined, automatically define a Windows 8 version.  
 
     defines
     {
