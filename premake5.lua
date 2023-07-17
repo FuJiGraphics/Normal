@@ -24,14 +24,14 @@ project "Normal"
 
     files
     {
-        "Normal/src/**.h",
-        "Normal/src/**.cpp"
+        "%{prj.name}/src/**.h",
+        "%{prj.name}/src/**.cpp"
     }
 
     includedirs
     {
-        "Normal/vendor/spdlog/include",
-        "Normal/src"
+        "%{prj.name}/vendor/spdlog/include",
+        "%{prj.name}/src"
     }
 
     filter "system:Windows"
@@ -75,8 +75,8 @@ project "SandBox"
 
     files
     {
-        "SandBox/src/**.h",
-        "SandBox/src/**.cpp"
+        "%{prj.name}/src/**.h",
+        "%{prj.name}/src/**.cpp"
     }
 
     includedirs
