@@ -76,7 +76,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Nrpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NR_PLATFORM_WINDOWS;NR_BUILD_DLL;NR_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>vendor\spdlog\include;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -97,7 +98,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Nrpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NR_PLATFORM_WINDOWS;NR_BUILD_DLL;NR_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>vendor\spdlog\include;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -122,7 +124,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Nrpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NR_PLATFORM_WINDOWS;NR_BUILD_DLL;NR_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>vendor\spdlog\include;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -149,13 +152,20 @@
     <ClInclude Include="src\Normal\Application.h" />
     <ClInclude Include="src\Normal\Core.h" />
     <ClInclude Include="src\Normal\EntryPoint.h" />
+    <ClInclude Include="src\Normal\Event\ApplicationEvent.h" />
     <ClInclude Include="src\Normal\Event\Event.h" />
+    <ClInclude Include="src\Normal\Event\KeyEvent.h" />
+    <ClInclude Include="src\Normal\Event\MouseEvent.h" />
     <ClInclude Include="src\Normal\Log.h" />
     <ClInclude Include="src\NormalEngine.h" />
+    <ClInclude Include="src\Nrpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Normal\Application.cpp" />
     <ClCompile Include="src\Normal\Log.cpp" />
+    <ClCompile Include="src\Nrpch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

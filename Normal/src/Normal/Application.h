@@ -1,6 +1,8 @@
 #pragma once
 #include "Core.h"
 
+#include "Event/Event.h"
+
 namespace Normal {
 
 class NORMAL_API Application

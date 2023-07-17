@@ -18,13 +18,23 @@
     <ClInclude Include="src\Normal\EntryPoint.h">
       <Filter>Normal</Filter>
     </ClInclude>
+    <ClInclude Include="src\Normal\Event\ApplicationEvent.h">
+      <Filter>Normal\Event</Filter>
+    </ClInclude>
     <ClInclude Include="src\Normal\Event\Event.h">
+      <Filter>Normal\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Normal\Event\KeyEvent.h">
+      <Filter>Normal\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Normal\Event\MouseEvent.h">
       <Filter>Normal\Event</Filter>
     </ClInclude>
     <ClInclude Include="src\Normal\Log.h">
       <Filter>Normal</Filter>
     </ClInclude>
     <ClInclude Include="src\NormalEngine.h" />
+    <ClInclude Include="src\Nrpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Normal\Application.cpp">
@@ -33,5 +43,6 @@
     <ClCompile Include="src\Normal\Log.cpp">
       <Filter>Normal</Filter>
     </ClCompile>
+    <ClCompile Include="src\Nrpch.cpp" />
   </ItemGroup>
 </Project>

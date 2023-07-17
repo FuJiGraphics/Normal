@@ -19,6 +19,9 @@ project "Normal"
     targetdir ("bin/"..outputDir.."/%{prj.name}")
     objdir ("bin-int/"..outputDir.."/%{prj.name}")
 
+    pchheader "Nrpch.h"
+    pchsource "Normal/src/Nrpch.cpp"
+
     files
     {
         "%{prj.name}/src/**.h",
@@ -34,7 +37,7 @@ project "Normal"
     filter "system:Windows"
         cppdialect "C++20"
         staticruntime "On"
-        systemversion "10.0" -- If this version is not defined, automatically define a Windows 8 version.  
+        systemversion "latest" -- If this version is not defined, automatically define a Windows 8 version.  
 
 
     defines
