@@ -11,12 +11,6 @@ workspace "NormalEngine"
 
 outputDir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
--- Include directories relative to root folder (solution directory)
-includeDir = {}
-includeDir["GLFW"] = "Normal/vendor/GLFW/include"
-
-include "Normal/vendor/GLFW"
-
 project "Normal"
     location "Normal"
     kind "SharedLib"
@@ -37,15 +31,7 @@ project "Normal"
     includedirs
     {
         "%{prj.name}/vendor/spdlog/include",
-        "%{prj.name}/src",
-        "%{includeDir.GLFW}"
-    }
-
-    links
-    {
-        "GLFW",
-        "opengl32.lib",
-        "$(VULKAN_SDK)/lib/vulkan-1.lib"
+        "%{prj.name}/src"
     }
 
     filter "system:Windows"
