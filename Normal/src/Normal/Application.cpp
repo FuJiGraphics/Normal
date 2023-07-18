@@ -2,6 +2,9 @@
 #include "Application.h"
 
 #include "Event/ApplicationEvent.h"
+#include "Event/Event.h"
+
+#include "Window.h"
 #include "Log.h"
 
 namespace Normal {
@@ -9,7 +12,8 @@ namespace Normal {
 
 Application::Application()
 {
-
+	m_Window = std::unique_ptr<Window> ( Window::Create() );
+	// TODO : Create Windows Window
 }
 
 Application::~Application()
@@ -19,13 +23,11 @@ Application::~Application()
 
 void Application::Run()
 {
-	int width = 1280;
-	int height = 720;
-	WindowResizeEvent winResize( width, height );
-	
-	NR_CORE_INFO( "initialized WindowResizeEvent Object. Width:{} Height:{}", width, height );
 
-	while ( true );
+	while ( m_Running )
+	{
+
+	}
 }
 
 

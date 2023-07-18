@@ -1,20 +1,24 @@
 #pragma once
 #include "Core.h"
 
-#include "Event/Event.h"
-
 namespace Normal {
 
-class NORMAL_API Application
-{
-public:
-	Application();
-	virtual ~Application();
+	class Window;
 
-	void Run();
-};
+	class NORMAL_API Application
+	{
+	public:
+		Application();
+		virtual ~Application();
 
-// To be defined in CLIENT
-Application* CreateApplication();
+		void Run();
+
+	private:
+		std::unique_ptr<Window> m_Window;
+		bool m_Running;
+	};
+
+	// To be defined in CLIENT
+	Application* CreateApplication();
 
 } // namespace Normal
