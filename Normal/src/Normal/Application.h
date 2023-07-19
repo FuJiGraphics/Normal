@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "Window.h"
+
 namespace Normal {
 	
 	class Window;

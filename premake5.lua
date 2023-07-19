@@ -11,6 +11,13 @@ workspace "NormalEngine"
 
 outputDir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+-- Included directories relative to root folder
+IncludeDir = {};
+IncludeDir["GLFW"] = "Normal/vendor/glfw/include"
+
+-- this code is include a premake5 file
+include "Normal/vendor/glfw"
+
 project "Normal"
     location "Normal"
     kind "SharedLib"
@@ -31,7 +38,14 @@ project "Normal"
     includedirs
     {
         "%{prj.name}/vendor/spdlog/include",
-        "%{prj.name}/src"
+        "%{prj.name}/src",
+        "%{IncludeDir.GLFW}"
+    }
+
+    links
+    {
+        "GLFW",
+        "opengl32.lib"
     }
 
     filter "system:Windows"
@@ -63,7 +77,6 @@ project "Normal"
     filter "configurations:Dist"
         defines "NR_DIST"
         optimize "On"
-
 
 
 project "SandBox"

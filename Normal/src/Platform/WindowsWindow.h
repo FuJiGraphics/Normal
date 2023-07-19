@@ -19,7 +19,7 @@ namespace Normal {
 		// Window attributes
 		virtual inline void SetEventCallBack( const EventCallbackFn& callback ) override 
 		{ m_Data.Callback = callback; }
-		virtual inline void SetVSync( bool enabled ) override { m_Data.VSync = enabled; }
+		virtual void SetVSync( bool enabled ) override;
 		virtual inline bool IsVSync() const override { return m_Data.VSync; }
 
 	protected:
@@ -34,7 +34,8 @@ namespace Normal {
 		struct WindowData
 		{
 			std::string Title;
-			uint32_t Width, Height;
+			uint32_t Width;
+			uint32_t Height;
 			bool VSync;
 
 			EventCallbackFn Callback;

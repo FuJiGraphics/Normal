@@ -1,11 +1,7 @@
 #include "Nrpch.h"
 #include "Application.h"
 
-#include "Normal/Event/ApplicationEvent.h"
-#include "Normal/Log.h"
-
-#include "Event/Event.h"
-#include "Window.h"
+#include <GLFW/glfw3.h>
 
 namespace Normal {
 
@@ -22,9 +18,10 @@ Application::~Application()
 
 void Application::Run()
 {
-
+	glClearColor( 0, 1, 0, 1 );
 	while ( m_Running )
 	{
+		glClear( GL_COLOR_BUFFER_BIT );
 		m_Window->OnUpdate();
 	}
 }
