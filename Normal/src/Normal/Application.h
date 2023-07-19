@@ -1,8 +1,10 @@
 #pragma once
 #include "Core.h"
 
-namespace Normal {
+#include <iostream>
 
+namespace Normal {
+	
 	class Window;
 
 	class NORMAL_API Application
@@ -15,7 +17,7 @@ namespace Normal {
 
 	private:
 		std::unique_ptr<Window> m_Window;
-		bool m_Running;
+		bool m_Running = true;
 	};
 
 	// To be defined in CLIENT

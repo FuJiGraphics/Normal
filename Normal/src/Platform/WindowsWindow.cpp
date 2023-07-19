@@ -1,44 +1,57 @@
 #include "Nrpch.h"
 #include "WindowsWindow.h"
 
+#include "./Normal/Log.h"
 
 namespace Normal {
-
-	static Window* Create( const WindowProps& props = WindowProps() )
+	// static function from Window.h
+	Window* Window::Create( const WindowProps& props )
 	{
 		return new WindowsWindow( props );
 	}
 
 	WindowsWindow::WindowsWindow( const WindowProps& props )
-		: m_Width( props.Width )
-		, m_Height( props.Height )
-		, m_Title( props.Title )
 	{
-		// Empty
+		Init( props );
+	}
+
+	WindowsWindow::~WindowsWindow()
+	{
+		Destroy();
 	}
 
 	void WindowsWindow::OnUpdate()
 	{
-
+		glfwPollEvents();
 	}
 
-	void WindowsWindow::SetEventCallBack( const EventCallbackFn& callback )
+	void WindowsWindow::Init( const WindowProps& props )
 	{
+		m_Data.Title  = props.Title;
+		m_Data.Width  = props.Width;
+		m_Data.Height = props.Height;
+		m_Data.VSync  = props.VSync;
 
+		if ( !m_GLFWinitialized )
+		{
+			int success = 0;
+			NR_CLIENT_ASSERT( success, "Failed to GLFW initialized." );
+		}
 
+		m_Window = glfwCreateWindow( (int)m_Data.Width,
+									 (int)m_Data.Height,
+									 m_Data.Title.c_str(),
+									 NULL, NULL );
+
+		m_HasWindowCreated = true;
 	}
 
-	void WindowsWindow::SetVSync( bool enabled )
+	void WindowsWindow::Destroy()
 	{
-
-
-	}
-
-	bool WindowsWindow::IsVSync() const
-	{
-
-
-		return false;
+		if ( m_Window != nullptr ) 
+		{
+			glfwDestroyWindow( m_Window );
+		}
 	}
 
 } // namespace Normal

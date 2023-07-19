@@ -43,7 +43,8 @@ project "Normal"
     defines
     {
         "NR_PLATFORM_WINDOWS",
-        "NR_BUILD_DLL"
+        "NR_BUILD_DLL",
+        "NR_ENABLE_ASSERTS"
     }
 
     postbuildcommands
@@ -97,7 +98,8 @@ project "SandBox"
 
     defines
     {
-        "NR_PLATFORM_WINDOWS"
+        "NR_PLATFORM_WINDOWS",
+        "NR_ENABLE_ASSERTS"
     }
 
     filter "configurations:Debug"

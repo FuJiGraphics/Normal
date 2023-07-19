@@ -9,13 +9,15 @@ namespace Normal {
 	struct WindowProps
 	{
 		std::string Title;
-		unsigned int Width;
-		unsigned int Height;
+		uint32_t Width;
+		uint32_t Height;
 		
+		bool VSync;
+
 		WindowProps( const std::string& title = "Normal Engine",
-					 unsigned int width = 1280,
-					 unsigned int height = 720 )
-			: Title(title), Width(width), Height(height)
+					 uint32_t width = 1280,
+					 uint32_t height = 720 )
+			: Title(title), Width(width), Height(height), VSync(false)
 		{
 			// Empty
 		}
@@ -31,8 +33,8 @@ namespace Normal {
 
 		virtual void OnUpdate() = 0;
 		
-		virtual unsigned int GetWidth() const = 0;
-		virtual unsigned int GetHeight() const = 0;
+		virtual uint32_t GetWidth() const = 0;
+		virtual uint32_t GetHeight() const = 0;
 
 		// Window attributes
 		virtual void SetEventCallBack( const EventCallbackFn& callback ) = 0;
