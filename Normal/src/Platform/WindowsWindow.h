@@ -27,7 +27,6 @@ namespace Normal {
 		void Destroy();
 
 	private:
-		bool m_HasWindowCreated  = false;
 		bool m_GLFWinitialized   = false;
 		GLFWwindow* m_Window     = nullptr;
 

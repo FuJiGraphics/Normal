@@ -23,6 +23,7 @@ namespace Normal {
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
+		glfwSwapBuffers( m_Window );
 	}
 
 	void WindowsWindow::Init( const WindowProps& props )
@@ -34,16 +35,13 @@ namespace Normal {
 
 		if ( !m_GLFWinitialized )
 		{
-			int success = 0;
+			int success = glfwInit();
 			NR_CLIENT_ASSERT( success, "Failed to GLFW initialized." );
 		}
 
-		m_Window = glfwCreateWindow( (int)m_Data.Width,
-									 (int)m_Data.Height,
-									 m_Data.Title.c_str(),
-									 NULL, NULL );
+		m_Window = glfwCreateWindow( (int)m_Data.Width, (int)m_Data.Height, m_Data.Title.c_str(), NULL, NULL );
+		glfwMakeContextCurrent( m_Window );
 
-		m_HasWindowCreated = true;
 	}
 
 	void WindowsWindow::Destroy()
@@ -51,6 +49,7 @@ namespace Normal {
 		if ( m_Window != nullptr ) 
 		{
 			glfwDestroyWindow( m_Window );
+			glfwTerminate();
 		}
 	}
 
