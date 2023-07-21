@@ -7,13 +7,13 @@ namespace Normal {
 
 std::shared_ptr<spdlog::logger> Log::s_CoreLogger;
 std::shared_ptr<spdlog::logger> Log::s_ClientLogger;
-Log::Patterns Log::m_CurrentPattern;
+Log::Patterns Log::s_CurrentPattern;
 
 void Log::init()
 {
 	// spdlog::set_default_logger( s_CoreLogger );
 	spdlog::set_pattern( "%^[%T] %n: %v%$" );
-	m_CurrentPattern = Patterns::Simple;
+	s_CurrentPattern = Patterns::Simple;
 
 	s_CoreLogger = spdlog::stdout_color_mt( "ENGINE" );
 	s_CoreLogger->set_level( spdlog::level::trace );
@@ -25,9 +25,9 @@ void Log::init()
 
 void Log::setPattern( Patterns p )
 {
-	if ( m_CurrentPattern == p ) { return; }
+	if ( s_CurrentPattern == p ) { return; }
 
-	m_CurrentPattern = p;
+	s_CurrentPattern = p;
 	switch ( p )
 	{
 	case Patterns::Simple:

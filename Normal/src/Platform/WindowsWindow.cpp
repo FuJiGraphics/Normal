@@ -1,6 +1,11 @@
 #include "Nrpch.h"
 #include "WindowsWindow.h"
 
+#include "Normal/Events/Event.h"
+#include "Normal/Events/KeyEvent.h"
+#include "Normal/Events/MouseEvent.h"
+#include "Normal/Events/ApplicationEvent.h"
+
 namespace Normal {
 	// static function from Window.h
 	Window* Window::Create( const WindowProps& props )
@@ -56,11 +61,11 @@ namespace Normal {
 			NR_CLIENT_ASSERT( success, "Failed to GLFW initialized." );
 		}
 
-		m_Window = glfwCreateWindow( (int)Width, (int)Height, Title.c_str(), NULL, NULL );
+		m_Window = glfwCreateWindow( Width, Height, Title.c_str(), NULL, NULL );
 		glfwMakeContextCurrent( m_Window );
 		glfwSetWindowUserPointer( m_Window, &m_Data );
 		SetVSync( VSync );
-
+		SetCallbacks();
 	}
 
 	void WindowsWindow::Destroy()
@@ -71,5 +76,29 @@ namespace Normal {
 			glfwTerminate();
 		}
 	}
+
+	void WindowsWindow::SetCallbacks() const
+	{
+		glfwSetWindowSizeCallback( m_Window,
+								   []( GLFWwindow* window, int width, int height )
+								   {
+									   WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
+									   data.Width = width;
+									   data.Height = height;
+
+									   WindowResizeEvent event{ width, width };
+									   data.Callback( event );
+								   } );
+
+		glfwSetWindowCloseCallback( m_Window,
+									[]( GLFWwindow* window ) {
+										WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
+
+										WindowCloseEvent event;
+										data.Callback( event );
+									} );
+
+
+	} // namespace SetCallbacks
 
 } // namespace Normal

@@ -64,6 +64,7 @@ public:
 	EventDispatcher( Event& event )
 		: m_Event( event )
 	{
+		// Empty
 	}
 
 	template<typename T>

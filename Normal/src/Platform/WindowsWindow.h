@@ -17,7 +17,7 @@ namespace Normal {
 		virtual inline uint32_t GetHeight() const override { return m_Data.Height; }
 
 		// Window attributes
-		virtual inline void SetEventCallBack( const EventCallbackFn& callback ) override 
+		virtual inline void SetEventCallback( const EventCallbackFn& callback ) override
 		{ m_Data.Callback = callback; }
 		virtual void SetVSync( bool enabled ) override;
 		virtual inline bool IsVSync() const override { return m_Data.VSync; }
@@ -25,6 +25,7 @@ namespace Normal {
 	protected:
 		void Init( const WindowProps& props );
 		void Destroy();
+		void SetCallbacks() const;
 
 	private:
 		bool m_GLFWinitialized   = false;
@@ -34,8 +35,8 @@ namespace Normal {
 		struct WindowData
 		{
 			std::string Title;
-			uint32_t Width;
-			uint32_t Height;
+			int Width;
+			int Height;
 			bool VSync;
 
 			EventCallbackFn Callback;

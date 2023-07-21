@@ -25,7 +25,7 @@ private:
 	static std::shared_ptr<spdlog::logger> s_CoreLogger;
 	static std::shared_ptr<spdlog::logger> s_ClientLogger;
 
-    static Patterns m_CurrentPattern;
+    static Patterns s_CurrentPattern;
 };
 
 // Normal Engine Core log macros
