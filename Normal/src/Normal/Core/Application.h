@@ -3,11 +3,12 @@
 
 #include <iostream>
 
-#include "Window.h"
-
 namespace Normal {
 	
 	class Window;
+	class Event;
+	class WindowCloseEvent;
+	class Module;
 
 	class NORMAL_API Application
 	{
@@ -17,10 +18,15 @@ namespace Normal {
 
 		void Run();
 
+	protected:
 		void OnEvent( Event& event );
+		bool OnWindowClose( WindowCloseEvent& event );
+
 	private:
-		std::unique_ptr<Window> m_Window;
 		bool m_Running = true;
+		std::unique_ptr<Window> m_Window;
+
+		// std::vector<Module&> m_Modules;
 	};
 
 	// To be defined in CLIENT

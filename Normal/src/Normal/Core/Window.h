@@ -2,7 +2,7 @@
 
 #include "Core.h"
 
-#include "Events/Event.h"
+#include "Normal/Events/Event.h"
 
 namespace Normal {
 

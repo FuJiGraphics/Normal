@@ -1,5 +1,5 @@
 #pragma once
-#include "./Normal/Window.h"
+#include "Normal/Core/Window.h"
 
 #include <GLFW\glfw3.h>
 
@@ -16,9 +16,9 @@ namespace Normal {
 		virtual inline uint32_t GetWidth() const override { return m_Data.Width; }
 		virtual inline uint32_t GetHeight() const override { return m_Data.Height; }
 
-		// Window attributes
+		// if you set many callback functions, maybe increase that overhead.
 		virtual inline void SetEventCallback( const EventCallbackFn& callback ) override
-		{ m_Data.Callback = callback; }
+		{ m_Data.Callbacks.push_back( callback ); }
 		virtual void SetVSync( bool enabled ) override;
 		virtual inline bool IsVSync() const override { return m_Data.VSync; }
 
@@ -39,7 +39,7 @@ namespace Normal {
 			int Height;
 			bool VSync;
 
-			EventCallbackFn Callback;
+			std::vector<EventCallbackFn> Callbacks;
 		};
 
 		WindowData m_Data;

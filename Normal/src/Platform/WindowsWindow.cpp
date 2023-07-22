@@ -87,7 +87,10 @@ namespace Normal {
 									   data.Height = height;
 
 									   WindowResizeEvent event{ width, width };
-									   data.Callback( event );
+									   for ( auto& callback : data.Callbacks )
+									   {
+										   callback( event );
+									   }
 								   } );
 
 		glfwSetWindowCloseCallback( m_Window,
@@ -95,8 +98,57 @@ namespace Normal {
 										WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
 
 										WindowCloseEvent event;
-										data.Callback( event );
+										for ( auto& callback : data.Callbacks )
+										{
+											callback( event );
+										}
 									} );
+		glfwSetCursorPosCallback( m_Window,
+								  []( GLFWwindow* window, double xpos, double ypos ) {
+									  WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
+									  
+									  MouseMovedEvent event( xpos, ypos );
+									  for ( auto& callback : data.Callbacks )
+									  {
+										  callback( event );
+									  }
+								  } );
+		glfwSetMouseButtonCallback( m_Window,
+									[]( GLFWwindow* window, int button, int action, int mods ) {
+										WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
+
+										switch ( action )
+										{
+											case GLFW_PRESS:
+											{
+												MouseButtonPressedEvent event( button );
+												for ( auto& callback : data.Callbacks )
+												{
+													callback( event );
+												}
+											} break;
+											case GLFW_RELEASE:
+											{
+												MouseButtonReleasedEvent event( button );
+												for ( auto& callback : data.Callbacks )
+												{
+													callback( event );
+												}
+											} break;
+										}
+									} );
+		glfwSetScrollCallback( m_Window,
+							   []( GLFWwindow* window, double xoffset, double yoffset )
+							   {
+								   WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
+								   
+								   MouseScrolledEvent event( xoffset, yoffset );
+								   for ( auto& callback : data.Callbacks )
+								   {
+									   callback( event );
+								   }
+							   } );
+
 
 
 	} // namespace SetCallbacks

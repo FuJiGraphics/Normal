@@ -2,7 +2,7 @@
 
 // Code Reference By https://github.com/TheCherno/Hazel.git
 
-#include "Normal/Core.h"
+#include "Normal/Core/Core.h"
 
 #include <string>
 #include <functional>
@@ -39,6 +39,8 @@ enum EventCategory
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
+#define BIND_EVENT_FN(x) std::bind( &x, this, std::placeholders::_1 )
+
 class NORMAL_API Event
 {
 	friend class EventDispatcher;
@@ -52,8 +54,9 @@ public:
 	{
 		return GetCategoryFlags() & category;
 	}
-protected:
-	bool m_Handled = false;
+
+public:
+	bool handled = false;
 };
 
 class EventDispatcher
@@ -72,7 +75,7 @@ public:
 	{
 		if ( m_Event.GetEventType() == T::GetStaticType() )
 		{
-			m_Event.m_Handled = func( *(T*)&m_Event );
+			m_Event.handled = func( *(T*)&m_Event );
 			return true;
 		}
 		return false;
