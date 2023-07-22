@@ -10,22 +10,7 @@ namespace Normal {
 
 	bool Mouse::IsPressed( MouseButtonPressedEvent& button ) const
 	{
-
-		/*switch ( button )
-		{
-			case Left:
-			{
-
-			}break;
-			case Right:
-			{
-
-			}break;
-			case Scroll:
-			{
-
-			}break;
-		}*/
+		NR_CORE_LINE_TRACE( "{0}", button );
 
 		return true;
 	}

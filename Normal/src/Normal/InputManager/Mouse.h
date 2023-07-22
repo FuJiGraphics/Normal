@@ -2,20 +2,18 @@
 
 #include "InputManager.h"
 
-// TODO : Mouse 클래스 완성하기 
 namespace Normal {
+
+#pragma region Forward
 	class Event; 
 	class Window;
 	class MouseButtonPressedEvent;
+#pragma endregion
 
 	class NORMAL_API Mouse : public InputManager <Mouse>
 	{
 	public:
-		Mouse( const std::string& moduleName )
-			: InputManager( moduleName ) 
-		{
-			// Empty
-		}
+		Mouse( ) : InputManager( "Mouse" ) {}
 
 		bool IsPressed( MouseButtonPressedEvent& button ) const;
 

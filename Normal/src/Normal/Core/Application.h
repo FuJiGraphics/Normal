@@ -1,14 +1,19 @@
 #pragma once
+
 #include "Core.h"
 
 #include <iostream>
 
 namespace Normal {
 	
+#pragma region Forward
+	// Forward Declerations
 	class Window;
 	class Event;
 	class WindowCloseEvent;
 	class Module;
+	class ModuleContainer;
+#pragma endregion
 
 	class NORMAL_API Application
 	{
@@ -25,8 +30,7 @@ namespace Normal {
 	private:
 		bool m_Running = true;
 		std::unique_ptr<Window> m_Window;
-
-		// std::vector<Module&> m_Modules;
+		std::unique_ptr<ModuleContainer> m_ModuleContainer;
 	};
 
 	// To be defined in CLIENT

@@ -4,7 +4,12 @@
 #include "Module.h"
 
 namespace Normal {
-
+	ModuleContainer::ModuleContainer() 
+		: m_Modules()
+		// , m_Iterator()
+	{
+		// Empty
+	}
 
 	void ModuleContainer::push_back( Module& module )
 	{
