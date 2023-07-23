@@ -5,26 +5,34 @@
 
 namespace Normal {
 
-	class Module;
+	class Level;
 
-	class NORMAL_API ModuleContainer
+	class NORMAL_API LevelContainer
 	{
 	public:
-		ModuleContainer();
-		ModuleContainer( ModuleContainer& ) = delete;
-		void operator= ( ModuleContainer& ) = delete;
+		LevelContainer();
+		~LevelContainer();
+		LevelContainer( LevelContainer& ) = delete;
+		void operator= ( LevelContainer& ) = delete;
 
 	public:
-		void push_back( Module& module );
-		bool erase( std::string moduleName );
+		// TODO : 레벨 컨테이너 구현하고 만들기 
+		// 1. 레벨의 정방향 순서 
+		// 2. 오버레이는 항상 레이어 마지막에
+		// 3. 이벤트가 발생되는 시점을 고려할 것 
+		void PushModule();
+		void PushOverlay();
 
-		inline int size() const { return m_Modules.size(); }
+		void PopModule();
+		void PopOverlay();
 
-		inline std::vector<Module*>::iterator begin() { return m_Modules.begin(); };
-		inline std::vector<Module*>::iterator end() { return m_Modules.end(); };
+		inline int size() const { return m_Container.size(); }
+
+		inline std::vector<Level*>::iterator begin() { return m_Container.begin(); };
+		inline std::vector<Level*>::iterator end() { return m_Container.end(); };
 
 	private:
-		std::vector<Module*> m_Modules;
+		std::vector<Level*> m_Container;
 		// std::vector<Module*>::iterator m_Iterator;
 	};
 

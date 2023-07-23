@@ -1,35 +1,19 @@
 #include "Nrpch.h"
 #include "ModuleContainer.h"
 
-#include "Module.h"
+#include "Level.h"
 
 namespace Normal {
-	ModuleContainer::ModuleContainer() 
-		: m_Modules()
+	LevelContainer::LevelContainer()
+		: m_Container()
 		// , m_Iterator()
 	{
 		// Empty
 	}
 
-	void ModuleContainer::push_back( Module& module )
+	LevelContainer::~LevelContainer()
 	{
-		m_Modules.push_back( &module );
-	}
 
-	bool ModuleContainer::erase( std::string moduleName )
-	{
-		size_t indexCount = 0;
-		auto end = m_Modules.end();
-		for ( auto iter = m_Modules.begin(); iter != end; ++iter )
-		{
-			const std::string& name = ( *iter )->GetModuleName();
-			if ( name == moduleName )
-			{
-				m_Modules.erase( iter );
-				return true;
-			}
-		}
-		return false;
 	}
 
 

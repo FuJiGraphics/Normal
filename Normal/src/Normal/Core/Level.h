@@ -5,20 +5,20 @@
 
 namespace Normal {
 
-	class NORMAL_API Module
+	class NORMAL_API Level
 	{
 	public:
-		Module( const std::string& moduleName )
-			: m_ModuleName( moduleName )
+		Level( const std::string& levelName )
+			: m_LevelName( levelName )
 		{
 			// Empty
 		}
-
+		
 		virtual void OnEvent( Event& event ) {};
 
-		virtual std::string GetModuleName() const { return m_ModuleName; }
+		virtual std::string GetName() const { return m_LevelName; }
 	private:
-		std::string m_ModuleName;
+		std::string m_LevelName;
 	};
 
 

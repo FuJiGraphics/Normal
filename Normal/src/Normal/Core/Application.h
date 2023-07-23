@@ -30,7 +30,7 @@ namespace Normal {
 	private:
 		bool m_Running = true;
 		std::unique_ptr<Window> m_Window;
-		std::unique_ptr<ModuleContainer> m_ModuleContainer;
+		// std::unique_ptr<LevelContainer> m_LevelContainer;
 	};
 
 	// To be defined in CLIENT
