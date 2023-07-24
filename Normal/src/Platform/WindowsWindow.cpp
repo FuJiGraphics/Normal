@@ -52,8 +52,6 @@ namespace Normal {
 		Height = props.Height;
 		VSync  = props.VSync;
 
-		NR_CORE_INFO( "Created the Windows Window. Resolution:{0},{1} VSync{2}", Width, Height, VSync );
-
 		if ( !m_GLFWinitialized )
 		{
 			m_GLFWinitialized = true;
@@ -66,6 +64,8 @@ namespace Normal {
 		glfwSetWindowUserPointer( m_Window, &m_Data );
 		SetVSync( VSync );
 		SetCallbacks();
+
+		NR_CORE_INFO( "Successfully Created Window : [Resolution={0}/{1}] [VSync={2}]", Width, Height, VSync );
 	}
 
 	void WindowsWindow::Destroy()

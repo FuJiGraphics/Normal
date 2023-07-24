@@ -11,8 +11,8 @@ namespace Normal {
 	class NORMAL_API InputManager : public Level
 	{
 	protected:
-		InputManager( const std::string& moduleName )
-			: Level( moduleName )
+		InputManager( )
+			: Level( )
 		{
 			// Empty 
 		}

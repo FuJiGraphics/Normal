@@ -5,7 +5,7 @@
 
 #include "Window.h"
 #include "Level.h"
-#include "ModuleContainer.h"
+#include "LevelContainer.h"
 
 #include "Normal/Events/ApplicationEvent.h"
 #include "Normal/Events/MouseEvent.h"
@@ -39,7 +39,7 @@ namespace Normal {
 		EventDispatcher dispatcher( event );
 		dispatcher.Dispatch<WindowCloseEvent>( BIND_EVENT_FN( Application::OnWindowClose ) );
 
-		// NR_CORE_INFO( "{0}", event );
+		NR_CORE_INFO( "{0}", event );
 
 	}
 

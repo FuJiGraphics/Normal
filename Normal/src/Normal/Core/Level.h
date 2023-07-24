@@ -8,13 +8,14 @@ namespace Normal {
 	class NORMAL_API Level
 	{
 	public:
-		Level( const std::string& levelName )
-			: m_LevelName( levelName )
+		Level( )
 		{
 			// Empty
 		}
 		
 		virtual void OnEvent( Event& event ) {};
+
+
 
 		virtual std::string GetName() const { return m_LevelName; }
 	private:

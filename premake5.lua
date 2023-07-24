@@ -13,10 +13,10 @@ outputDir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Included directories relative to root folder
 IncludeDir = {};
-IncludeDir["GLFW"] = "Normal/vendor/glfw/include"
+IncludeDir["GLFW"] = "Normal/vendor/GLFW/include"
 
 -- this code is include a premake5 file
-include "Normal/vendor/glfw"
+include "Normal/vendor/GLFW"
 
 project "Normal"
     location "Normal"
@@ -50,7 +50,7 @@ project "Normal"
 
     filter "system:Windows"
         cppdialect "C++20"
-        staticruntime "On"
+        staticruntime "Off"
         systemversion "latest" -- If this version is not defined, automatically define a Windows 8 version.  
 
 
@@ -67,14 +67,17 @@ project "Normal"
     }
 
     filter "configurations:Debug"
+        runtime "Debug"
         defines "NR_DEBUG"
         symbols "On"
 
     filter "configurations:Release"
+        runtime "Release"
         defines "NR_RELEASE"
         optimize "On"
 
     filter "configurations:Dist"
+        runtime "Release"
         defines "NR_DIST"
         optimize "On"
 
@@ -107,6 +110,7 @@ project "SandBox"
     filter "system:Windows"
         cppdialect "C++20"
         staticruntime "On"
+        runtime "release"
         systemversion "latest" -- If this version is not defined, automatically define a Windows 8 version.  
 
     defines

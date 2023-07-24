@@ -1,7 +1,8 @@
 #pragma once
 
-#include <vector>
 #include "Core.h"
+
+#include <vector>
 
 namespace Normal {
 
@@ -20,20 +21,21 @@ namespace Normal {
 		// 1. 레벨의 정방향 순서 
 		// 2. 오버레이는 항상 레이어 마지막에
 		// 3. 이벤트가 발생되는 시점을 고려할 것 
-		void PushModule();
+		void PushLevel( Level* level );
 		void PushOverlay();
-
-		void PopModule();
+		void PopLevel();
 		void PopOverlay();
 
-		inline int size() const { return m_Container.size(); }
+	public:
+		using container = std::vector< Level* >;
 
-		inline std::vector<Level*>::iterator begin() { return m_Container.begin(); };
-		inline std::vector<Level*>::iterator end() { return m_Container.end(); };
+		inline int size() const { return m_Container.size(); }
+		inline container::iterator begin() { return m_Container.begin(); };
+		inline container::iterator end() { return m_Container.end(); };
 
 	private:
-		std::vector<Level*> m_Container;
-		// std::vector<Module*>::iterator m_Iterator;
+		container m_Container;
+		container::iterator m_InsertLevel;
 	};
 
 

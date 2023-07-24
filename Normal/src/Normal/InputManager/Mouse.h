@@ -13,7 +13,7 @@ namespace Normal {
 	class NORMAL_API Mouse : public InputManager <Mouse>
 	{
 	public:
-		Mouse( ) : InputManager( "Mouse" ) {}
+		Mouse( ) : InputManager() {}
 
 		bool IsPressed( MouseButtonPressedEvent& button ) const;
 
