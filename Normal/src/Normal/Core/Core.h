@@ -12,6 +12,7 @@
 	#error Normal Engine only support windows!
 #endif
 
+
 #pragma region Asserts
 #ifdef NR_ENABLE_ASSERTS
     #define NR_CLIENT_ASSERT(x, ...) { if(!(x)){ NR_CLIENT_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}
@@ -21,6 +22,20 @@
     #define NR_CORE_ASSERT(x, ...)
 #endif 
 #pragma endregion
+
+
+#pragma region DebugDefines
+#ifdef NR_DEBUG
+    // One can define a unique entity in each scope area.
+    #define NR_SET_NAME(x) const char* NR_DebugName = ##x;
+    #define NR_GET_NAME NR_DebugName
+#else
+    // One can define a unique entity in each scope area.
+    #define NR_SET_NAME(x)
+    #define NR_GET_NAME "Non-Debug"
+#endif
+#pragma endregion
+
 
 #pragma region DataTypes
 // Built-in Data Types

@@ -65,7 +65,7 @@ namespace Normal {
 		SetVSync( VSync );
 		SetCallbacks();
 
-		NR_CORE_INFO( "Successfully Created Window : [Resolution={0}/{1}] [VSync={2}]", Width, Height, VSync );
+		NR_CORE_INFO( "{0} Successfully Created Window : [Resolution={1}/{2}] [VSync={3}]", NR_GET_NAME, Width, Height, VSync );
 	}
 
 	void WindowsWindow::Destroy()
@@ -149,7 +149,31 @@ namespace Normal {
 								   }
 							   } );
 
-
+		glfwSetKeyCallback( m_Window, 
+							[]( GLFWwindow* window, int key, int scancode, int action, int mods )
+							{
+								WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
+								for ( auto& callback : data.Callbacks )
+								{
+									switch ( action )
+									{
+										case GLFW_PRESS:
+										{
+											KeyPressedEvent event( key );
+											callback( event );
+										}break;
+										case GLFW_RELEASE:
+										{
+											KeyReleasedEvent event( key );
+											callback( event );
+										}break;
+										case GLFW_REPEAT:
+										{
+											// TODO : 반복 횟수 구현하기
+										}
+									}
+								}
+							} );
 
 	} // namespace SetCallbacks
 

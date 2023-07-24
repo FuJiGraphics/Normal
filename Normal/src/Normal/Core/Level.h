@@ -12,14 +12,18 @@ namespace Normal {
 		{
 			// Empty
 		}
-		
+		virtual ~Level()
+		{
+			NR_CORE_INFO( "[{0}] Successfully deallocated memory", NR_GET_NAME );
+
+
+		}
+
 		virtual void OnEvent( Event& event ) {};
 
-
-
-		virtual std::string GetName() const { return m_LevelName; }
+		// virtual std::string GetName() const { return NR_GET_NAME; }
 	private:
-		std::string m_LevelName;
+		NR_SET_NAME( "Level" );
 	};
 
 

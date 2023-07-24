@@ -7,6 +7,15 @@
 #include "Normal/Events/MouseEvent.h"
 
 namespace Normal {
+	Mouse::Mouse()
+	{
+		NR_CORE_INFO("")
+	}
+
+	Mouse::~Mouse()
+	{
+		NR_CORE_INFO("")
+	}
 
 	bool Mouse::IsPressed( MouseButtonPressedEvent& button ) const
 	{

@@ -8,10 +8,10 @@
 #include "LevelContainer.h"
 
 #include "Normal/Events/ApplicationEvent.h"
-#include "Normal/Events/MouseEvent.h"
 #include "Normal/Events/Event.h"
 
 #include "Normal/InputManager/Mouse.h"
+#include "Normal/InputManager/Keyboard.h"
 
 namespace Normal {
 
@@ -19,6 +19,14 @@ namespace Normal {
 	{
 		m_Window = std::unique_ptr<Window>( Window::Create() );
 		m_Window->SetEventCallback( BIND_EVENT_FN( Application::OnEvent ) );
+
+		m_LevelContainer = std::unique_ptr<LevelContainer>( LevelContainer::Create() );
+
+		Mouse* mouse = new Mouse();
+		m_LevelContainer->PushLevel( mouse );
+
+		Keyboard* keyboard = new Keyboard();
+		m_LevelContainer->PushLevel( keyboard );
 	}
 
 	Application::~Application()
@@ -39,7 +47,14 @@ namespace Normal {
 		EventDispatcher dispatcher( event );
 		dispatcher.Dispatch<WindowCloseEvent>( BIND_EVENT_FN( Application::OnWindowClose ) );
 
-		NR_CORE_INFO( "{0}", event );
+		// NR_CORE_INFO( "{0}", event );
+
+		for ( auto level = m_LevelContainer->begin(); level != m_LevelContainer->end(); level++ )
+		{
+			(*level)->OnEvent( event );
+			if ( event.handled )
+				break;
+		}
 
 	}
 

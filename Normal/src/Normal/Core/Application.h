@@ -11,8 +11,8 @@ namespace Normal {
 	class Window;
 	class Event;
 	class WindowCloseEvent;
-	class Module;
-	class ModuleContainer;
+	class Level;
+	class LevelContainer;
 #pragma endregion
 
 	class NORMAL_API Application
@@ -30,7 +30,7 @@ namespace Normal {
 	private:
 		bool m_Running = true;
 		std::unique_ptr<Window> m_Window;
-		// std::unique_ptr<LevelContainer> m_LevelContainer;
+		std::unique_ptr<LevelContainer> m_LevelContainer;
 	};
 
 	// To be defined in CLIENT

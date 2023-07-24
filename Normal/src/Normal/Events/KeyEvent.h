@@ -24,7 +24,7 @@ protected:
 class NORMAL_API KeyPressedEvent : public KeyEvent
 {
 public:
-	KeyPressedEvent( int keycode, int repeatCount )
+	KeyPressedEvent( int keycode, int repeatCount = 0 )
 		: KeyEvent( keycode ), m_RepeatCount( repeatCount ) {}
 
 	inline int GetRepeatCount() const { return m_RepeatCount; }
