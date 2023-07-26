@@ -5,11 +5,6 @@
 
 namespace Normal {
 
-	LevelContainer* LevelContainer::Create()
-	{
-		return new LevelContainer();
-	}
-
 	LevelContainer::LevelContainer()
 		: m_Container()
 		, m_InsertLevel()

@@ -10,7 +10,7 @@ int main( int argc, char** argv )
 	auto app = Normal::CreateApplication();
 
 	app->Run();
-
+	
 	delete app;
 }
 

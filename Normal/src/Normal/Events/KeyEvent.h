@@ -28,6 +28,8 @@ public:
 		: KeyEvent( keycode ), m_RepeatCount( repeatCount ) {}
 
 	inline int GetRepeatCount() const { return m_RepeatCount; }
+	inline void IncreaseRepeatCount() { ++m_RepeatCount; }
+	inline void ResetRepeatCount() { m_RepeatCount = 0; }
 
 	std::string ToString() const override
 	{
@@ -38,7 +40,7 @@ public:
 
 	EVENT_CLASS_TYPE( KeyPressed )
 private:
-	int m_RepeatCount;
+	uint64 m_RepeatCount;
 };
 
 class NORMAL_API KeyReleasedEvent : public KeyEvent

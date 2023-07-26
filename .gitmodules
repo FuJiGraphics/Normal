@@ -4,3 +4,6 @@
 [submodule "Normal/vendor/glfw"]
 	path = Normal/vendor/glfw
 	url = https://github.com/TheCherno/glfw.git
+[submodule "Normal/vendor/imgui"]
+	path = Normal/vendor/imgui
+	url = https://github.com/ocornut/imgui.git

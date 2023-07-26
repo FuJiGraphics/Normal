@@ -1,13 +1,13 @@
 #include <NormalEngine.h>
 
-class SandBox : public Normal::Application
+class Workspace : public Normal::Application
 {
 public:
-	SandBox()
+	Workspace()
 	{
 
 	}
-	~SandBox()
+	~Workspace()
 	{
 
 	}
@@ -16,5 +16,5 @@ public:
 Normal::Application* Normal::CreateApplication()
 {
 
-	return new SandBox();
+	return new Workspace();
 }

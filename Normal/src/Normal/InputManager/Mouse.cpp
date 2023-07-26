@@ -7,6 +7,7 @@
 #include "Normal/Events/MouseEvent.h"
 
 namespace Normal {
+
 	Mouse::Mouse()
 	{
 		NR_CORE_INFO("")
@@ -19,7 +20,7 @@ namespace Normal {
 
 	bool Mouse::IsPressed( MouseButtonPressedEvent& button ) const
 	{
-		NR_CORE_LINE_TRACE( "{0}", button );
+		NR_CORE_TRACE( "[{0}] Pressed = {1}", NR_GET_NAME, button.ToString() );
 
 		return true;
 	}
@@ -27,7 +28,7 @@ namespace Normal {
 	void Mouse::OnEvent( Normal::Event& event )
 	{
 		EventDispatcher dispatcher( event );
-		dispatcher.Dispatch<MouseButtonPressedEvent>( BIND_EVENT_FN( Mouse::IsPressed ) );
+		dispatcher.Dispatch<MouseButtonPressedEvent>( BIND_EVENT_FUNC( Mouse::IsPressed ) );
 
 	}
 

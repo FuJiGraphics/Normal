@@ -30,12 +30,12 @@ void Log::setPattern( Patterns p )
 	s_CurrentPattern = p;
 	switch ( p )
 	{
-	case Patterns::Simple:
-		spdlog::set_pattern( "%^[%T] %n: %v%$" );
-		return;
-	case Patterns::Line:
-		spdlog::set_pattern( "%^[%@][%T] %n: %v%$" );
-		return;
+		case Patterns::Simple:
+			spdlog::set_pattern( "%^[%T] %n: %v%$" );
+			return;
+		case Patterns::Line:
+			spdlog::set_pattern( "%^[%T][%s][Line:%#] %n: %v%$" );
+			return;
 	}
 	
 }

@@ -28,6 +28,8 @@ private:
     static Patterns s_CurrentPattern;
 };
 
+
+#pragma region CoreDefines 
 // Normal Engine Core log macros
 #define NR_CORE_TRACE(...) \
     Log::setPattern( Log::Patterns::Simple ); \
@@ -76,8 +78,9 @@ private:
 #define NR_CORE_LINE_CRITICAL(...) \
     Log::setPattern( Log::Patterns::Line ); \
     SPDLOG_LOGGER_CALL( Normal::Log::GetCoreLoger(), spdlog::level::critical, __VA_ARGS__);
+#pragma endregion 
 
-
+#pragma region ClientDefines 
 // Normal Engine Client log macros
 #define NR_CLIENT_TRACE(...) \
     Log::setPattern( Log::Patterns::Simple ); \
@@ -126,6 +129,6 @@ private:
 #define NR_CLIENT_LINE_CRITICAL(...) \
     Log::setPattern( Log::Patterns::Line ); \
     SPDLOG_LOGGER_CALL( Normal::Log::GetClientLoger(), spdlog::level::critical, __VA_ARGS__);
-
+#pragma endregion 
 
 } // namespace Normal Engine

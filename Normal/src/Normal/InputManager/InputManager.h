@@ -2,17 +2,19 @@
 
 #include "Normal/Core/Core.h"
 
-#include "Normal/Core/Level.h"
-
 namespace Normal {
+
+	class Event;
 
 	// https://nerdooit.github.io/2020/06/17/design_pattern_sigleton_2.html
 	template<typename T> 
-	class NORMAL_API InputManager : public Level
+	class NORMAL_API InputManager
 	{
+	public:
+		virtual void OnEvent( Event& event ) = 0;
+
 	protected:
 		InputManager( )
-			: Level( )
 		{
 			// Empty 
 		}

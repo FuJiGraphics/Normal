@@ -39,11 +39,11 @@ namespace Normal {
 		{
 			case EventType::KeyPressed:
 			{
-				dispatcher.Dispatch<KeyPressedEvent>( BIND_EVENT_FN( Keyboard::IsPressed ) );
+				dispatcher.Dispatch<KeyPressedEvent>( BIND_EVENT_FUNC( Keyboard::IsPressed ) );
 			} break;
 			case EventType::KeyReleased:
 			{
-				dispatcher.Dispatch<KeyReleasedEvent>( BIND_EVENT_FN( Keyboard::IsReleased ) );
+				dispatcher.Dispatch<KeyReleasedEvent>( BIND_EVENT_FUNC( Keyboard::IsReleased ) );
 			} 
 		}
 

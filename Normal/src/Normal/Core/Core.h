@@ -1,7 +1,5 @@
 #pragma once
 
-#define BIT(x) ( 1 << x )
-
 #ifdef NR_PLATFORM_WINDOWS
 	#ifdef NR_BUILD_DLL
 		#define NORMAL_API __declspec(dllexport)
@@ -22,8 +20,6 @@
     #define NR_CORE_ASSERT(x, ...)
 #endif 
 #pragma endregion
-
-
 #pragma region DebugDefines
 #ifdef NR_DEBUG
     // One can define a unique entity in each scope area.
@@ -35,8 +31,6 @@
     #define NR_GET_NAME "Non-Debug"
 #endif
 #pragma endregion
-
-
 #pragma region DataTypes
 // Built-in Data Types
 namespace Normal {
@@ -94,4 +88,22 @@ namespace Normal {
 #endif
 
 } // namespace Normal
+#pragma endregion
+#pragma region Etc...
+
+namespace Normal {
+
+#define BIT(x) ( 1 << x )
+
+#define NR_CORE_DELETE(x, ...) {\
+            if ( x ) {\
+                delete x;\
+                x = nullptr;\
+                NR_CORE_LINE_INFO("[{0}] Successfully deallocated memory.", __VA_ARGS__);\
+            }\
+        } // NR_CORE_DELETE
+
+
+} // namespace Normal
+
 #pragma endregion

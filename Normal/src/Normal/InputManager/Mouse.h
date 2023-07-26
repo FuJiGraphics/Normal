@@ -17,9 +17,12 @@ namespace Normal {
 		virtual ~Mouse();
 
 		bool IsPressed( MouseButtonPressedEvent& button ) const;
-		// TODO : 마우스 버튼 떼는거 구현하기.
+
 	protected:
 		virtual void OnEvent( Event& event ) override;
+
+	private:
+		NR_SET_NAME( "Mouse" );
 	};
 
 } // namespace Normal

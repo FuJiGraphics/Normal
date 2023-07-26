@@ -6,6 +6,9 @@
 #include "Normal/Events/MouseEvent.h"
 #include "Normal/Events/ApplicationEvent.h"
 
+#include <glad/glad.h>
+#include <GLFW\glfw3.h>
+
 namespace Normal {
 	// static function from Window.h
 	Window* Window::Create( const WindowProps& props )
@@ -14,6 +17,7 @@ namespace Normal {
 	}
 
 	WindowsWindow::WindowsWindow( const WindowProps& props )
+		: m_Data()
 	{
 		Init( props );
 	}
@@ -26,6 +30,10 @@ namespace Normal {
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
+
+		// testing 
+
+		// -------
 		glfwSwapBuffers( m_Window );
 	}
 
@@ -62,6 +70,10 @@ namespace Normal {
 		m_Window = glfwCreateWindow( Width, Height, Title.c_str(), NULL, NULL );
 		glfwMakeContextCurrent( m_Window );
 		glfwSetWindowUserPointer( m_Window, &m_Data );
+
+		uint8 status = gladLoadGLLoader( GLADloadproc( glfwGetProcAddress ) );
+		NR_CORE_ASSERT( status, "Failed to load Glad extenstion. " );
+
 		SetVSync( VSync );
 		SetCallbacks();
 
@@ -153,23 +165,26 @@ namespace Normal {
 							[]( GLFWwindow* window, int key, int scancode, int action, int mods )
 							{
 								WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
+								static KeyPressedEvent pressedEvent( key );
+								static KeyReleasedEvent releasedEvent( key );
+								// static uint64 repeatCount = 0;
 								for ( auto& callback : data.Callbacks )
 								{
 									switch ( action )
 									{
 										case GLFW_PRESS:
 										{
-											KeyPressedEvent event( key );
-											callback( event );
+											callback( pressedEvent );
 										}break;
 										case GLFW_RELEASE:
 										{
-											KeyReleasedEvent event( key );
-											callback( event );
+											pressedEvent.ResetRepeatCount();
+											callback( releasedEvent );
 										}break;
 										case GLFW_REPEAT:
 										{
-											// TODO : 반복 횟수 구현하기
+											pressedEvent.IncreaseRepeatCount();
+											callback( pressedEvent );
 										}
 									}
 								}

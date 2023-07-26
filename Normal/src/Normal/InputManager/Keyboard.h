@@ -4,13 +4,13 @@
 #include "InputManager.h"
 
 namespace Normal {
-	// TODO : 키보드 인풋 매니저 만들기
+
 #pragma region Forward
 	class KeyPressedEvent;
 	class KeyReleasedEvent;
 #pragma endregion
 
-	class Keyboard : public InputManager <Keyboard>
+	class NORMAL_API Keyboard : public InputManager <Keyboard>
 	{
 	public:
 		Keyboard();
@@ -22,7 +22,10 @@ namespace Normal {
 		virtual void OnEvent( Event& event ) override;
 
 	private:
+		bool m_OnRepeatMode = true;
 		NR_SET_NAME( "Keyboard" );
 	};
+
+
 } // namespace Normal
 

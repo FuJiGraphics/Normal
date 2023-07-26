@@ -1,5 +1,5 @@
 workspace "NormalEngine"
-    startproject "SandBox"
+    startproject "Workspace"
     architecture "x64"
 
     configurations
@@ -14,9 +14,13 @@ outputDir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Included directories relative to root folder
 IncludeDir = {};
 IncludeDir["GLFW"] = "Normal/vendor/GLFW/include"
+IncludeDir["Glad"] = "Normal/vendor/Glad/include"
+IncludeDir["Imgui"] = "Normal/vendor/imgui"
 
 -- this code is include a premake5 file
 include "Normal/vendor/GLFW"
+include "Normal/vendor/Glad"
+include "Normal/vendor/imgui"
 
 project "Normal"
     location "Normal"
@@ -36,15 +40,19 @@ project "Normal"
     }
 
     includedirs
-    {
-        "%{prj.name}/vendor/spdlog/include",
-        "%{prj.name}/src",
-        "%{IncludeDir.GLFW}"
+    { -- The order of imports is important.
+        "%{IncludeDir.GLFW}",
+        "%{IncludeDir.Glad}",
+        "%{IncludeDir.Imgui}",
+        "Normal/vendor/spdlog/include",
+        "Normal/src"
     }
 
     links
     {
         "GLFW",
+        "Glad",
+        "Imgui",
         "opengl32.lib"
     }
 
@@ -58,32 +66,33 @@ project "Normal"
     {
         "NR_PLATFORM_WINDOWS",
         "NR_BUILD_DLL",
-        "NR_ENABLE_ASSERTS"
+        "NR_ENABLE_ASSERTS",
+        "GLFW_INCLUDE_NONE" -- Does not include OpenGL header.
     }
 
     postbuildcommands
     {
-        ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputDir .."/SandBox/" )
+        ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputDir .."/Workspace/" )
     }
 
     filter "configurations:Debug"
-        runtime "Debug"
         defines "NR_DEBUG"
         symbols "On"
+        buildoptions "/MDd"
 
     filter "configurations:Release"
-        runtime "Release"
         defines "NR_RELEASE"
         optimize "On"
+        buildoptions "/MD"
 
     filter "configurations:Dist"
-        runtime "Release"
         defines "NR_DIST"
         optimize "On"
+        buildoptions "/MD"
 
 
-project "SandBox"
-    location "SandBox"
+project "Workspace"
+    location "Workspace"
     kind "ConsoleApp"
     language "C++"
 

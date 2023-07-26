@@ -11,8 +11,6 @@ namespace Normal {
 	class NORMAL_API LevelContainer
 	{
 	public:
-		static LevelContainer* Create();
-
 		LevelContainer();
 		virtual ~LevelContainer();
 
@@ -29,9 +27,9 @@ namespace Normal {
 	public:
 		using container = std::vector< std::unique_ptr<Level> >;
 
-		inline int size() const { return m_Container.size(); }
-		inline container::iterator begin() { return m_Container.begin(); }
-		inline container::iterator end() { return m_Container.end(); }
+		inline bool empty() const { return m_Container.empty(); }
+		container::iterator begin() { return m_Container.begin(); }
+		container::iterator end() { return m_Container.end(); }
 
 	private:
 		container m_Container;
