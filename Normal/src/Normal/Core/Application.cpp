@@ -26,10 +26,6 @@ namespace Normal {
 		m_Window->SetEventCallback( BIND_EVENT_FUNC( Application::OnEvent ) );
 		
 		m_LevelContainer = new LevelContainer;
-		// testing
-		
-		TestRenderer* test = new TestRenderer();
-		m_LevelContainer->PushLevel( test );
 	}
 
 	Application::~Application()

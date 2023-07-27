@@ -66,7 +66,6 @@ project "Normal"
     {
         "NR_PLATFORM_WINDOWS",
         "NR_BUILD_DLL",
-        "NR_ENABLE_ASSERTS",
         "GLFW_INCLUDE_NONE" -- Does not include OpenGL header.
     }
 
@@ -77,18 +76,18 @@ project "Normal"
 
     filter "configurations:Debug"
         defines "NR_DEBUG"
+        runtime "Debug"
         symbols "On"
-        buildoptions "/MDd"
 
     filter "configurations:Release"
         defines "NR_RELEASE"
+        runtime "Release"
         optimize "On"
-        buildoptions "/MD"
 
     filter "configurations:Dist"
         defines "NR_DIST"
+        runtime "Release"
         optimize "On"
-        buildoptions "/MD"
 
 
 project "Workspace"
@@ -118,24 +117,25 @@ project "Workspace"
 
     filter "system:Windows"
         cppdialect "C++20"
-        staticruntime "On"
-        runtime "release"
+        staticruntime "Off"
         systemversion "latest" -- If this version is not defined, automatically define a Windows 8 version.  
 
     defines
     {
-        "NR_PLATFORM_WINDOWS",
-        "NR_ENABLE_ASSERTS"
+        "NR_PLATFORM_WINDOWS"
     }
 
     filter "configurations:Debug"
         defines "NR_DEBUG"
+        runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
         defines "NR_RELEASE"
+        runtime "Release"
         optimize "On"
 
     filter "configurations:Dist"
         defines "NR_DIST"
+        runtime "Release"
         optimize "On"

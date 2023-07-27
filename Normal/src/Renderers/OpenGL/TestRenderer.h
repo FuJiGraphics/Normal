@@ -14,9 +14,9 @@ namespace Normal {
 	public:
 		TestRenderer();
 		~TestRenderer();
-		void OnEvent( Event& event );
-		void OnUpdate( float deltaTime );
-		void OnRender();
+		virtual void OnEvent( Event& event ) override;
+		virtual void OnUpdate( float deltaTime ) override;
+		virtual void OnRender() override;
 
 		static void glfw_error_callback( int error, const char* description );
 

@@ -10,6 +10,10 @@
 	#error Normal Engine only support windows!
 #endif
 
+#ifdef NR_DEBUG
+#define NR_ENABLE_ASSERTS
+#define NR_ENABLE_DEBUG_DEFINES
+#endif
 
 #pragma region Asserts
 #ifdef NR_ENABLE_ASSERTS
@@ -20,8 +24,9 @@
     #define NR_CORE_ASSERT(x, ...)
 #endif 
 #pragma endregion
+
 #pragma region DebugDefines
-#ifdef NR_DEBUG
+#ifdef NR_ENABLE_DEBUG_DEFINES
     // One can define a unique entity in each scope area.
     #define NR_SET_NAME(x) const char* NR_DebugName = ##x;
     #define NR_GET_NAME NR_DebugName
@@ -31,6 +36,7 @@
     #define NR_GET_NAME "Non-Debug"
 #endif
 #pragma endregion
+
 #pragma region DataTypes
 // Built-in Data Types
 namespace Normal {
