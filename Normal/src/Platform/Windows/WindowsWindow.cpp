@@ -19,7 +19,7 @@ namespace Normal {
 	WindowsWindow::WindowsWindow( const WindowProps& props )
 		: m_Data()
 	{
-		Init( props );
+		Initialize( props );
 	}
 
 	WindowsWindow::~WindowsWindow()
@@ -30,7 +30,6 @@ namespace Normal {
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
-
 		// testing 
 
 		// -------
@@ -52,7 +51,7 @@ namespace Normal {
 
 	}
 
-	void WindowsWindow::Init( const WindowProps& props )
+	void WindowsWindow::Initialize( const WindowProps& props )
 	{
 		auto& [ Title, Width, Height, VSync, Callback ] = m_Data;
 		Title  = props.Title;
@@ -161,34 +160,35 @@ namespace Normal {
 								   }
 							   } );
 
-		glfwSetKeyCallback( m_Window, 
-							[]( GLFWwindow* window, int key, int scancode, int action, int mods )
-							{
-								WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
-								static KeyPressedEvent pressedEvent( key );
-								static KeyReleasedEvent releasedEvent( key );
-								// static uint64 repeatCount = 0;
-								for ( auto& callback : data.Callbacks )
-								{
-									switch ( action )
-									{
-										case GLFW_PRESS:
-										{
-											callback( pressedEvent );
-										}break;
-										case GLFW_RELEASE:
-										{
-											pressedEvent.ResetRepeatCount();
-											callback( releasedEvent );
-										}break;
-										case GLFW_REPEAT:
-										{
-											pressedEvent.IncreaseRepeatCount();
-											callback( pressedEvent );
-										}
-									}
-								}
-							} );
+
+		// TODO : 임시적으로 여기에 선언
+		// static uint64 repeatCount = 0;
+		//glfwSetKeyCallback( m_Window, 
+		//					[]( GLFWwindow* window, int key, int scancode, int action, int mods )
+		//					{
+		//						WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
+		//						KeyReleasedEvent releasedEvent( key );
+		//						repeatCount = 0;
+		//						for ( auto& callback : data.Callbacks )
+		//						{
+		//							if ( action == GLFW_RELEASE )
+		//							{
+		//								callback( releasedEvent );
+		//							}
+		//						}
+		//					} );
+
+		glfwSetCharCallback( m_Window,
+							 []( GLFWwindow* window, unsigned int key )
+							 {
+								 WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
+								 // ++repeatCount;
+								 KeyPressedEvent pressedEvent( key );
+								 for ( auto& callback : data.Callbacks )
+								 {
+									 callback( pressedEvent );
+								 }
+							 } );
 
 	} // namespace SetCallbacks
 

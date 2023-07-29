@@ -12,23 +12,19 @@ namespace Normal {
 	{
 	public:
 		virtual void OnEvent( Event& event ) = 0;
-
-	protected:
-		InputManager( )
-		{
-			// Empty 
-		}
-
-	protected:
-		InputManager( const InputManager& ) = delete;
-		void operator=( const InputManager& ) = delete;
-
-	public:
 		inline static T& GetInstance()
 		{
 			static T instance;
 			return instance;
 		}
+
+	protected:
+		InputManager( ) { }
+		virtual ~InputManager() { }
+
+	protected:
+		InputManager( const InputManager& ) = delete;
+		void operator=( const InputManager& ) = delete;
 	};
 
 } // namespace Normal

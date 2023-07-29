@@ -1,20 +1,30 @@
 #include <NormalEngine.h>
 
-class Workspace : public Normal::Application
-{
-public:
-	Workspace()
+namespace Normal {
+
+
+	class Workspace : public Application
+	{
+	public:
+		Workspace()
+		{
+			super::AttachOverlay( new ImGuiLevel );
+			
+
+		}
+		~Workspace()
+		{
+
+		}
+
+
+	};
+
+	Normal::Application* Normal::CreateApplication()
 	{
 
+		return new Workspace();
 	}
-	~Workspace()
-	{
 
-	}
-};
 
-Normal::Application* Normal::CreateApplication()
-{
-
-	return new Workspace();
-}
+} // namespace Normal

@@ -28,8 +28,6 @@ public:
 		: KeyEvent( keycode ), m_RepeatCount( repeatCount ) {}
 
 	inline int GetRepeatCount() const { return m_RepeatCount; }
-	inline void IncreaseRepeatCount() { ++m_RepeatCount; }
-	inline void ResetRepeatCount() { m_RepeatCount = 0; }
 
 	std::string ToString() const override
 	{

@@ -33,7 +33,7 @@
 #else
     // One can define a unique entity in each scope area.
     #define NR_SET_NAME(x)
-    #define NR_GET_NAME "Non-Debug"
+    #define NR_GET_NAME "Release"
 #endif
 #pragma endregion
 
@@ -100,6 +100,9 @@ namespace Normal {
 namespace Normal {
 
 #define BIT(x) ( 1 << x )
+
+#define BIND_EVENT_FUNC(x) std::bind( &x, this, std::placeholders::_1 )
+#define BIND_NOARGS_FUNC(x) std::bind( &x, this )
 
 #define NR_CORE_DELETE(x, ...) {\
             if ( x ) {\

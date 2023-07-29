@@ -13,6 +13,7 @@ namespace Normal {
 
 		virtual void OnUpdate() override;
 
+		virtual inline void* GetNativeWindow() const override { return static_cast<void*>( m_Window ); }
 		virtual inline uint32_t GetWidth() const override { return m_Data.Width; }
 		virtual inline uint32_t GetHeight() const override { return m_Data.Height; }
 
@@ -23,7 +24,7 @@ namespace Normal {
 		virtual inline bool IsVSync() const override { return m_Data.VSync; }
 
 	protected:
-		void Init( const WindowProps& props );
+		void Initialize( const WindowProps& props );
 		void Destroy();
 		void SetCallbacks() const;
 

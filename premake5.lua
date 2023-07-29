@@ -71,7 +71,7 @@ project "Normal"
 
     postbuildcommands
     {
-        ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputDir .."/Workspace/" )
+        ("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputDir .."/Workspace/\"" )
     }
 
     filter "configurations:Debug"

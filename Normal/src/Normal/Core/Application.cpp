@@ -7,23 +7,21 @@
 #include "Level.h"
 #include "LevelContainer.h"
 
-#include "Normal/Events/ApplicationEvent.h"
 #include "Normal/Events/Event.h"
-
-#include "Normal/InputManager/Mouse.h"
-#include "Normal/InputManager/Keyboard.h"
-
-
-// testing
-#include "Renderers/OpenGL/TestRenderer.h"
+#include "Normal/InputManager/WindowInput.h"
 
 namespace Normal {
 
 	Application::Application()
-		:m_LevelContainer( nullptr )
+		: m_WindowInput( WindowInput::GetInstance() )
 	{
+		NR_CORE_ASSERT( !s_Instance, "Application already exists." );
+		s_Instance = this;
+
 		m_Window = std::unique_ptr<Window>( Window::Create() );
 		m_Window->SetEventCallback( BIND_EVENT_FUNC( Application::OnEvent ) );
+
+		m_WindowInput.AttachCallback( BIND_NOARGS_FUNC(Application::OnWindowClose), WindowInput::Type::IsClosed);
 		
 		m_LevelContainer = new LevelContainer;
 	}
@@ -48,7 +46,8 @@ namespace Normal {
 				m_Window->OnUpdate();
 				for ( auto& level : *m_LevelContainer )
 				{
-					( *level ).OnUpdate( time );
+					level->OnUpdate( time );
+					level->OnRender();
 				}
 				++frame;
 			}
@@ -64,13 +63,38 @@ namespace Normal {
 		}
 	}
 
+	void Application::AttachLevel( Level* level )
+	{
+		NR_CORE_ASSERT( level, "Failed to Attached Level." );
+		m_LevelContainer->PushLevel( level );
+		level->OnAttach();
+	}
+
+	void Application::DetachLevel( Level* level )
+	{
+		NR_CORE_ASSERT( level, "Failed to Detached Level." );
+		m_LevelContainer->PopOverlay( level );
+		level->OnDetach();
+	}
+
+	void Application::AttachOverlay( Level* overlay )
+	{
+		NR_CORE_ASSERT( overlay, "Failed to Attached Overlay." );
+		m_LevelContainer->PushOverlay( overlay );
+		overlay->OnAttach();
+	}
+
+	void Application::DetachOverlay( Level* overlay )
+	{
+		NR_CORE_ASSERT( overlay, "Failed to Detached Overlay." );
+		m_LevelContainer->PopOverlay( overlay );
+		overlay->OnDetach();
+	}
+
 	void Application::OnEvent( Event& event )
 	{
-		EventDispatcher dispatcher( event );
-		dispatcher.Dispatch<WindowCloseEvent>( BIND_EVENT_FUNC( Application::OnWindowClose ) );
+		m_WindowInput.OnEvent( event );
 
-		// NR_CORE_INFO( "{0}", event );
-		
 		for ( auto level = m_LevelContainer->end(); level != m_LevelContainer->begin(); )
 		{
 			--level;
@@ -78,14 +102,11 @@ namespace Normal {
 			if ( event.handled )
 				break;
 		}
-		
 	}
 
-	bool Application::OnWindowClose( WindowCloseEvent& event )
+	void Application::OnWindowClose()
 	{
 		m_Running = false;
-		return true;
 	}
-
 
 } // namespace Normal
