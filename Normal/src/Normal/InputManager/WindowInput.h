@@ -13,7 +13,10 @@ namespace Normal {
 	class AppUpdateEvent;
 	class AppRenderEvent;
 #pragma endregion
-
+	struct WindowInputData
+	{
+		float width, height;
+	};
 	/* ------------------------------------------------------------------------------------------
 	* MouseInput class
 	* If you are using the Mouse class, you need to call the GetInstance() function first.
@@ -28,7 +31,7 @@ namespace Normal {
 			IsResized, IsClosed, AppTick, AppUpdate, AppRender,
 			MAX_SIZE
 		};
-		using WindowCallbackFn = std::function<void( void )>;
+		using WindowCallbackFn = std::function<void( WindowInputData )>;
 
 	public:
 		WindowInput();

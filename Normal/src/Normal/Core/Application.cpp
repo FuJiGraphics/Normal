@@ -21,7 +21,7 @@ namespace Normal {
 		m_Window = std::unique_ptr<Window>( Window::Create() );
 		m_Window->SetEventCallback( BIND_EVENT_FUNC( Application::OnEvent ) );
 
-		m_WindowInput.AttachCallback( BIND_NOARGS_FUNC(Application::OnWindowClose), WindowInput::Type::IsClosed);
+		m_WindowInput.AttachCallback( BIND_EVENT_FUNC(Application::OnWindowClose), WindowInput::Type::IsClosed);
 		
 		m_LevelContainer = new LevelContainer;
 	}
@@ -56,7 +56,7 @@ namespace Normal {
 			limit += time;
 			if ( contain > 1.0 )
 			{
-				NR_CORE_TRACE( "Frame:{0}", frame );
+				// NR_CORE_TRACE( "Frame:{0}", frame );
 				frame = 0.0;
 				contain = 0.0;
 			}
@@ -73,7 +73,7 @@ namespace Normal {
 	void Application::DetachLevel( Level* level )
 	{
 		NR_CORE_ASSERT( level, "Failed to Detached Level." );
-		m_LevelContainer->PopOverlay( level );
+		m_LevelContainer->PopLevel( level );
 		level->OnDetach();
 	}
 
@@ -104,7 +104,7 @@ namespace Normal {
 		}
 	}
 
-	void Application::OnWindowClose()
+	void Application::OnWindowClose( WindowInputData input )
 	{
 		m_Running = false;
 	}

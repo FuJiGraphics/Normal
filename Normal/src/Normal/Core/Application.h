@@ -13,6 +13,7 @@ namespace Normal {
 	class LevelContainer;
 	class Event;
 	class WindowInput;
+	struct WindowInputData;
 #pragma endregion
 
 	class NORMAL_API Application
@@ -32,7 +33,7 @@ namespace Normal {
 		void DetachOverlay( Level* overlay );
 
 		void OnEvent( Event& event );
-		void OnWindowClose();
+		void OnWindowClose( WindowInputData input );
 
 	public:
 		inline static Application& GetInstance() { return *s_Instance; };

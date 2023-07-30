@@ -16,6 +16,7 @@ IncludeDir = {};
 IncludeDir["GLFW"] = "Normal/vendor/GLFW/include"
 IncludeDir["Glad"] = "Normal/vendor/Glad/include"
 IncludeDir["Imgui"] = "Normal/vendor/imgui"
+IncludeDir["GLM"] = "Normal/vendor/GLM"
 
 -- this code is include a premake5 file
 include "Normal/vendor/GLFW"
@@ -44,6 +45,7 @@ project "Normal"
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
         "%{IncludeDir.Imgui}",
+        "%{IncludeDir.GLM}",
         "Normal/vendor/spdlog/include",
         "Normal/src"
     }
@@ -107,6 +109,7 @@ project "Workspace"
     includedirs
     {
         "Normal/vendor/spdlog/include",
+        "%{IncludeDir.GLM}",
         "Normal/src"
     }
 

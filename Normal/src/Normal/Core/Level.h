@@ -3,13 +3,19 @@
 #include "Core.h"
 #include "Normal/Events/Event.h"
 
-namespace Normal {
+#include "Normal/InputManager/WindowInput.h"
+#include "Normal/InputManager/MouseInput.h"
+#include "Normal/InputManager/KeyInput.h"
 
-	class Mouse;
-	class Keyboard;
+namespace Normal {
 
 	class NORMAL_API Level
 	{
+	protected:
+		inline static WindowInput& s_WindowInput = WindowInput::GetInstance();
+		inline static MouseInput& s_MouseInput = MouseInput::GetInstance();
+		inline static KeyInput& s_KeyboardInput = KeyInput::GetInstance();
+	
 	public:
 		Level() { }
 		virtual ~Level() { }
@@ -21,13 +27,9 @@ namespace Normal {
 		virtual void OnUpdate( float deltaTime ) {};
 		virtual void OnRender() {};
 
-
-		// virtual std::string GetName() const { return NR_GET_NAME; }
+		virtual std::string GetName() const { return NR_GET_NAME; }
 	private:
-		// std::unique_ptr<Normal::Mouse> m_MouseManager;
 		NR_SET_NAME( "Level" );
 	};
-
-
 
 } // namespace Normal

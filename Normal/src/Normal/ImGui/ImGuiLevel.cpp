@@ -1,5 +1,6 @@
 #include "Nrpch.h"
 #include "ImGuiLevel.h"
+#include "KeycodeConverter.h"
 
 #include "Normal/Core/Window.h"
 #include "Normal/Core/Application.h"
@@ -13,6 +14,7 @@
 #include "Normal/Events/KeyEvent.h"
 #include "Normal/Events/MouseEvent.h"
 
+#include "Normal/InputManager/WindowInput.h"
 #include "Normal/InputManager/MouseInput.h"
 #include "Normal/InputManager/KeyInput.h"
 
@@ -21,8 +23,6 @@ namespace Normal {
 
 	ImGuiLevel::ImGuiLevel()
 		: m_Window( nullptr )
-		, m_MouseInput( MouseInput::GetInstance() )
-		, m_KeyboardInput( KeyInput::GetInstance() )
 	{
 		Initialize();
 	}
@@ -34,8 +34,9 @@ namespace Normal {
 
 	void ImGuiLevel::OnEvent( Event& event )
 	{
-		m_MouseInput.OnEvent( event );
-		m_KeyboardInput.OnEvent( event );
+		s_WindowInput.OnEvent( event );
+		s_MouseInput.OnEvent( event );
+		s_KeyboardInput.OnEvent( event );
 	}
 
 	void ImGuiLevel::OnUpdate( float deltaTime )
@@ -98,9 +99,32 @@ namespace Normal {
 
 	void ImGuiLevel::OnKeyPressedImpl( KeyInputData input )
 	{
-		// NR_CORE_INFO( "Pressed key {0}", (char)input.keycode );
+		// NR_CORE_INFO( "Pressed key = {0}", (char)input.keycode );
 		ImGuiIO& io = ImGui::GetIO();
-		io.AddInputCharacter( input.keycode );
+		io.AddKeyEvent( GLFWKeyToImGuiKey( input.keycode ), true );
+	}
+
+	void ImGuiLevel::OnKeyReleasedImpl( KeyInputData input )
+	{
+		// NR_CORE_INFO( "Released key = {0}", (char)input.keycode );
+		ImGuiIO& io = ImGui::GetIO();
+		io.AddKeyEvent( GLFWKeyToImGuiKey( input.keycode ), false );
+	}
+
+	void ImGuiLevel::OnKeyTypedImpl( KeyInputData input )
+	{
+		// NR_CORE_INFO( "Typed key = {0}", (char)input.keycode );
+		ImGuiIO& io = ImGui::GetIO();
+		io.AddInputCharacter( static_cast<uint32>( input.keycode ) );
+	}
+
+	void ImGuiLevel::OnWindowResizedImpl( WindowInputData input )
+	{
+		// NR_CORE_TRACE( "Called Window Resized Event." );
+		ImGuiIO& io = ImGui::GetIO();
+		io.DisplaySize = ImVec2{ input.width, input.height };
+		io.DisplayFramebufferScale = ImVec2( 1.0f, 1.0f );
+		glViewport( 0, 0, input.width, input.height );
 	}
 
 	void ImGuiLevel::Initialize()
@@ -122,12 +146,16 @@ namespace Normal {
 		// Setup Platform/Renderer backends
 		ImGui_ImplOpenGL3_Init( "#version 130" );
 
-		m_MouseInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnMousePressedImpl ), MouseInput::Type::IsPressed );
-		m_MouseInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnMouseReleasedImpl ), MouseInput::Type::IsReleased );
-		m_MouseInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnMouseScrolledImpl ), MouseInput::Type::IsScrolled );
-		m_MouseInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnMouseMovedImpl ), MouseInput::Type::IsMoved );
+		s_MouseInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnMousePressedImpl ), MouseInput::Type::IsPressed );
+		s_MouseInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnMouseReleasedImpl ), MouseInput::Type::IsReleased );
+		s_MouseInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnMouseScrolledImpl ), MouseInput::Type::IsScrolled );
+		s_MouseInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnMouseMovedImpl ), MouseInput::Type::IsMoved );
 
-		m_KeyboardInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnKeyPressedImpl ), KeyInput::Type::IsPressed );
+		s_KeyboardInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnKeyPressedImpl ), KeyInput::Type::IsPressed );
+		s_KeyboardInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnKeyReleasedImpl ), KeyInput::Type::IsReleased );
+		s_KeyboardInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnKeyTypedImpl ), KeyInput::Type::IsTyped );
+
+		s_WindowInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnWindowResizedImpl ), WindowInput::Type::IsResized );
 	}
 
 	void ImGuiLevel::Destroy()

@@ -4,15 +4,9 @@
 #include "Normal/Core/Level.h"
 
 struct GLFWwindow;
+enum ImGuiKey;
 
 namespace Normal {
-
-#pragma region Forward
-	class MouseInput;
-	class KeyInput;
-	struct MouseInputData;
-	struct KeyInputData;
-#pragma endregion 
 
 	class NORMAL_API ImGuiLevel : public Level
 	{
@@ -29,6 +23,9 @@ namespace Normal {
 		void OnMouseScrolledImpl( MouseInputData input );
 		void OnMouseMovedImpl( MouseInputData input );
 		void OnKeyPressedImpl( KeyInputData input );
+		void OnKeyReleasedImpl( KeyInputData input );
+		void OnKeyTypedImpl( KeyInputData input );
+		void OnWindowResizedImpl( WindowInputData input );
 
 	protected:
 		void Initialize();
@@ -36,10 +33,6 @@ namespace Normal {
 
 	private:
 		GLFWwindow* m_Window;
-
-		MouseInput& m_MouseInput;
-		KeyInput& m_KeyboardInput;
-
 
 		double m_Time = 0.0;
 

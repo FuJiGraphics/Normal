@@ -30,9 +30,6 @@ namespace Normal {
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
-		// testing 
-
-		// -------
 		glfwSwapBuffers( m_Window );
 	}
 
@@ -161,29 +158,42 @@ namespace Normal {
 							   } );
 
 
-		// TODO : 임시적으로 여기에 선언
-		// static uint64 repeatCount = 0;
-		//glfwSetKeyCallback( m_Window, 
-		//					[]( GLFWwindow* window, int key, int scancode, int action, int mods )
-		//					{
-		//						WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
-		//						KeyReleasedEvent releasedEvent( key );
-		//						repeatCount = 0;
-		//						for ( auto& callback : data.Callbacks )
-		//						{
-		//							if ( action == GLFW_RELEASE )
-		//							{
-		//								callback( releasedEvent );
-		//							}
-		//						}
-		//					} );
+		glfwSetKeyCallback( m_Window, 
+							[]( GLFWwindow* window, int key, int scancode, int action, int mods )
+							{
+								WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
+								static uint64 repeatCount = 0;
+						
+								KeyReleasedEvent releasedEvent( key );
+								KeyPressedEvent pressedEvent( key, repeatCount );
+								for ( auto& callback : data.Callbacks )
+								{
+									switch ( action )
+									{
+										case GLFW_RELEASE:
+										{
+											// NR_CORE_TRACE( "Called a glfwSetKeyCallback Release." );
+											repeatCount = 0;
+											callback( releasedEvent );
+											return;
+										} break;
+										case GLFW_PRESS: case GLFW_REPEAT:
+										{
+											// NR_CORE_TRACE( "Called a glfwSetKeyCallback Press || Repeat." );
+											++repeatCount;
+											callback( pressedEvent );
+											return;
+										} break;
+									}
+								}
+							} );
 
 		glfwSetCharCallback( m_Window,
 							 []( GLFWwindow* window, unsigned int key )
 							 {
+								 // NR_CORE_TRACE( "Called a glfwSetCharCallback" );
 								 WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
-								 // ++repeatCount;
-								 KeyPressedEvent pressedEvent( key );
+								 KeyTypedEvent pressedEvent( key );
 								 for ( auto& callback : data.Callbacks )
 								 {
 									 callback( pressedEvent );

@@ -8,6 +8,7 @@ namespace Normal {
 #pragma region Forward
 	class KeyPressedEvent;
 	class KeyReleasedEvent;
+	class KeyTypedEvent;
 #pragma endregion
 
 	struct KeyInputData {
@@ -27,7 +28,7 @@ namespace Normal {
 	{
 	public:
 		enum class Type : int {
-			IsPressed, IsReleased,
+			IsPressed, IsReleased, IsTyped,
 			MAX_SIZE
 		};
 		using KeyboardCallbackFn = std::function<void( KeyInputData )>;
@@ -39,12 +40,17 @@ namespace Normal {
 		void AttachCallback( KeyboardCallbackFn pFunc, Type type );
 		void DetachCallback( Type type );
 
+		// Polling Keycode 
+		bool IsKeyPreesed( uint32 keycode ) const;
+		bool IsKeyPreesed( char keycode ) const;
+
 		virtual void OnEvent( Event& event ) override;
 
 		inline void SetRepeatMode( bool enable ) { m_OnRepeatMode = enable; }
 	protected:
-		bool IsPressed( KeyPressedEvent& button ) const;
-		// bool IsReleased( KeyReleasedEvent& button ) const;
+		bool IsPressed( KeyPressedEvent& event ) const;
+		bool IsReleased( KeyReleasedEvent& event ) const;
+		bool IsTyped( KeyTypedEvent& event ) const;
 		
 	private:
 		KeyboardCallbackFn m_Callbacks[static_cast<int>( Type::MAX_SIZE )];

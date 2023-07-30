@@ -55,7 +55,10 @@ namespace Normal {
 		int type = static_cast<int>( Type::IsResized );
 		if ( m_Callbacks[type] != nullptr )
 		{
-			m_Callbacks[type]();
+			WindowInputData data;
+			data.width = event.GetWidth();
+			data.height = event.GetHeight();
+			m_Callbacks[type]( data );
 			return true;
 		}
 		return false;
@@ -66,7 +69,7 @@ namespace Normal {
 		int type = static_cast<int>( Type::IsClosed );
 		if ( m_Callbacks[type] != nullptr )
 		{
-			m_Callbacks[type]();
+			m_Callbacks[type]( {} );
 			return true;
 		}
 		return false;
@@ -77,7 +80,7 @@ namespace Normal {
 		int type = static_cast<int>( Type::AppTick );
 		if ( m_Callbacks[type] != nullptr )
 		{
-			m_Callbacks[type]();
+			m_Callbacks[type]( {} );
 			return true;
 		}
 		return false;
@@ -88,7 +91,7 @@ namespace Normal {
 		int type = static_cast<int>( Type::AppUpdate );
 		if ( m_Callbacks[type] != nullptr )
 		{
-			m_Callbacks[type]();
+			m_Callbacks[type]( {} );
 			return true;
 		}
 		return false;
@@ -99,7 +102,7 @@ namespace Normal {
 		int type = static_cast<int>( Type::AppRender );
 		if ( m_Callbacks[type] != nullptr )
 		{
-			m_Callbacks[type]();
+			m_Callbacks[type]( {} );
 			return true;
 		}
 		return false;

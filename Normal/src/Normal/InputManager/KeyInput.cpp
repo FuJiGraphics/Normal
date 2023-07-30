@@ -1,6 +1,10 @@
 #include "Nrpch.h"
 #include "KeyInput.h"
 
+#include <GLFW/glfw3.h>
+#include "Normal/Core/Window.h"
+#include "Normal/Core/Application.h"
+
 #include "Normal/Core/Window.h"
 
 #include "Normal/Events/Event.h"
@@ -33,6 +37,20 @@ namespace Normal {
 		m_Callbacks[indices] = nullptr;
 	}
 
+	bool KeyInput::IsKeyPreesed( uint32 keycode ) const
+	{
+		auto& app = Application::GetInstance();
+		auto nativeWindow = static_cast<GLFWwindow*>( app.GetWindow().GetNativeWindow() );
+		auto state = glfwGetKey( nativeWindow, keycode );
+		return state == GLFW_PRESS || state == GLFW_REPEAT;
+		return false;
+	}
+
+	bool KeyInput::IsKeyPreesed( char keycode ) const
+	{
+		return IsKeyPreesed( static_cast<uint32>( keycode ) );
+	}
+
 	void KeyInput::OnEvent( Normal::Event& event )
 	{
 		EventDispatcher dispatcher( event );
@@ -46,10 +64,14 @@ namespace Normal {
 				dispatcher.Dispatch<KeyPressedEvent>( BIND_EVENT_FUNC( KeyInput::IsPressed ) );
 				return;
 			} break;
-			/*case EventType::KeyReleased:
-			{	dispatcher.Dispatch<KeyReleasedEvent>( BIND_EVENT_FUNC( Keyboard::IsReleased ) );
+			case EventType::KeyReleased:
+			{	dispatcher.Dispatch<KeyReleasedEvent>( BIND_EVENT_FUNC( KeyInput::IsReleased ) );
 				return;
-			} break;*/
+			} break;
+			case EventType::KeyTyped:
+			{	dispatcher.Dispatch<KeyTypedEvent>( BIND_EVENT_FUNC( KeyInput::IsTyped ) );
+			return;
+			} break;
 		}
 	} // scope = void Keyboard::OnEvent( Normal::Event& event )
 
@@ -59,21 +81,32 @@ namespace Normal {
 		if ( m_Callbacks[type] != nullptr )
 		{
 			m_Callbacks[type]( { event.GetKeyCode(), event.GetRepeatCount() } );
-			return true;
+			return false;
 		}
 		return false;
 	}
 
-	//bool Keyboard::IsReleased( KeyReleasedEvent& event ) const
-	//{
-	//	int type = static_cast<int>( Type::IsReleased );
-	//	if ( m_Callbacks[type] != nullptr )
-	//	{
-	//		m_Callbacks[type]( { event.GetKeyCode(), 0 } );
-	//		return true;
-	//	}
-	//	return false;
-	//}
+	bool KeyInput::IsReleased( KeyReleasedEvent& event ) const
+	{
+		int type = static_cast<int>( Type::IsReleased );
+		if ( m_Callbacks[type] != nullptr )
+		{
+			m_Callbacks[type]( { event.GetKeyCode(), 0 } );
+			return false;
+		}
+		return false;
+	}
+
+	bool KeyInput::IsTyped( KeyTypedEvent& event ) const
+	{
+		int type = static_cast<int>( Type::IsTyped );
+		if ( m_Callbacks[type] != nullptr )
+		{
+			m_Callbacks[type]( { event.GetKeyCode(), 0 } );
+			return false;
+		}
+		return false;
+	}
 
 
 } // namepsace Normal
