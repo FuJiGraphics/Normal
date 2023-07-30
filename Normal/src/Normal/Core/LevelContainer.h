@@ -10,6 +10,8 @@ namespace Normal {
 
 	class NORMAL_API LevelContainer
 	{
+		using iter = std::vector<Level*>::iterator;
+
 	public:
 		LevelContainer();
 		virtual ~LevelContainer();
@@ -19,21 +21,22 @@ namespace Normal {
 		void operator= ( LevelContainer& ) = delete;
 
 	public:
-		void PushLevel( Level* pLevel );
-		void PushOverlay( Level* pOverlay );
-		void PopLevel( Level* pLevel );
-		void PopOverlay( Level* pOverlay );
+		bool PushLevel( Level* pLevel );
+		bool PushOverlay( Level* pOverlay );
+		bool PopLevel( Level* pLevel );
+		bool PopOverlay( Level* pOverlay );
+
+	protected:
+		iter FindLevel( Level* pLevel );
 
 	public:
-		using container = std::vector< std::unique_ptr<Level> >;
-
 		inline bool empty() const { return m_Container.empty(); }
-		container::iterator begin() { return m_Container.begin(); }
-		container::iterator end() { return m_Container.end(); }
+		iter begin() { return m_Container.begin(); }
+		iter end() { return m_Container.end(); }
 
 	private:
-		container m_Container;
-		container::iterator m_InsertLevel;
+		std::vector<Level*> m_Container;
+		uint64 m_InsertIndex;
 
 		NR_SET_NAME( "LevelContainer" );
 	};
