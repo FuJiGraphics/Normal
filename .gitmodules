@@ -1,12 +1,12 @@
-[submodule "Normal/vendor/glfw"]
-	path = Normal/vendor/glfw
-	url = https://github.com/FuJiGraphics/glfw.git
 [submodule "Normal/vendor/glm"]
 	path = Normal/vendor/glm
 	url = https://github.com/FuJiGraphics/glm.git
 [submodule "Normal/vendor/spdlog"]
 	path = Normal/vendor/spdlog
 	url = https://github.com/FuJiGraphics/spdlog.git
+[submodule "Normal/vendor/glfw"]
+	path = Normal/vendor/glfw
+	url = https://github.com/FuJiGraphics/glfw.git
 [submodule "Normal/vendor/imgui"]
 	path = Normal/vendor/imgui
 	url = https://github.com/FuJiGraphics/imgui.git
