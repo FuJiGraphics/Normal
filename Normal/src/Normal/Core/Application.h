@@ -10,6 +10,7 @@ namespace Normal {
 	// Forward Declerations
 	class Window;
 	class Level;
+	class ImGuiLevel;
 	class LevelContainer;
 	class Event;
 	class WindowInput;
@@ -26,29 +27,37 @@ namespace Normal {
 		virtual ~Application();
 
 		void Run();
+		void OnEvent( Event& event );
 
 		void AttachLevel( Level* level );
 		void DetachLevel( Level* level );
 		void AttachOverlay( Level* overlay );
 		void DetachOverlay( Level* overlay );
 
-		void OnEvent( Event& event );
 		void OnWindowClose( WindowInputData input );
+
+	protected:
+		void Initialize();
+		void Destroy();
 
 	public:
 		inline static Application& GetInstance() { return *s_Instance; };
 		inline Window& GetWindow() const { return *m_Window; }
 
 	private:
+		double m_Time = 0.0;
+		bool m_Running = true;
+		ImGuiLevel* m_ImGuiLevel = nullptr;
+
 		inline static Application* s_Instance = nullptr;
 
+	private:
+		static WindowInput& s_WindowInput;
+
 		std::unique_ptr<Window> m_Window;
-		WindowInput& m_WindowInput;
+		std::unique_ptr<LevelContainer> m_LevelContainer;
 
-		LevelContainer* m_LevelContainer = nullptr;
-
-		bool m_Running = true;
-		double m_Time = 0.0;
+		NR_SET_NAME( "Application" );
 	};
 
 	// To be defined in CLIENT

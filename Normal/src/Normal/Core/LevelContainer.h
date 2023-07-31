@@ -10,7 +10,7 @@ namespace Normal {
 
 	class NORMAL_API LevelContainer
 	{
-		using iter = std::vector<Level*>::iterator;
+		using iter = std::vector< Level* >::iterator;
 
 	public:
 		LevelContainer();
@@ -21,10 +21,10 @@ namespace Normal {
 		void operator= ( LevelContainer& ) = delete;
 
 	public:
-		bool PushLevel( Level* pLevel );
-		bool PushOverlay( Level* pOverlay );
-		bool PopLevel( Level* pLevel );
-		bool PopOverlay( Level* pOverlay );
+		bool InsertLevel( Level* pLevel );
+		bool InsertOverlay( Level* pOverlay );
+		bool RemoveLevel( Level* pLevel );
+		bool RemoveOverlay( Level* pOverlay );
 
 	protected:
 		iter FindLevel( Level* pLevel );
@@ -35,7 +35,7 @@ namespace Normal {
 		iter end() { return m_Container.end(); }
 
 	private:
-		std::vector<Level*> m_Container;
+		std::vector< Level* > m_Container;
 		uint64 m_InsertIndex;
 
 		NR_SET_NAME( "LevelContainer" );

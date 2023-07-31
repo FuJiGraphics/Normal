@@ -10,12 +10,12 @@ namespace Normal {
 	MouseInput::MouseInput()
 		: m_Callbacks{ nullptr }
 	{
-		// Empty
+		NR_CORE_INFO_CTOR;
 	}
 
 	MouseInput::~MouseInput()
 	{
-		// Empty
+		NR_CORE_INFO_DTOR;
 	}
 
 	void MouseInput::AttachCallback( MouseCallbackFn pFunc, Type type )

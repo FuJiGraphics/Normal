@@ -14,14 +14,25 @@ public:
         None = 0,
         Line, Simple
     };
+
 public:
 	static void init();
     static void setPattern( Patterns p );
 
-	inline static std::shared_ptr<spdlog::logger>& GetCoreLoger() { return s_CoreLogger; }
-	inline static std::shared_ptr<spdlog::logger>& GetClientLoger() { return s_ClientLogger; }
+	inline static std::shared_ptr<spdlog::logger>& GetCoreLoger() 
+    { 
+        init();
+        return s_CoreLogger;
+    }
+
+	inline static std::shared_ptr<spdlog::logger>& GetClientLoger() 
+    {
+        init();
+        return s_ClientLogger;
+    }
 
 private:
+    inline static bool s_Initialized = false;
 	static std::shared_ptr<spdlog::logger> s_CoreLogger;
 	static std::shared_ptr<spdlog::logger> s_ClientLogger;
 
@@ -78,6 +89,10 @@ private:
 #define NR_CORE_LINE_CRITICAL(...) \
     Log::setPattern( Log::Patterns::Line ); \
     SPDLOG_LOGGER_CALL( Normal::Log::GetCoreLoger(), spdlog::level::critical, __VA_ARGS__);
+
+#define NR_CORE_INFO_CTOR NR_CORE_INFO("[{0}] Successfully Allocated Memory.", NR_GET_NAME);
+#define NR_CORE_INFO_DTOR NR_CORE_ERROR("[{0}] Successfully Deallocated Memory.", NR_GET_NAME);
+
 #pragma endregion 
 
 #pragma region ClientDefines 
@@ -129,6 +144,10 @@ private:
 #define NR_CLIENT_LINE_CRITICAL(...) \
     Log::setPattern( Log::Patterns::Line ); \
     SPDLOG_LOGGER_CALL( Normal::Log::GetClientLoger(), spdlog::level::critical, __VA_ARGS__);
+
+#define NR_CLIENT_INFO_CTOR NR_CLIENT_INFO("[{0}] Successfully Allocated Memory.", NR_GET_NAME);
+#define NR_CLIENT_INFO_DTOR NR_CLIENT_ERROR("[{0}] Successfully Deallocated Memory.", NR_GET_NAME);
+
 #pragma endregion 
 
 } // namespace Normal Engine

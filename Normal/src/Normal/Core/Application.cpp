@@ -10,90 +10,51 @@
 #include "Normal/Events/Event.h"
 #include "Normal/InputManager/WindowInput.h"
 
+#include "Normal/ImGui/ImGuiLevel.h"
+
 namespace Normal {
 
+	WindowInput& Application::s_WindowInput = WindowInput::GetInstance();
+
 	Application::Application()
-		: m_WindowInput( WindowInput::GetInstance() )
 	{
 		NR_CORE_ASSERT( !s_Instance, "Application already exists." );
 		s_Instance = this;
 
-		m_Window = std::unique_ptr<Window>( Window::Create() );
-		m_Window->SetEventCallback( BIND_EVENT_FUNC( Application::OnEvent ) );
-
-		m_WindowInput.AttachCallback( BIND_EVENT_FUNC(Application::OnWindowClose), WindowInput::Type::IsClosed);
-		
-		m_LevelContainer = new LevelContainer;
+		Initialize();
+		NR_CORE_INFO_CTOR;
 	}
 
 	Application::~Application()
 	{
-		NR_CORE_DELETE( m_LevelContainer, "m_LevelContainer" );
+		Destroy();
+		NR_CORE_INFO_DTOR;
 	}
 
 	void Application::Run()
 	{
-		static double frame = 0.0;
-		static double contain = 0.0;
-		static double limit = 0.0;
 		while ( m_Running )
 		{
-			double time = glfwGetTime();
-			time = ( m_Time > 0.001 ) ? time - m_Time : 1.0 / 60.0;
-			if ( limit > 0.007 )
+			m_Window->OnUpdate();
+			
+			for ( auto level : *m_LevelContainer )
 			{
-				limit = 0.0;
-				m_Window->OnUpdate();
-				for ( auto& level : *m_LevelContainer )
-				{
-					level->OnUpdate( time );
-					level->OnRender();
-				}
-				++frame;
+				level->OnUpdate( 0 );
 			}
-			m_Time = m_Time + time;
-			contain += time;
-			limit += time;
-			if ( contain > 1.0 )
+
+			m_ImGuiLevel->BeginFrame();
+			for ( auto level : *m_LevelContainer )
 			{
-				// NR_CORE_TRACE( "Frame:{0}", frame );
-				frame = 0.0;
-				contain = 0.0;
+				level->OnGuiRender();
 			}
+			m_ImGuiLevel->EndFrame();
+
 		}
-	}
-
-	void Application::AttachLevel( Level* level )
-	{
-		NR_CORE_ASSERT( level, "Failed to Attached Level." );
-		m_LevelContainer->PushLevel( level );
-		level->OnAttach();
-	}
-
-	void Application::DetachLevel( Level* level )
-	{
-		NR_CORE_ASSERT( level, "Failed to Detached Level." );
-		m_LevelContainer->PopLevel( level );
-		level->OnDetach();
-	}
-
-	void Application::AttachOverlay( Level* overlay )
-	{
-		NR_CORE_ASSERT( overlay, "Failed to Attached Overlay." );
-		m_LevelContainer->PushOverlay( overlay );
-		overlay->OnAttach();
-	}
-
-	void Application::DetachOverlay( Level* overlay )
-	{
-		NR_CORE_ASSERT( overlay, "Failed to Detached Overlay." );
-		m_LevelContainer->PopOverlay( overlay );
-		overlay->OnDetach();
 	}
 
 	void Application::OnEvent( Event& event )
 	{
-		m_WindowInput.OnEvent( event );
+		s_WindowInput.OnEvent( event );
 
 		for ( auto level = m_LevelContainer->end(); level != m_LevelContainer->begin(); )
 		{
@@ -104,9 +65,56 @@ namespace Normal {
 		}
 	}
 
+	void Application::AttachLevel( Level* level )
+	{
+		NR_CORE_ASSERT( level, "Failed to Attached Level." );
+		m_LevelContainer->InsertLevel( level );
+		level->OnAttach();
+	}
+
+	void Application::DetachLevel( Level* level )
+	{
+		NR_CORE_ASSERT( level, "Failed to Detached Level." );
+		m_LevelContainer->RemoveLevel( level );
+		level->OnDetach();
+	}
+
+	void Application::AttachOverlay( Level* overlay )
+	{
+		NR_CORE_ASSERT( overlay, "Failed to Attached Overlay." );
+		m_LevelContainer->InsertOverlay( overlay );
+		overlay->OnAttach();
+	}
+
+	void Application::DetachOverlay( Level* overlay )
+	{
+		NR_CORE_ASSERT( overlay, "Failed to Detached Overlay." );
+		m_LevelContainer->RemoveOverlay( overlay );
+		overlay->OnDetach();
+	}
+
 	void Application::OnWindowClose( WindowInputData input )
 	{
 		m_Running = false;
+	}
+
+	void Application::Initialize()
+	{
+		m_Window = std::unique_ptr<Window>( Window::Create() );
+		m_Window->SetEventCallback( BIND_EVENT_FUNC( Application::OnEvent ) );
+
+		m_LevelContainer = std::make_unique<LevelContainer>();
+
+		m_ImGuiLevel = new ImGuiLevel;
+		m_LevelContainer->InsertOverlay( m_ImGuiLevel );
+
+		s_WindowInput.AttachCallback( BIND_EVENT_FUNC( Application::OnWindowClose ), 
+									  WindowInput::Type::IsClosed );
+	}
+
+	void Application::Destroy()
+	{
+		// NR_CORE_DELETE( m_LevelContainer, "m_LevelContainer" );
 	}
 
 } // namespace Normal

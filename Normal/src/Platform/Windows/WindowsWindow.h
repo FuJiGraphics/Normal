@@ -31,8 +31,7 @@ namespace Normal {
 	private:
 		bool m_GLFWinitialized   = false;
 		GLFWwindow* m_Window     = nullptr;
-		NR_SET_NAME( "WindowsWindow" );
-;
+
 	private:
 		struct WindowData
 		{
@@ -45,6 +44,8 @@ namespace Normal {
 		};
 
 		WindowData m_Data;
+
+		NR_SET_NAME( "WindowsWindow" );
 	};
 
 } // namespace Normal

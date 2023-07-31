@@ -4,7 +4,6 @@
 #include "Normal/Core/Level.h"
 
 struct GLFWwindow;
-enum ImGuiKey;
 
 namespace Normal {
 
@@ -14,29 +13,26 @@ namespace Normal {
 		ImGuiLevel();
 		virtual ~ImGuiLevel();
 
-		virtual void OnEvent( Event& event ) override;
-		virtual void OnUpdate( float deltaTime ) override;
-		virtual void OnRender() override;
 
-		void OnMousePressedImpl( MouseInputData input );
-		void OnMouseReleasedImpl( MouseInputData input );
-		void OnMouseScrolledImpl( MouseInputData input );
-		void OnMouseMovedImpl( MouseInputData input );
-		void OnKeyPressedImpl( KeyInputData input );
-		void OnKeyReleasedImpl( KeyInputData input );
-		void OnKeyTypedImpl( KeyInputData input );
-		void OnWindowResizedImpl( WindowInputData input );
+
+		void BeginFrame();
+		void EndFrame();
+
+		virtual void OnGuiRender() override;
 
 	protected:
-		void Initialize();
-		void Destroy();
+		void CreateImGui();
+		void CleanupImGui();
 
 	private:
-		GLFWwindow* m_Window;
+		GLFWwindow* m_Window      = nullptr;
+		bool m_ShowDemoWindow     = true;
+		bool m_ShowAnotherWindow  = false;
 
+		float m_ClearColor[4] = { 0.45f, 0.55f, 0.60f, 1.00f };
 		double m_Time = 0.0;
 
-		NR_SET_NAME( "ImGui_Level" );
+		NR_SET_NAME( "ImGuiLevel" );
 	};
 
 } // namespace Normal

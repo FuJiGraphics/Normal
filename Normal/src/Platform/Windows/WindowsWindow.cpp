@@ -20,11 +20,15 @@ namespace Normal {
 		: m_Data()
 	{
 		Initialize( props );
+		NR_CORE_INFO_CTOR;
+		NR_CORE_INFO( "Platform:[{0}]  Title:[{1}]  Resolution:[{2}:{3}]  VSync Mode:[{4}]",
+					  "Windows", m_Data.Title, m_Data.Width, m_Data.Height, m_Data.VSync );
 	}
 
 	WindowsWindow::~WindowsWindow()
 	{
 		Destroy();
+		NR_CORE_INFO_DTOR;
 	}
 
 	void WindowsWindow::OnUpdate()
@@ -72,8 +76,6 @@ namespace Normal {
 
 		SetVSync( VSync );
 		SetCallbacks();
-
-		NR_CORE_INFO( "{0} Successfully Created Window : [Resolution={1}/{2}] [VSync={3}]", NR_GET_NAME, Width, Height, VSync );
 	}
 
 	void WindowsWindow::Destroy()

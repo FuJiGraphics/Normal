@@ -56,6 +56,7 @@ namespace Normal {
 		KeyboardCallbackFn m_Callbacks[static_cast<int>( Type::MAX_SIZE )];
 
 		bool m_OnRepeatMode = true;
+
 		NR_SET_NAME( "KeyInput" );
 	};
 

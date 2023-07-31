@@ -1,167 +1,169 @@
 #include "Nrpch.h"
 #include "ImGuiLevel.h"
-#include "KeycodeConverter.h"
 
-#include "Normal/Core/Window.h"
 #include "Normal/Core/Application.h"
+#include "Normal/Core/Window.h"
 
+#include <imgui.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "imgui.h"
-#include "Renderers/OpenGL/imgui_impl_opengl3.h"
-
-#include "Normal/Events/KeyEvent.h"
-#include "Normal/Events/MouseEvent.h"
-
-#include "Normal/InputManager/WindowInput.h"
-#include "Normal/InputManager/MouseInput.h"
-#include "Normal/InputManager/KeyInput.h"
+#include "backends/imgui_impl_opengl3.h"
+#include "backends/imgui_impl_glfw.h"
 
 namespace Normal {
 
-
+	
 	ImGuiLevel::ImGuiLevel()
-		: m_Window( nullptr )
 	{
-		Initialize();
+		CreateImGui();
+		NR_CORE_INFO_CTOR;
 	}
 
 	ImGuiLevel::~ImGuiLevel()
 	{
-		Destroy();
+		CleanupImGui();
+		NR_CORE_INFO_DTOR;
 	}
 
-	void ImGuiLevel::OnEvent( Event& event )
+	void ImGuiLevel::BeginFrame()
 	{
-		s_WindowInput.OnEvent( event );
-		s_MouseInput.OnEvent( event );
-		s_KeyboardInput.OnEvent( event );
+		// Start the Dear ImGui frame
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
 	}
 
-	void ImGuiLevel::OnUpdate( float deltaTime )
+	void ImGuiLevel::EndFrame()
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		auto& app = Application::GetInstance();
 
-		// Setup display size (every frame to accommodate for window resizing)
-		// glfwGetWindowSize( m_Window, &w, &h );
-		// glfwGetFramebufferSize( m_Window, &display_w, &display_h );
-		io.DisplaySize = ImVec2( (float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight() );
-		
-		// Setup time step
-		double current_time = glfwGetTime();
-		if ( current_time <= m_Time ) current_time = m_Time + 0.00001f;
-		io.DeltaTime = m_Time > 0.0 ? (float)( current_time - m_Time ) : (float)( 1.0f / 60.0f );
-		m_Time = current_time;
-		
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui::NewFrame();
-
-		bool showDemoWindow = true;
-		ImGui::ShowDemoWindow( &showDemoWindow );
-	}
-
-	void ImGuiLevel::OnRender()
-	{
+		// Rendering
 		ImGui::Render();
+		int display_w, display_h;
+		glfwGetFramebufferSize( m_Window, &display_w, &display_h );
+		glViewport( 0, 0, display_w, display_h );
+		glClearColor( m_ClearColor[0] * m_ClearColor[3], 
+					  m_ClearColor[1] * m_ClearColor[3], 
+					  m_ClearColor[2] * m_ClearColor[3], 
+					  m_ClearColor[3] );
 		glClear( GL_COLOR_BUFFER_BIT );
 		ImGui_ImplOpenGL3_RenderDrawData( ImGui::GetDrawData() );
+
+		// Update and Render additional Platform Windows
+		// (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
+		//  For this specific demo app we could also call glfwMakeContextCurrent(window) directly)
+		if ( io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable )
+		{
+			GLFWwindow* backup_current_context = glfwGetCurrentContext();
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			glfwMakeContextCurrent( backup_current_context );
+		}
+
 	}
 
-	void ImGuiLevel::OnMousePressedImpl( MouseInputData input )
+	void ImGuiLevel::OnGuiRender()
 	{
-		// NR_CORE_INFO( "Pressed Mouse Button = {0}", input.keycode );
-		ImGuiIO& io = ImGui::GetIO();
-		io.AddMouseButtonEvent( input.keycode, true );
+		if ( m_ShowDemoWindow )
+			ImGui::ShowDemoWindow();
+
+		// 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
+		{
+			const ImGuiIO& io = ImGui::GetIO();
+
+			static float f = 0.0f;
+			static int counter = 0;
+
+			ImGui::Begin( "Hello, world!" );                          // Create a window called "Hello, world!" and append into it.
+
+			ImGui::Text( "This is some useful text." );               // Display some text (you can use a format strings too)
+			ImGui::Checkbox( "Demo Window", &m_ShowDemoWindow );      // Edit bools storing our window open/close state
+			ImGui::Checkbox( "Another Window", &m_ShowAnotherWindow );
+
+			ImGui::SliderFloat( "float", &f, 0.0f, 1.0f );            // Edit 1 float using a slider from 0.0f to 1.0f
+			ImGui::ColorEdit3( "clear color", (float*)&m_ClearColor ); // Edit 3 floats representing a color
+
+			if ( ImGui::Button( "Button" ) )                            // Buttons return true when clicked (most widgets return true when edited/activated)
+				counter++;
+			ImGui::SameLine();
+			ImGui::Text( "counter = %d", counter );
+
+			ImGui::Text( "Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate );
+			ImGui::End();
+		}
+
+		// 3. Show another simple window.
+		if ( m_ShowAnotherWindow )
+		{
+			ImGui::Begin( "Another Window", &m_ShowAnotherWindow );   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+			ImGui::Text( "Hello from another window!" );
+			if ( ImGui::Button( "Close Me" ) )
+				m_ShowAnotherWindow = false;
+			ImGui::End();
+		}
 	}
 
-	void ImGuiLevel::OnMouseReleasedImpl( MouseInputData input )
+	void ImGuiLevel::CreateImGui()
 	{
-		// NR_CORE_TRACE( "Released Mouse Button = {0}", input.keycode );
-		ImGuiIO& io = ImGui::GetIO();
-		io.AddMouseButtonEvent( input.keycode, false );
-	}
-
-	void ImGuiLevel::OnMouseScrolledImpl( MouseInputData input )
-	{
-		// NR_CORE_TRACE( "Scrolled xOffset = {0}, yOffset = {1}", input.xOffset, input.yOffset );
-		ImGuiIO& io = ImGui::GetIO();
-		io.AddMouseWheelEvent( input.xOffset, input.yOffset );
-	}
-
-	void ImGuiLevel::OnMouseMovedImpl( MouseInputData input )
-	{
-		// NR_CORE_TRACE( "Mouse Position x = {0}, y = {1}", input.xOffset, input.yOffset );
-		ImGuiIO& io = ImGui::GetIO();
-		io.AddMousePosEvent( input.xOffset, input.yOffset );
-	}
-
-	void ImGuiLevel::OnKeyPressedImpl( KeyInputData input )
-	{
-		// NR_CORE_INFO( "Pressed key = {0}", (char)input.keycode );
-		ImGuiIO& io = ImGui::GetIO();
-		io.AddKeyEvent( GLFWKeyToImGuiKey( input.keycode ), true );
-	}
-
-	void ImGuiLevel::OnKeyReleasedImpl( KeyInputData input )
-	{
-		// NR_CORE_INFO( "Released key = {0}", (char)input.keycode );
-		ImGuiIO& io = ImGui::GetIO();
-		io.AddKeyEvent( GLFWKeyToImGuiKey( input.keycode ), false );
-	}
-
-	void ImGuiLevel::OnKeyTypedImpl( KeyInputData input )
-	{
-		// NR_CORE_INFO( "Typed key = {0}", (char)input.keycode );
-		ImGuiIO& io = ImGui::GetIO();
-		io.AddInputCharacter( static_cast<uint32>( input.keycode ) );
-	}
-
-	void ImGuiLevel::OnWindowResizedImpl( WindowInputData input )
-	{
-		// NR_CORE_TRACE( "Called Window Resized Event." );
-		ImGuiIO& io = ImGui::GetIO();
-		io.DisplaySize = ImVec2{ input.width, input.height };
-		io.DisplayFramebufferScale = ImVec2( 1.0f, 1.0f );
-		glViewport( 0, 0, input.width, input.height );
-	}
-
-	void ImGuiLevel::Initialize()
-	{
-		auto& app = Application::GetInstance();
+		// Decide GL+GLSL versions
+#if defined(IMGUI_IMPL_OPENGL_ES2)
+	// GL ES 2.0 + GLSL 100
+		const char* glsl_version = "#version 100";
+		glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 2 );
+		glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 0 );
+		glfwWindowHint( GLFW_CLIENT_API, GLFW_OPENGL_ES_API );
+#elif defined(__APPLE__)
+	// GL 3.2 + GLSL 150
+		const char* glsl_version = "#version 150";
+		glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 3 );
+		glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 2 );
+		glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE );  // 3.2+ only
+		glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );            // Required on Mac
+#else
+	// GL 3.0 + GLSL 130
+		const char* glsl_version = "#version 130";
+		glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 3 );
+		glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 0 );
+		//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
+		//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
+#endif
+		// Create window with graphics context
+		const auto& app = Application::GetInstance();
 		m_Window = static_cast<GLFWwindow*>( app.GetWindow().GetNativeWindow() );
-
-		// Setup Dear ImGui Context
+		glfwMakeContextCurrent( m_Window );
+		
+		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO();
-		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
-		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
-
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+	
 		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();
 		//ImGui::StyleColorsLight();
 
+			// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+		ImGuiStyle& style = ImGui::GetStyle();
+		if ( io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable )
+		{
+			style.WindowRounding = 0.0f;
+			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+		}
+
 		// Setup Platform/Renderer backends
-		ImGui_ImplOpenGL3_Init( "#version 130" );
-
-		s_MouseInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnMousePressedImpl ), MouseInput::Type::IsPressed );
-		s_MouseInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnMouseReleasedImpl ), MouseInput::Type::IsReleased );
-		s_MouseInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnMouseScrolledImpl ), MouseInput::Type::IsScrolled );
-		s_MouseInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnMouseMovedImpl ), MouseInput::Type::IsMoved );
-
-		s_KeyboardInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnKeyPressedImpl ), KeyInput::Type::IsPressed );
-		s_KeyboardInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnKeyReleasedImpl ), KeyInput::Type::IsReleased );
-		s_KeyboardInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnKeyTypedImpl ), KeyInput::Type::IsTyped );
-
-		s_WindowInput.AttachCallback( BIND_EVENT_FUNC( ImGuiLevel::OnWindowResizedImpl ), WindowInput::Type::IsResized );
+		ImGui_ImplGlfw_InitForOpenGL( m_Window, true );
+		ImGui_ImplOpenGL3_Init( glsl_version );
 	}
 
-	void ImGuiLevel::Destroy()
+	void ImGuiLevel::CleanupImGui()
 	{
 		// Cleanup
 		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
 	}
 

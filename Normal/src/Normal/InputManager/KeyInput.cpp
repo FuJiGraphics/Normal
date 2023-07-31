@@ -14,13 +14,13 @@ namespace Normal {
 
 	KeyInput::KeyInput()
 	{
-		// Empty
+		NR_CORE_INFO_CTOR;
 	}
 
 
 	KeyInput::~KeyInput()
 	{
-		// Empty
+		NR_CORE_INFO_DTOR;
 	}
 
 	void KeyInput::AttachCallback( KeyboardCallbackFn pFunc, Type type )

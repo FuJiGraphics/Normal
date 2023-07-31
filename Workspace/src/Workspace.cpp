@@ -18,11 +18,6 @@ namespace Normal {
 			}
 		};
 
-		virtual void OnRender() 
-		{
-		
-		};
-
 	private:
 
 	};
@@ -32,9 +27,6 @@ namespace Normal {
 	public:
 		Workspace()
 		{
-			super::AttachOverlay( new ImGuiLevel );
-			super::AttachLevel( new ExampleLevel );
-
 		}
 		~Workspace()
 		{

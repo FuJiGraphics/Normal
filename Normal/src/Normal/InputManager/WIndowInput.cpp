@@ -8,12 +8,12 @@ namespace Normal {
 
 	WindowInput::WindowInput()
 	{
-		// Empty
+		NR_CORE_INFO_CTOR;
 	}
 
 	WindowInput::~WindowInput()
 	{
-		// Empty
+		NR_CORE_INFO_DTOR;
 	}
 
 	void WindowInput::AttachCallback( WindowCallbackFn pFunc, Type type )

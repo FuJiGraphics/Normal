@@ -25,6 +25,8 @@ namespace Normal {
 	protected:
 		InputManager( const InputManager& ) = delete;
 		void operator=( const InputManager& ) = delete;
+
+		NR_SET_NAME( "InputManager" );
 	};
 
 } // namespace Normal

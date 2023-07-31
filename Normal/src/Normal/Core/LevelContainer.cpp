@@ -8,7 +8,9 @@ namespace Normal {
 	LevelContainer::LevelContainer()
 		: m_Container()
 		, m_InsertIndex( 0 )
-	{ }
+	{
+		NR_CORE_INFO_CTOR;
+	}
 
 	LevelContainer::~LevelContainer()
 	{
@@ -20,10 +22,10 @@ namespace Normal {
 				delete level;
 			}
 		}
-		NR_CORE_INFO( "[{0}] Successfully deallocate Memory.", NR_GET_NAME );
+		NR_CORE_INFO_DTOR;
 	}
 
-	bool LevelContainer::PushLevel( Level* pLevel )
+	bool LevelContainer::InsertLevel( Level* pLevel )
 	{
 		NR_CORE_ASSERT( pLevel, "Unexpected Error : Failed to called a emplace" );
 
@@ -37,7 +39,7 @@ namespace Normal {
 		return false;
 	}
 
-	bool LevelContainer::PushOverlay( Level* pOverlay )
+	bool LevelContainer::InsertOverlay( Level* pOverlay )
 	{
 		NR_CORE_ASSERT( pOverlay, "Unexpected Error : Failed to called a emplace_back" );
 		
@@ -50,7 +52,7 @@ namespace Normal {
 		return false;
 	}
 
-	bool LevelContainer::PopLevel( Level* pLevel )
+	bool LevelContainer::RemoveLevel( Level* pLevel )
 	{
 		NR_CORE_ASSERT( pLevel, "Unexpected Error : Failed to called a PopLevel" );
 		
@@ -64,7 +66,7 @@ namespace Normal {
 		return false;
 	}
 
-	bool LevelContainer::PopOverlay( Level* pOverlay )
+	bool LevelContainer::RemoveOverlay( Level* pOverlay )
 	{
 		NR_CORE_ASSERT( pOverlay, "Unexpected Error : Failed to called a PopOverlay" );
 		
@@ -80,7 +82,7 @@ namespace Normal {
 	LevelContainer::iter LevelContainer::FindLevel( Level* pLevel )
 	{
 		return std::find_if( m_Container.begin(), m_Container.end(),
-							[pLevel]( Level* pTarget ) 
+							[pLevel]( Level* pTarget )
 							{
 								return pLevel == pTarget;
 							} );

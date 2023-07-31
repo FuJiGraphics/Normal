@@ -11,6 +11,8 @@ Log::Patterns Log::s_CurrentPattern;
 
 void Log::init()
 {
+	if ( s_Initialized ) return;
+	s_Initialized = true;
 	// spdlog::set_default_logger( s_CoreLogger );
 	spdlog::set_pattern( "%^[%T] %n: %v%$" );
 	s_CurrentPattern = Patterns::Simple;
@@ -20,7 +22,6 @@ void Log::init()
 
 	s_ClientLogger = spdlog::stdout_color_mt( "APP" );
 	s_ClientLogger->set_level( spdlog::level::trace );
-	 
 }
 
 void Log::setPattern( Patterns p )
