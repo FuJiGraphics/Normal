@@ -179,7 +179,9 @@ namespace Normal {
 											callback( releasedEvent );
 											return;
 										} break;
-										case GLFW_PRESS: case GLFW_REPEAT:
+
+										case GLFW_PRESS: [[fallthrough]];
+										case GLFW_REPEAT:
 										{
 											// NR_CORE_TRACE( "Called a glfwSetKeyCallback Press || Repeat." );
 											++repeatCount;

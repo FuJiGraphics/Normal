@@ -1,25 +1,35 @@
 #include <NormalEngine.h>
 
+#include <imgui.h>
+
 namespace Normal {
 
 	class ExampleLevel : public Level
 	{
 	public:
-		ExampleLevel() {}
-		~ExampleLevel() {}
-
-		virtual void OnUpdate( float deltaTime ) 
+		ExampleLevel() 
 		{
-			auto& keyInput = KeyInput::GetInstance();
+			NR_CLIENT_INFO_CTOR_N( super::GetLevelCount() );
+		}
+		~ExampleLevel() 
+		{
+			NR_CLIENT_INFO_DTOR_N( super::GetLevelCount() );
+		}
 
-			if ( keyInput.IsKeyPreesed( NR_KEY_T ) )
-			{
-				NR_CLIENT_TRACE( "Pressed Key = {0}", (char)NR_KEY_T );
-			}
-		};
+		virtual void OnUpdate( float deltaTime ) override
+		{
+			
+		}
+
+		virtual void OnGuiRender() override
+		{
+			ImGui::Begin( "test" );
+			ImGui::Text( "te" );
+			ImGui::End();
+		}
 
 	private:
-
+		NR_SET_NAME( "Example Level" );
 	};
 
 	class Workspace : public Application
@@ -27,6 +37,7 @@ namespace Normal {
 	public:
 		Workspace()
 		{
+			super::AttachOverlay( new ExampleLevel() );
 		}
 		~Workspace()
 		{

@@ -90,8 +90,11 @@ private:
     Log::setPattern( Log::Patterns::Line ); \
     SPDLOG_LOGGER_CALL( Normal::Log::GetCoreLoger(), spdlog::level::critical, __VA_ARGS__);
 
+// This macro should be defined to use NR_SET_NAME
 #define NR_CORE_INFO_CTOR NR_CORE_INFO("[{0}] Successfully Allocated Memory.", NR_GET_NAME);
 #define NR_CORE_INFO_DTOR NR_CORE_ERROR("[{0}] Successfully Deallocated Memory.", NR_GET_NAME);
+#define NR_CORE_INFO_CTOR_N(x) NR_CORE_INFO("[{0}:{1}] Successfully Allocated Memory.", NR_GET_NAME, x);
+#define NR_CORE_INFO_DTOR_N(x) NR_CORE_ERROR("[{0}:{1}] Successfully Deallocated Memory.", NR_GET_NAME, x);
 
 #pragma endregion 
 
@@ -145,8 +148,11 @@ private:
     Log::setPattern( Log::Patterns::Line ); \
     SPDLOG_LOGGER_CALL( Normal::Log::GetClientLoger(), spdlog::level::critical, __VA_ARGS__);
 
+// This macro should be defined to use NR_SET_NAME
 #define NR_CLIENT_INFO_CTOR NR_CLIENT_INFO("[{0}] Successfully Allocated Memory.", NR_GET_NAME);
 #define NR_CLIENT_INFO_DTOR NR_CLIENT_ERROR("[{0}] Successfully Deallocated Memory.", NR_GET_NAME);
+#define NR_CLIENT_INFO_CTOR_N(x) NR_CLIENT_INFO("[{0}:{1}] Successfully Allocated Memory.", NR_GET_NAME, x);
+#define NR_CLIENT_INFO_DTOR_N(x) NR_CLIENT_ERROR("[{0}:{1}] Successfully Deallocated Memory.", NR_GET_NAME, x);
 
 #pragma endregion 
 

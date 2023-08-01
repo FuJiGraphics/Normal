@@ -20,7 +20,7 @@ namespace Normal {
 	class NORMAL_API Application
 	{
 	protected:
-		typedef Application super;
+		using super = Application;
 
 	public:
 		Application();

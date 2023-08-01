@@ -11,9 +11,12 @@ namespace Normal {
 
 	class NORMAL_API Level
 	{
+	protected:
+		using super = Level;
+
 	public:
-		Level() { }
-		virtual ~Level() { }
+		Level() { ++s_NumOfLevels; }
+		virtual ~Level() { --s_NumOfLevels ; }
 
 		virtual void OnAttach() {};
 		virtual void OnDetach() {};
@@ -29,7 +32,10 @@ namespace Normal {
 		inline static MouseInput& s_MouseInput = MouseInput::GetInstance();
 		inline static KeyInput& s_KeyboardInput = KeyInput::GetInstance();
 
+		inline static uint32 GetLevelCount() { return s_NumOfLevels; }
+
 	private:
+		inline static int s_NumOfLevels = 0;
 		NR_SET_NAME( "Level" );
 	};
 

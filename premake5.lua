@@ -68,7 +68,8 @@ project "Normal"
     {
         "NR_PLATFORM_WINDOWS",
         "NR_BUILD_DLL",
-        "GLFW_INCLUDE_NONE" -- Does not include OpenGL header.
+        "GLFW_INCLUDE_NONE", -- Does not include OpenGL header.
+        "IMGUI_API=__declspec(dllexport)"
     }
 
     postbuildcommands
@@ -109,6 +110,7 @@ project "Workspace"
     includedirs
     {
         "Normal/vendor/spdlog/include",
+        "%{IncludeDir.Imgui}",
         "%{IncludeDir.GLM}",
         "Normal/src"
     }
