@@ -25,8 +25,11 @@ include "Normal/vendor/imgui"
 
 project "Normal"
     location "Normal"
-    kind "SharedLib"
+    kind "StaticLib"
     language "C++"
+    cppdialect "C++20"
+    staticruntime "on"
+    systemversion "latest" -- If this version is not defined, automatically define a Windows 8 version.  
 
     targetdir ("bin/"..outputDir.."/%{prj.name}")
     objdir ("bin-int/"..outputDir.."/%{prj.name}")
@@ -59,9 +62,6 @@ project "Normal"
     }
 
     filter "system:Windows"
-        cppdialect "C++20"
-        staticruntime "Off"
-        systemversion "latest" -- If this version is not defined, automatically define a Windows 8 version.  
 
 
     defines
@@ -69,7 +69,6 @@ project "Normal"
         "NR_PLATFORM_WINDOWS",
         "NR_BUILD_DLL",
         "GLFW_INCLUDE_NONE", -- Does not include OpenGL header.
-        "IMGUI_API=__declspec(dllexport)"
     }
 
     postbuildcommands
@@ -92,11 +91,13 @@ project "Normal"
         runtime "Release"
         optimize "On"
 
-
 project "Workspace"
     location "Workspace"
     kind "ConsoleApp"
     language "C++"
+    cppdialect "C++20"
+    staticruntime "on"
+    systemversion "latest"
 
     targetdir ("bin/"..outputDir.."/%{prj.name}")
     objdir ("bin-int/"..outputDir.."/%{prj.name}")
@@ -119,12 +120,7 @@ project "Workspace"
     {
         "Normal"
     }
-
-    filter "system:Windows"
-        cppdialect "C++20"
-        staticruntime "Off"
-        systemversion "latest" -- If this version is not defined, automatically define a Windows 8 version.  
-
+    
     defines
     {
         "NR_PLATFORM_WINDOWS"
