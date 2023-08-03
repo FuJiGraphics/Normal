@@ -3,7 +3,10 @@
 
 struct GLFWwindow;
 
+
 namespace Normal {
+
+	class RenderContext;
 
 	class NORMAL_API WindowsWindow : public Window
 	{
@@ -29,21 +32,22 @@ namespace Normal {
 		void SetCallbacks() const;
 
 	private:
-		bool m_GLFWinitialized   = false;
-		GLFWwindow* m_Window     = nullptr;
-
-	private:
-		struct WindowData
-		{
+		struct WindowData {
 			std::string Title;
 			uint32 Width;
 			uint32 Height;
 			bool VSync;
-
 			std::vector<EventCallbackFn> Callbacks;
 		};
 
 		WindowData m_Data;
+
+	private:
+		bool m_GLFWinitialized = false;
+		GLFWwindow* m_Window = nullptr;
+
+	private:
+		std::unique_ptr<RenderContext> m_RenderContext;
 
 		NR_SET_NAME( "WindowsWindow" );
 	};

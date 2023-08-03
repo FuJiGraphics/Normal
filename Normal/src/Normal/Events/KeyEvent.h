@@ -24,10 +24,10 @@ protected:
 class NORMAL_API KeyPressedEvent : public KeyEvent
 {
 public:
-	KeyPressedEvent( int keycode, int repeatCount = 0 )
+	KeyPressedEvent( int keycode, uint64 repeatCount = 0 )
 		: KeyEvent( keycode ), m_RepeatCount( repeatCount ) {}
 
-	inline int GetRepeatCount() const { return m_RepeatCount; }
+	inline uint64 GetRepeatCount() const { return m_RepeatCount; }
 
 	std::string ToString() const override
 	{

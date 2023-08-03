@@ -6,8 +6,11 @@
 #include "Normal/Events/MouseEvent.h"
 #include "Normal/Events/ApplicationEvent.h"
 
-#include <glad/glad.h>
+#include "Platform/OpenGL/OpenGLContext.h"
+#include "Normal/Renderer/RenderContext.h"
+
 #include <GLFW\glfw3.h>
+
 
 namespace Normal {
 	// static function from Window.h
@@ -17,7 +20,7 @@ namespace Normal {
 	}
 
 	WindowsWindow::WindowsWindow( const WindowProps& props )
-		: m_Data()
+		: m_Data{}
 	{
 		Initialize( props );
 		NR_CORE_INFO_CTOR;
@@ -34,7 +37,7 @@ namespace Normal {
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers( m_Window );
+		m_RenderContext->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync( bool enabled )
@@ -67,12 +70,13 @@ namespace Normal {
 			NR_CLIENT_ASSERT( success, "Failed to GLFW initialized." );
 		}
 
+		// Set Window
 		m_Window = glfwCreateWindow( Width, Height, Title.c_str(), NULL, NULL );
-		glfwMakeContextCurrent( m_Window );
 		glfwSetWindowUserPointer( m_Window, &m_Data );
 
-		uint8 status = gladLoadGLLoader( GLADloadproc( glfwGetProcAddress ) );
-		NR_CORE_ASSERT( status, "Failed to load Glad extenstion. " );
+		// Set Rendering Context
+		m_RenderContext = std::make_unique<OpenGLContext>( m_Window );
+		m_RenderContext->InitContext();
 
 		SetVSync( VSync );
 		SetCallbacks();
@@ -117,7 +121,7 @@ namespace Normal {
 								  []( GLFWwindow* window, double xpos, double ypos ) {
 									  WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
 									  
-									  MouseMovedEvent event( xpos, ypos );
+									  MouseMovedEvent event( (float)xpos, (float)ypos );
 									  for ( auto& callback : data.Callbacks )
 									  {
 										  callback( event );
@@ -152,7 +156,7 @@ namespace Normal {
 							   {
 								   WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
 								   
-								   MouseScrolledEvent event( xoffset, yoffset );
+								   MouseScrolledEvent event( (float)xoffset, (float)yoffset );
 								   for ( auto& callback : data.Callbacks )
 								   {
 									   callback( event );
@@ -167,7 +171,7 @@ namespace Normal {
 								static uint64 repeatCount = 0;
 						
 								KeyReleasedEvent releasedEvent( key );
-								KeyPressedEvent pressedEvent( key, repeatCount );
+								KeyPressedEvent pressedEvent( key, (uint32)repeatCount );
 								for ( auto& callback : data.Callbacks )
 								{
 									switch ( action )

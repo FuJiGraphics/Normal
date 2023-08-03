@@ -80,7 +80,7 @@ namespace Normal {
 		int type = static_cast<int>( Type::IsPressed );
 		if ( m_Callbacks[type] != nullptr )
 		{
-			m_Callbacks[type]( { event.GetKeyCode(), event.GetRepeatCount() } );
+			m_Callbacks[type]( { event.GetKeyCode(), (int)event.GetRepeatCount() } );
 			return false;
 		}
 		return false;

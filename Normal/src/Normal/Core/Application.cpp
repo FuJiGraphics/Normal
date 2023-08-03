@@ -35,20 +35,23 @@ namespace Normal {
 	{
 		while ( m_Running )
 		{
+			// Update a Window and Renderer
 			m_Window->OnUpdate();
 			
+			// Start update a Level and Overlays
 			for ( auto level : *m_LevelContainer )
 			{
 				level->OnUpdate( 0 );
 			}
 
+			// -- ImGui Start --
 			m_ImGuiLevel->BeginFrame();
 			for ( auto level : *m_LevelContainer )
 			{
 				level->OnGuiRender();
 			}
 			m_ImGuiLevel->EndFrame();
-
+			// -- ImGui End --
 		}
 	}
 
