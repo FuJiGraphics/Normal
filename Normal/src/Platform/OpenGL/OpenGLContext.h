@@ -14,6 +14,9 @@ namespace Normal {
 		virtual void InitContext() override;
 		virtual void SwapBuffers() override;
 
+	protected:
+		void ShowRendererProps() const;
+
 	private:
 		GLFWwindow* m_Window;
 

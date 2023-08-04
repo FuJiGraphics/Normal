@@ -57,6 +57,9 @@ namespace Normal {
 		std::unique_ptr<Window> m_Window;
 		std::unique_ptr<LevelContainer> m_LevelContainer;
 
+		uint32 m_VertexBufferObject;
+		uint32 m_IndexBufferObject;
+
 		NR_SET_NAME( "Application" );
 	};
 

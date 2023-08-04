@@ -1,6 +1,7 @@
 #include "Nrpch.h"
 #include "Application.h"
 
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include "Window.h"
@@ -35,9 +36,11 @@ namespace Normal {
 	{
 		while ( m_Running )
 		{
-			// Update a Window and Renderer
-			m_Window->OnUpdate();
-			
+			glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
+			glClear( GL_COLOR_BUFFER_BIT );
+
+			glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0 );
+
 			// Start update a Level and Overlays
 			for ( auto level : *m_LevelContainer )
 			{
@@ -52,6 +55,9 @@ namespace Normal {
 			}
 			m_ImGuiLevel->EndFrame();
 			// -- ImGui End --
+
+			// Update a Window and Renderer
+			m_Window->OnUpdate();
 		}
 	}
 
@@ -113,6 +119,31 @@ namespace Normal {
 
 		s_WindowInput.AttachCallback( BIND_EVENT_FUNC( Application::OnWindowClose ), 
 									  WindowInput::Type::IsClosed );
+
+		float vertices[3 * 3] = {
+			-0.5f, -0.5f, 0.0f,
+			+0.5f, -0.5f, 0.0f,
+			+0.0f, +0.5f, 0.0f,
+		};
+
+		uint32 indices[3] = { 0, 1, 2 };
+
+		// Vertex Array
+		glGenBuffers( 1, &m_VertexBufferObject );
+		glBindBuffer( GL_ARRAY_BUFFER, m_VertexBufferObject );
+		
+		glBufferData( GL_ARRAY_BUFFER, sizeof( vertices ), vertices, GL_STATIC_DRAW );
+
+		glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( float ), (void*)0 );
+		glEnableVertexAttribArray( 0 );
+
+		// Index Buffer
+		glGenBuffers( 1, &m_IndexBufferObject );
+		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_IndexBufferObject );
+
+		glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( indices ), indices, GL_STATIC_DRAW );
+
+		// Shader
 	}
 
 	void Application::Destroy()
