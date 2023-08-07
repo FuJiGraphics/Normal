@@ -12,6 +12,7 @@
 #include "Normal/InputManager/WindowInput.h"
 
 #include "Normal/ImGui/ImGuiLevel.h"
+#include "Normal/Renderer/Shader.h"
 
 namespace Normal {
 
@@ -126,7 +127,7 @@ namespace Normal {
 			+0.0f, +0.5f, 0.0f,
 		};
 
-		uint32 indices[3] = { 0, 1, 2 };
+		NRuint indices[3] = { 0, 1, 2 };
 
 		// Vertex Array
 		glGenBuffers( 1, &m_VertexBufferObject );
@@ -144,6 +145,33 @@ namespace Normal {
 		glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( indices ), indices, GL_STATIC_DRAW );
 
 		// Shader
+		std::string vertexShader = R"(
+		#version 330 core
+		layout (location = 0) in vec3 aPos;
+		
+		out vec4 vertexColor;
+		
+		void main()
+		{
+			gl_Position = vec4(aPos, 1.0);
+			vertexColor = vec4(0.3, 0.3, 0.7, 1.0);
+		}		
+		)";
+
+		std::string fragmentShader = R"(
+		#version 330 core
+		out vec4 FragColor;
+
+		in vec4 vertexColor;
+		void main()
+		{
+			FragColor = vertexColor;
+		}
+		)";
+
+		m_Shader = std::make_unique<Shader>( vertexShader, fragmentShader );
+		m_Shader->Bind();
+
 	}
 
 	void Application::Destroy()

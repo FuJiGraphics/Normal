@@ -14,6 +14,7 @@ namespace Normal {
 	class LevelContainer;
 	class Event;
 	class WindowInput;
+	class Shader;
 	struct WindowInputData;
 #pragma endregion
 
@@ -57,8 +58,10 @@ namespace Normal {
 		std::unique_ptr<Window> m_Window;
 		std::unique_ptr<LevelContainer> m_LevelContainer;
 
-		uint32 m_VertexBufferObject;
-		uint32 m_IndexBufferObject;
+		NRuint m_VertexBufferObject;
+		NRuint m_IndexBufferObject;
+
+		std::unique_ptr<Shader> m_Shader;
 
 		NR_SET_NAME( "Application" );
 	};

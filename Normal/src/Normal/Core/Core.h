@@ -59,42 +59,51 @@ namespace Normal {
 #define UINT64_MAX       0xffffffffffffffffui64
 
 #ifdef NR_PLATFORM_WINDOWS
-	
+	using NRfloat  = float;
+	using NRdouble = double;
+	using NRuchar  = unsigned char;
+	using NRchar   = char;
+
 	// unsigned integer [1byte], range of expression [0~255]
-	typedef unsigned __int8   uint8;
+	using NRuint8  = unsigned __int8;
 	// unsigned integer [2byte], range of expression [0 ~ 65535]
-	typedef unsigned __int16  uint16;
+	using NRuint16 = unsigned __int16;
 	// unsigned integer [4byte], range of expression [0 ~ 4294967295]
-	typedef unsigned __int32  uint32;
+	using NRuint   = unsigned __int32;
 	// unsigned integer [8byte], range of expression [0 ~ 18446744073709551615]
-	typedef unsigned __int64  uint64;
+	using NRuint64 = unsigned __int64;
 	
 	// signed integer [1byte], range of expression [-128 ~ 127]
-	typedef __int8    int8;
+	using NRint8  = __int8;
 	// signed integer [2byte], range of expression [-32,768 ~ 32,767]
-	typedef __int16   int16;
+	using NRint16 = __int16;
 	// signed integer [4byte], range of expression [-2,147,483,648 ~ 2,147,483,647]
-	typedef __int32   int32;
+	using NRint   = __int32;
 	// signed integer [8byte], range of expression [-9,223,372,036,854,775,808 ~ 9,223,372,036,854,775,807]
-	typedef __int64   int64;
+	using NRint64 = __int64;
 #else
+	using NRfloat  = float;
+	using NRdouble = double;
+	using NRuchar  = unsigned char;
+	using NRchar   = char;
+
 	// unsigned integer [1byte], range of expression [0~255]
-	typedef unsigned char       uint8;
+	using NRuint8  = unsigned char;
 	// unsigned integer [2byte], range of expression [0 ~ 65535]
-	typedef unsigned short      uint16;
+	using NRuint16 = unsigned short;
 	// unsigned integer [4byte], range of expression [0 ~ 4294967295]
-	typedef unsigned long       uint32;
+	using NRuint   = unsigned long;
 	// unsigned integer [8byte], range of expression [0 ~ 18446744073709551615]
-	typedef unsigned long long  uint64;
+	using NRuint64 = unsigned long long;
 
 	// signed integer [8byte], range of expression [-128 ~ 127]
-	typedef signed char      int8;
+	using NRint8  = signed char;    
 	// signed integer [8byte], range of expression [-32,768 ~ 32,767]
-	typedef short            int16;
+	using NRint16 = short;         
 	// signed integer [8byte], range of expression [-2,147,483,648 ~ 2,147,483,647]
-	typedef long             int32;
+	using NRint32 = long;           
 	// signed integer [8byte], range of expression [-9,223,372,036,854,775,808 ~ 9,223,372,036,854,775,807]
-	typedef long long        int64;
+	using NRint64 = long long;    
 #endif
 
 } // namespace Normal

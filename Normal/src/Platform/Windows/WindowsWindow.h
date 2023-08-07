@@ -34,8 +34,8 @@ namespace Normal {
 	private:
 		struct WindowData {
 			std::string Title;
-			uint32 Width;
-			uint32 Height;
+			NRuint Width;
+			NRuint Height;
 			bool VSync;
 			std::vector<EventCallbackFn> Callbacks;
 		};

@@ -168,10 +168,10 @@ namespace Normal {
 							[]( GLFWwindow* window, int key, int scancode, int action, int mods )
 							{
 								WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
-								static uint64 repeatCount = 0;
+								static NRuint64 repeatCount = 0;
 						
 								KeyReleasedEvent releasedEvent( key );
-								KeyPressedEvent pressedEvent( key, (uint32)repeatCount );
+								KeyPressedEvent pressedEvent( key, (NRuint)repeatCount );
 								for ( auto& callback : data.Callbacks )
 								{
 									switch ( action )

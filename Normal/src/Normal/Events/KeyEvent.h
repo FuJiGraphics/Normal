@@ -24,10 +24,10 @@ protected:
 class NORMAL_API KeyPressedEvent : public KeyEvent
 {
 public:
-	KeyPressedEvent( int keycode, uint64 repeatCount = 0 )
+	KeyPressedEvent( int keycode, NRuint64 repeatCount = 0 )
 		: KeyEvent( keycode ), m_RepeatCount( repeatCount ) {}
 
-	inline uint64 GetRepeatCount() const { return m_RepeatCount; }
+	inline NRuint64 GetRepeatCount() const { return m_RepeatCount; }
 
 	std::string ToString() const override
 	{
@@ -38,7 +38,7 @@ public:
 
 	EVENT_CLASS_TYPE( KeyPressed )
 private:
-	uint64 m_RepeatCount;
+	NRuint64 m_RepeatCount;
 };
 
 class NORMAL_API KeyReleasedEvent : public KeyEvent

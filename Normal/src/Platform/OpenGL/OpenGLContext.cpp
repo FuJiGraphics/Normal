@@ -22,7 +22,7 @@ namespace Normal {
 	void OpenGLContext::InitContext()
 	{
 		glfwMakeContextCurrent( m_Window );
-		uint8 status = gladLoadGLLoader( GLADloadproc( glfwGetProcAddress ) );
+		NRint status = gladLoadGLLoader( GLADloadproc( glfwGetProcAddress ) );
 		NR_CORE_ASSERT( status, "Failed to load Glad extenstion. " );
 
 		ShowRendererProps();

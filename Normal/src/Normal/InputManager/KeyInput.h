@@ -41,7 +41,7 @@ namespace Normal {
 		void DetachCallback( Type type );
 
 		// Polling Keycode 
-		bool IsKeyPreesed( uint32 keycode ) const;
+		bool IsKeyPreesed( NRuint keycode ) const;
 		bool IsKeyPreesed( char keycode ) const;
 
 		virtual void OnEvent( Event& event ) override;

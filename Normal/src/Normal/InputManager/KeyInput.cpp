@@ -37,7 +37,7 @@ namespace Normal {
 		m_Callbacks[indices] = nullptr;
 	}
 
-	bool KeyInput::IsKeyPreesed( uint32 keycode ) const
+	bool KeyInput::IsKeyPreesed( NRuint keycode ) const
 	{
 		auto& app = Application::GetInstance();
 		auto nativeWindow = static_cast<GLFWwindow*>( app.GetWindow().GetNativeWindow() );
@@ -48,7 +48,7 @@ namespace Normal {
 
 	bool KeyInput::IsKeyPreesed( char keycode ) const
 	{
-		return IsKeyPreesed( static_cast<uint32>( keycode ) );
+		return IsKeyPreesed( static_cast<NRuint>( keycode ) );
 	}
 
 	void KeyInput::OnEvent( Normal::Event& event )

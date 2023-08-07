@@ -32,7 +32,7 @@ namespace Normal {
 		inline static MouseInput& s_MouseInput = MouseInput::GetInstance();
 		inline static KeyInput& s_KeyboardInput = KeyInput::GetInstance();
 
-		inline static uint32 GetLevelCount() { return s_NumOfLevels; }
+		inline static NRuint GetLevelCount() { return s_NumOfLevels; }
 
 	private:
 		inline static int s_NumOfLevels = 0;
