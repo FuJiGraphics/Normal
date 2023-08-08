@@ -1,9 +1,9 @@
 #include "Nrpch.h"
 #include "MouseInput.h"
 
-#include "Normal/Events/Event.h"
-#include "Normal/Events/MouseEvent.h"
-#include "Normal/Events/ApplicationEvent.h"
+#include <Normal/Events/Event.h>
+#include <Normal/Events/MouseEvent.h>
+#include <Normal/Events/ApplicationEvent.h>
 
 namespace Normal {
 

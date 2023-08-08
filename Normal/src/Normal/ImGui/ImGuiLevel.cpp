@@ -1,15 +1,15 @@
 #include "Nrpch.h"
 #include "ImGuiLevel.h"
 
-#include "Normal/Core/Application.h"
-#include "Normal/Core/Window.h"
+#include <Normal/Core/Application.h>
+#include <Normal/Core/Window.h>
 
 #include <imgui.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "backends/imgui_impl_opengl3.h"
-#include "backends/imgui_impl_glfw.h"
+#include <backends/imgui_impl_opengl3.h>
+#include <backends/imgui_impl_glfw.h>
 
 namespace Normal {
 

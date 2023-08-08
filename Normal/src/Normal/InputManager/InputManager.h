@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Normal/Core/Core.h"
+#include <Normal/Core/Core.h>
 
 namespace Normal {
 

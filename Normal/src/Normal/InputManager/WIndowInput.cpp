@@ -1,8 +1,8 @@
 #include "Nrpch.h"
 #include "WindowInput.h"
 
-#include "Normal/Events/Event.h"
-#include "Normal/Events/ApplicationEvent.h"
+#include <Normal/Events/Event.h>
+#include <Normal/Events/ApplicationEvent.h>
 
 namespace Normal {
 

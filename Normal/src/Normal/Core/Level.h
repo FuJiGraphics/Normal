@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Core.h"
-#include "Normal/Events/Event.h"
 
-#include "Normal/InputManager/WindowInput.h"
-#include "Normal/InputManager/MouseInput.h"
-#include "Normal/InputManager/KeyInput.h"
+#include <Normal/Events/Event.h>
+
+#include <Normal/InputManager/WindowInput.h>
+#include <Normal/InputManager/MouseInput.h>
+#include <Normal/InputManager/KeyInput.h>
 
 namespace Normal {
 

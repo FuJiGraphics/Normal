@@ -1,20 +1,19 @@
 #include "Nrpch.h"
 #include "Application.h"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include "Window.h"
 #include "Level.h"
 #include "LevelContainer.h"
 
-#include "Normal/Events/Event.h"
-#include "Normal/InputManager/WindowInput.h"
+#include <glad/glad.h>
 
-#include "Normal/ImGui/ImGuiLevel.h"
+#include <Normal/Events/Event.h>
+#include <Normal/InputManager/WindowInput.h>
 
-#include "Normal/Renderer/Buffer.h"
-#include "Normal/Renderer/Shader.h"
+#include <Normal/ImGui/ImGuiLevel.h>
+
+#include <Normal/Renderer/Buffer.h>
+#include <Normal/Renderer/Shader.h>
 
 namespace Normal {
 

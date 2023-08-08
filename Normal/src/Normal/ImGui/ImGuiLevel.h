@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Normal/Core/Core.h"
-#include "Normal/Core/Level.h"
+#include <Normal/Core/Core.h>
+#include <Normal/Core/Level.h>
 
 struct GLFWwindow;
 

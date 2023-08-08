@@ -2,13 +2,14 @@
 #include "KeyInput.h"
 
 #include <GLFW/glfw3.h>
-#include "Normal/Core/Window.h"
-#include "Normal/Core/Application.h"
 
-#include "Normal/Core/Window.h"
+#include <Normal/Core/Window.h>
+#include <Normal/Core/Application.h>
 
-#include "Normal/Events/Event.h"
-#include "Normal/Events/KeyEvent.h"
+#include <Normal/Core/Window.h>
+
+#include <Normal/Events/Event.h>
+#include <Normal/Events/KeyEvent.h>
 
 namespace Normal {
 

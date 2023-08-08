@@ -2,7 +2,7 @@
 
 // Code Reference By https://github.com/TheCherno/Hazel.git
 
-#include "Normal/Core/Core.h"
+#include <Normal/Core/Core.h>
 
 #include <string>
 #include <functional>
