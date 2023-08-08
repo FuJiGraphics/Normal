@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Normal/Core/Core.h>
-#include <vector>
 
 namespace Normal {
 
