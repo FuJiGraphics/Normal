@@ -17,9 +17,10 @@ namespace Normal {
 	{
 		float width, height;
 	};
+
 	/* ------------------------------------------------------------------------------------------
-	* MouseInput class
-	* If you are using the Mouse class, you need to call the GetInstance() function first.
+	* WindowInput class
+	* If you are using the Window class, you need to call the GetInstance() function first.
 	* You need to periodically call the 'OnEvent' function, inserting the event argument first.
 	* Afterwards, you can bind each function for use with the 'AttachCallback()' function
 	* via the 'BIND_EVENT_FUNC' macro. 
@@ -34,7 +35,7 @@ namespace Normal {
 		using WindowCallbackFn = std::function<void( WindowInputData )>;
 
 	public:
-		WindowInput();
+		explicit WindowInput();
 		virtual ~WindowInput();
 
 		void AttachCallback( WindowCallbackFn pFunc, Type type );

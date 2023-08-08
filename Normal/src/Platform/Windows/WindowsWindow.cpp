@@ -6,7 +6,6 @@
 #include "Normal/Events/MouseEvent.h"
 #include "Normal/Events/ApplicationEvent.h"
 
-#include "Platform/OpenGL/OpenGLContext.h"
 #include "Normal/Renderer/RenderContext.h"
 
 #include <GLFW\glfw3.h>
@@ -75,7 +74,7 @@ namespace Normal {
 		glfwSetWindowUserPointer( m_Window, &m_Data );
 
 		// Set Rendering Context
-		m_RenderContext = std::make_unique<OpenGLContext>( m_Window );
+		m_RenderContext.reset( RenderContext::Create( m_Window ) );
 		m_RenderContext->InitContext();
 
 		SetVSync( VSync );
@@ -101,10 +100,7 @@ namespace Normal {
 									   data.Height = height;
 
 									   WindowResizeEvent event{ width, width };
-									   for ( auto& callback : data.Callbacks )
-									   {
-										   callback( event );
-									   }
+									   data.Callback( event );
 								   } );
 
 		glfwSetWindowCloseCallback( m_Window,
@@ -112,20 +108,14 @@ namespace Normal {
 										WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
 
 										WindowCloseEvent event;
-										for ( auto& callback : data.Callbacks )
-										{
-											callback( event );
-										}
+										data.Callback( event );
 									} );
 		glfwSetCursorPosCallback( m_Window,
 								  []( GLFWwindow* window, double xpos, double ypos ) {
 									  WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
 									  
 									  MouseMovedEvent event( (float)xpos, (float)ypos );
-									  for ( auto& callback : data.Callbacks )
-									  {
-										  callback( event );
-									  }
+									  data.Callback( event );
 								  } );
 		glfwSetMouseButtonCallback( m_Window,
 									[]( GLFWwindow* window, int button, int action, int mods ) {
@@ -136,18 +126,12 @@ namespace Normal {
 											case GLFW_PRESS:
 											{
 												MouseButtonPressedEvent event( button );
-												for ( auto& callback : data.Callbacks )
-												{
-													callback( event );
-												}
+												data.Callback( event );
 											} break;
 											case GLFW_RELEASE:
 											{
 												MouseButtonReleasedEvent event( button );
-												for ( auto& callback : data.Callbacks )
-												{
-													callback( event );
-												}
+												data.Callback( event );
 											} break;
 										}
 									} );
@@ -157,10 +141,7 @@ namespace Normal {
 								   WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
 								   
 								   MouseScrolledEvent event( (float)xoffset, (float)yoffset );
-								   for ( auto& callback : data.Callbacks )
-								   {
-									   callback( event );
-								   }
+								   data.Callback( event );
 							   } );
 
 
@@ -172,27 +153,24 @@ namespace Normal {
 						
 								KeyReleasedEvent releasedEvent( key );
 								KeyPressedEvent pressedEvent( key, (NRuint)repeatCount );
-								for ( auto& callback : data.Callbacks )
+								switch ( action )
 								{
-									switch ( action )
+									case GLFW_RELEASE:
 									{
-										case GLFW_RELEASE:
-										{
-											// NR_CORE_TRACE( "Called a glfwSetKeyCallback Release." );
-											repeatCount = 0;
-											callback( releasedEvent );
-											return;
-										} break;
+										// NR_CORE_TRACE( "Called a glfwSetKeyCallback Release." );
+										repeatCount = 0;
+										data.Callback( releasedEvent );
+										return;
+									} break;
 
-										case GLFW_PRESS: [[fallthrough]];
-										case GLFW_REPEAT:
-										{
-											// NR_CORE_TRACE( "Called a glfwSetKeyCallback Press || Repeat." );
-											++repeatCount;
-											callback( pressedEvent );
-											return;
-										} break;
-									}
+									case GLFW_PRESS: [[fallthrough]];
+									case GLFW_REPEAT:
+									{
+										// NR_CORE_TRACE( "Called a glfwSetKeyCallback Press || Repeat." );
+										++repeatCount;
+										data.Callback( pressedEvent );
+										return;
+									} break;
 								}
 							} );
 
@@ -202,10 +180,7 @@ namespace Normal {
 								 // NR_CORE_TRACE( "Called a glfwSetCharCallback" );
 								 WindowData& data = *(WindowData*)glfwGetWindowUserPointer( window );
 								 KeyTypedEvent pressedEvent( key );
-								 for ( auto& callback : data.Callbacks )
-								 {
-									 callback( pressedEvent );
-								 }
+								 data.Callback( pressedEvent );
 							 } );
 
 	} // namespace SetCallbacks

@@ -6,16 +6,17 @@ namespace Normal {
 
 	class NORMAL_API Shader
 	{
+	protected:
+		explicit Shader() = default;
 	public:
-		Shader( const std::string& vertexSrc, const std::string& fragmentSrc );
-		virtual ~Shader();
+		virtual ~Shader() = default;
 
-		void Bind();
-		void UnBind();
+	public:
+		virtual void Bind() const = 0;
+		virtual void UnBind() const = 0;
 
-	private:
-		NRuint m_RenderID;
+		static Shader* Create( const std::string& vertexSrc, const std::string& fragmentSrc );
 	};
 
 
-} // Normal
+} // namespace Normal

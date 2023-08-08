@@ -16,7 +16,7 @@ namespace Normal {
 
 	public:
 		Level() { ++s_NumOfLevels; }
-		virtual ~Level() { --s_NumOfLevels ; }
+		virtual ~Level() { --s_NumOfLevels; }
 
 		virtual void OnAttach() {};
 		virtual void OnDetach() {};
@@ -25,7 +25,7 @@ namespace Normal {
 		virtual void OnUpdate( float deltaTime ) {};
 		virtual void OnGuiRender() {};
 
-		virtual std::string GetName() const { return NR_GET_NAME; }
+		virtual std::string GetName() const { return std::string(); }
 
 	protected:
 		inline static WindowInput& s_WindowInput = WindowInput::GetInstance();
@@ -36,7 +36,6 @@ namespace Normal {
 
 	private:
 		inline static int s_NumOfLevels = 0;
-		NR_SET_NAME( "Level" );
 	};
 
 } // namespace Normal

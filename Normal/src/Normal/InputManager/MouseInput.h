@@ -37,7 +37,7 @@ namespace Normal {
 		using MouseCallbackFn = std::function<void( MouseInputData )>;
 
 	public:
-		MouseInput();
+		explicit MouseInput();
 		virtual ~MouseInput();
 
 		void AttachCallback( MouseCallbackFn pFunc, Type type );

@@ -62,8 +62,6 @@ namespace Normal {
 	{
 		if ( m_ShowDemoWindow )
 			ImGui::ShowDemoWindow();
-
-
 	}
 
 	void ImGuiLevel::CreateImGui()

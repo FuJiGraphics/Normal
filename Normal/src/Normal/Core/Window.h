@@ -29,8 +29,12 @@ namespace Normal {
 	public:
 		using EventCallbackFn = std::function<void( Event& )>;
 
-		virtual ~Window() {}
+	protected:
+		explicit Window() = default;
+	public:
+		virtual ~Window() = default;
 
+	public:
 		virtual void OnUpdate() = 0;
 		
 		virtual void* GetNativeWindow() const = 0;

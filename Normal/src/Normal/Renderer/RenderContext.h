@@ -7,17 +7,16 @@ namespace Normal {
 	class NORMAL_API RenderContext
 	{
 	protected:
-		using super = RenderContext;
+		explicit RenderContext() = default;
+	public:
+		virtual ~RenderContext() = default;
 
 	public:
-		RenderContext() {}
-		virtual ~RenderContext() {}
-
 		virtual void InitContext() = 0;
 		virtual void SwapBuffers() = 0;
 
-	private:
-		NR_SET_NAME( "RenderContext " );
+	    static RenderContext* Create( void* nativeWindow );
+
 	};
 
 } // namespace Normal

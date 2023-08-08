@@ -15,7 +15,12 @@ public:
         Line, Simple
     };
 
+protected:
+    explicit Log() = default;
+
 public:
+    virtual ~Log() = default;
+
 	static void init();
     static void setPattern( Patterns p );
 

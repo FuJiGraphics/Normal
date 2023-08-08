@@ -3,7 +3,6 @@
 
 struct GLFWwindow;
 
-
 namespace Normal {
 
 	class RenderContext;
@@ -11,9 +10,10 @@ namespace Normal {
 	class NORMAL_API WindowsWindow : public Window
 	{
 	public:
-		WindowsWindow( const WindowProps& props );
+		explicit WindowsWindow( const WindowProps& props );
 		virtual ~WindowsWindow();
 
+	public:
 		virtual void OnUpdate() override;
 
 		virtual inline void* GetNativeWindow() const override { return static_cast<void*>( m_Window ); }
@@ -22,7 +22,7 @@ namespace Normal {
 
 		// if you set many callback functions, maybe increase that overhead.
 		virtual inline void SetEventCallback( const EventCallbackFn& callback ) override
-		{ m_Data.Callbacks.push_back( callback ); }
+		{ m_Data.Callback = callback; }
 		virtual void SetVSync( bool enabled ) override;
 		virtual inline bool IsVSync() const override { return m_Data.VSync; }
 
@@ -37,7 +37,7 @@ namespace Normal {
 			NRuint Width;
 			NRuint Height;
 			bool VSync;
-			std::vector<EventCallbackFn> Callbacks;
+			EventCallbackFn Callback;
 		};
 
 		WindowData m_Data;

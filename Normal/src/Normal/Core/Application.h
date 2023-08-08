@@ -16,6 +16,9 @@ namespace Normal {
 	class WindowInput;
 	class Shader;
 	struct WindowInputData;
+
+	class VertexBuffer;
+	class IndexBuffer;
 #pragma endregion
 
 	class NORMAL_API Application
@@ -23,10 +26,12 @@ namespace Normal {
 	protected:
 		using super = Application;
 
+	protected:
+		explicit Application();
 	public:
-		Application();
 		virtual ~Application();
 
+	public:
 		void Run();
 		void OnEvent( Event& event );
 
@@ -58,9 +63,8 @@ namespace Normal {
 		std::unique_ptr<Window> m_Window;
 		std::unique_ptr<LevelContainer> m_LevelContainer;
 
-		NRuint m_VertexBufferObject;
-		NRuint m_IndexBufferObject;
-
+		std::shared_ptr<VertexBuffer> m_VertexBuffer;
+		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 		std::unique_ptr<Shader> m_Shader;
 
 		NR_SET_NAME( "Application" );

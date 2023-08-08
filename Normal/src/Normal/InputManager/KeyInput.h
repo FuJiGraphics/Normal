@@ -18,7 +18,7 @@ namespace Normal {
 
 	/* ------------------------------------------------------------------------------------------
 	* Keyboard Input class
-	* If you are using the Mouse class, you need to call the GetInstance() function first.
+	* If you are using the Keyboad class, you need to call the GetInstance() function first.
 	* You need to periodically call the 'OnEvent' function, inserting the event argument first.
 	* Afterwards, you can bind each function for use with the 'AttachCallback()' function
 	* via the 'BIND_EVENT_FUNC' macro. However, you must use a function that includes
@@ -34,7 +34,7 @@ namespace Normal {
 		using KeyboardCallbackFn = std::function<void( KeyInputData )>;
 
 	public:
-		KeyInput();
+		explicit KeyInput();
 		virtual ~KeyInput();
 
 		void AttachCallback( KeyboardCallbackFn pFunc, Type type );

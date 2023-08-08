@@ -10,10 +10,8 @@ namespace Normal {
 	class NORMAL_API ImGuiLevel : public Level
 	{
 	public:
-		ImGuiLevel();
+		explicit ImGuiLevel();
 		virtual ~ImGuiLevel();
-
-
 
 		void BeginFrame();
 		void EndFrame();

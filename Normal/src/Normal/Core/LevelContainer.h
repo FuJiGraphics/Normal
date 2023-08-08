@@ -13,7 +13,7 @@ namespace Normal {
 		using iter = std::vector< Level* >::iterator;
 
 	public:
-		LevelContainer();
+		explicit LevelContainer();
 		virtual ~LevelContainer();
 
 	private:
