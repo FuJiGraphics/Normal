@@ -58,50 +58,64 @@ namespace Normal {
 #define UINT32_MAX       0xffffffffui32
 #define UINT64_MAX       0xffffffffffffffffui64
 
+	enum NR_TYPES { NR_FLOAT, NR_DOUBLE, NR_UINT, NR_INT };
+
 #ifdef NR_PLATFORM_WINDOWS
+	using NRsizet  = unsigned long long;
+	using NRbool   = bool;
+	using NRenum   = unsigned int;
 	using NRfloat  = float;
 	using NRdouble = double;
 	using NRuchar  = unsigned char;
 	using NRchar   = char;
 
+	// unsigned integer [4byte], range of expression [0 ~ 4294967295]
+	using NRuint   = unsigned __int32;
 	// unsigned integer [1byte], range of expression [0~255]
 	using NRuint8  = unsigned __int8;
 	// unsigned integer [2byte], range of expression [0 ~ 65535]
 	using NRuint16 = unsigned __int16;
 	// unsigned integer [4byte], range of expression [0 ~ 4294967295]
-	using NRuint   = unsigned __int32;
+	using NRuint32 = unsigned __int32;
 	// unsigned integer [8byte], range of expression [0 ~ 18446744073709551615]
 	using NRuint64 = unsigned __int64;
-	
+
+	// signed integer [4byte], range of expression [-2,147,483,648 ~ 2,147,483,647]
+	using NRint   = __int32;
 	// signed integer [1byte], range of expression [-128 ~ 127]
 	using NRint8  = __int8;
 	// signed integer [2byte], range of expression [-32,768 ~ 32,767]
 	using NRint16 = __int16;
 	// signed integer [4byte], range of expression [-2,147,483,648 ~ 2,147,483,647]
-	using NRint   = __int32;
+	using NRint32 = __int32;
 	// signed integer [8byte], range of expression [-9,223,372,036,854,775,808 ~ 9,223,372,036,854,775,807]
 	using NRint64 = __int64;
 #else
+	using NRsizet  = unsigned long long;
+	using NRbool   = bool;
+	using NRenum   = unsigned int;
 	using NRfloat  = float;
 	using NRdouble = double;
 	using NRuchar  = unsigned char;
 	using NRchar   = char;
 
+	// unsigned integer [4byte], range of expression [0 ~ 4294967295]
+	using NRuint   = unsigned int;
 	// unsigned integer [1byte], range of expression [0~255]
 	using NRuint8  = unsigned char;
 	// unsigned integer [2byte], range of expression [0 ~ 65535]
 	using NRuint16 = unsigned short;
 	// unsigned integer [4byte], range of expression [0 ~ 4294967295]
-	using NRuint   = unsigned long;
+	using NRuint32 = unsigned int;
 	// unsigned integer [8byte], range of expression [0 ~ 18446744073709551615]
 	using NRuint64 = unsigned long long;
 
-	// signed integer [8byte], range of expression [-128 ~ 127]
+	// signed integer [1byte], range of expression [-128 ~ 127]
 	using NRint8  = signed char;    
-	// signed integer [8byte], range of expression [-32,768 ~ 32,767]
+	// signed integer [2byte], range of expression [-32,768 ~ 32,767]
 	using NRint16 = short;         
-	// signed integer [8byte], range of expression [-2,147,483,648 ~ 2,147,483,647]
-	using NRint32 = long;           
+	// signed integer [4byte], range of expression [-2,147,483,648 ~ 2,147,483,647]
+	using NRint32 = int;           
 	// signed integer [8byte], range of expression [-9,223,372,036,854,775,808 ~ 9,223,372,036,854,775,807]
 	using NRint64 = long long;    
 #endif

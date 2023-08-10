@@ -122,10 +122,10 @@ namespace Normal {
 		s_WindowInput.AttachCallback( BIND_EVENT_FUNC( Application::OnWindowClose ), 
 									  WindowInput::Type::IsClosed );
 
-		float vertices[3 * 3] = {
-			-0.5f, -0.5f, 0.0f,
-			+0.5f, -0.5f, 0.0f,
-			+0.0f, +0.5f, 0.0f,
+		float vertices[3 * 7] = {
+			-0.5f, -0.5f, 0.0f, 0.5f, 0.0f, 0.0f, 1.0f,
+			+0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f, 1.0f,
+			+0.0f, +0.5f, 0.0f, 0.0f, 0.0f, 0.5f, 1.0f
 		};
 
 		NRuint indices[3] = { 0, 1, 2 };
@@ -133,8 +133,13 @@ namespace Normal {
 		// Vertex Buffer
 		m_VertexBuffer.reset( VertexBuffer::Create( vertices, sizeof( vertices ) ) );
 
-		glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( float ), (void*)0 );
-		glEnableVertexAttribArray( 0 );
+
+		BufferLayout layout = {
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float4, "a_Color" }
+		};
+
+		m_VertexBuffer->SetLayout( layout );
 
 		// Index Buffer
 		NRuint indexCount = sizeof( indices ) / sizeof( NRuint );
@@ -144,13 +149,14 @@ namespace Normal {
 		std::string vertexShader = R"(
 		#version 330 core
 		layout (location = 0) in vec3 aPos;
+		layout (location = 1) in vec4 aColor;
 		
 		out vec4 vertexColor;
 		
 		void main()
 		{
 			gl_Position = vec4(aPos, 1.0);
-			vertexColor = vec4(0.3, 0.3, 0.7, 1.0);
+			vertexColor = aColor;
 		}		
 		)";
 

@@ -6,6 +6,8 @@
 
 namespace Normal {
 
+	static int ShaderDataTypeToGLType( const ShaderDataType& type );
+
 	class NORMAL_API OpenGLVertexBuffer : public VertexBuffer
 	{
 	public:
@@ -15,6 +17,9 @@ namespace Normal {
 	public:
 		virtual void Bind() const override;
 		virtual void UnBind() const override;
+		
+		virtual void SetLayout( BufferLayout& layout ) override; 
+		// inline virtual const BufferLayout& GetLayout() const override { return m_Layout; };
 
 	private:
 		NRuint m_RenderID;
