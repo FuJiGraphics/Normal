@@ -8,17 +8,17 @@
 
 namespace Normal {
 
+	/*___________________________________________________________________________________
+	 *   Vertex Buffer
+	 *__________________________________________________________________________________*/
 	VertexBuffer* VertexBuffer::Create( float* vertices, NRuint size )
 	{
 		const GraphicAPI& renderAPI = Renderer::GetGraphicAPI();
 		switch ( renderAPI )
 		{
-			case GraphicAPI::OpenGL:
-				return new OpenGLVertexBuffer( vertices, size );
+			case GraphicAPI::OpenGL: return new OpenGLVertexBuffer( vertices, size );
 			case GraphicAPI::Vulkan:
-				NR_CORE_ASSERT( nullptr, "GraphicAPI::Vulkan is currently not supported API." );
 			case GraphicAPI::DirectX11:
-				NR_CORE_ASSERT( nullptr, "GraphicAPI::DirectX11 is currently not supported API." );
 			case GraphicAPI::DirectX12:
 				NR_CORE_ASSERT( nullptr, "GraphicAPI::DirectX12 is currently not supported API." );
 		}
@@ -27,17 +27,17 @@ namespace Normal {
 		return nullptr;
 	}
 
+	/*___________________________________________________________________________________
+	 *   Index Buffer
+	 *__________________________________________________________________________________*/
 	IndexBuffer* IndexBuffer::Create( NRuint* indices, NRuint count )
 	{
 		const GraphicAPI& renderAPI = Renderer::GetGraphicAPI();
 		switch ( renderAPI )
 		{
-			case GraphicAPI::OpenGL:
-				return new OpenGLIndexBuffer( indices, count );
+			case GraphicAPI::OpenGL: return new OpenGLIndexBuffer( indices, count );
 			case GraphicAPI::Vulkan:
-				NR_CORE_ASSERT( nullptr, "GraphicAPI::Vulkan is currently not supported API." );
 			case GraphicAPI::DirectX11:
-				NR_CORE_ASSERT( nullptr, "GraphicAPI::DirectX11 is currently not supported API." );
 			case GraphicAPI::DirectX12:
 				NR_CORE_ASSERT( nullptr, "GraphicAPI::DirectX12 is currently not supported API." );
 		}

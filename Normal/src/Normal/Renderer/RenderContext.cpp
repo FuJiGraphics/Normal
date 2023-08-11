@@ -12,12 +12,9 @@ namespace Normal {
         const GraphicAPI& renderAPI = Renderer::GetGraphicAPI();
         switch ( renderAPI )
         {
-            case GraphicAPI::OpenGL:
-                return new OpenGLContext( reinterpret_cast<GLFWwindow*>( nativeWindow ) );
+            case GraphicAPI::OpenGL: return new OpenGLContext( reinterpret_cast<GLFWwindow*>( nativeWindow ) );
             case GraphicAPI::Vulkan:
-                NR_CORE_ASSERT( nullptr, "GraphicAPI::Vulkan is currently not supported API." );
             case GraphicAPI::DirectX11:
-                NR_CORE_ASSERT( nullptr, "GraphicAPI::DirectX11 is currently not supported API." );
             case GraphicAPI::DirectX12:
                 NR_CORE_ASSERT( nullptr, "GraphicAPI::DirectX12 is currently not supported API." );
         }

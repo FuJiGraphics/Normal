@@ -5,25 +5,9 @@
 
 namespace Normal {
 
-	static int ShaderDataTypeToGLType( const ShaderDataType& type )
-	{
-		switch ( type )
-		{
-			case ShaderDataType::Float:   return GL_FLOAT;
-			case ShaderDataType::Float2:  return GL_FLOAT;
-			case ShaderDataType::Float3:  return GL_FLOAT;
-			case ShaderDataType::Float4:  return GL_FLOAT;
-			case ShaderDataType::Mat3:    return GL_FLOAT;
-			case ShaderDataType::Mat4:    return GL_FLOAT;
-			case ShaderDataType::Int:     return GL_INT;
-			case ShaderDataType::Int2:    return GL_INT;
-			case ShaderDataType::Int3:    return GL_INT;
-			case ShaderDataType::Int4:    return GL_INT;
-			case ShaderDataType::Bool:    return GL_BOOL;
-		}
-	}
-
-	// OpenGL Vertex Buffer Implements
+	/*___________________________________________________________________________________
+	 *    Vertex Buffer
+	 *__________________________________________________________________________________*/
 	OpenGLVertexBuffer::OpenGLVertexBuffer( float* vertices, NRuint size )
 		: m_RenderID( 0 )
 	{
@@ -47,25 +31,11 @@ namespace Normal {
 		glBindBuffer( GL_ARRAY_BUFFER, 0 );
 	}
 
-	void OpenGLVertexBuffer::SetLayout( BufferLayout& layout )
-	{
-		NRuint indices = 0;
-		for ( const auto& element : layout )
-		{
-			glVertexAttribPointer( indices,
-								   (GLuint)element.Count,
-								   ShaderDataTypeToGLType( element.Type ),
-								   (GLboolean)element.Normalized,
-								   (GLsizei)layout.GetStride(),
-								   (void*)element.Offset );
-			glEnableVertexAttribArray( indices );
-			++indices;
-		}
-
-	}
 
 
-	// OpenGL Index Buffer Implements
+	/*___________________________________________________________________________________
+	 *    Index Buffer
+	 *__________________________________________________________________________________*/
 	OpenGLIndexBuffer::OpenGLIndexBuffer( NRuint* indices, NRuint count )
 		: m_RenderID( 0 )
 		, m_IndexCount( count )

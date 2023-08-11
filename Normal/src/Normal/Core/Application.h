@@ -17,6 +17,7 @@ namespace Normal {
 	class Shader;
 	struct WindowInputData;
 
+	class VertexArray;
 	class VertexBuffer;
 	class IndexBuffer;
 #pragma endregion
@@ -63,10 +64,18 @@ namespace Normal {
 		std::unique_ptr<Window> m_Window;
 		std::unique_ptr<LevelContainer> m_LevelContainer;
 
-		std::shared_ptr<VertexBuffer> m_VertexBuffer;
-		std::shared_ptr<IndexBuffer> m_IndexBuffer;
-		std::unique_ptr<Shader> m_Shader;
+		// std::shared_ptr<IndexBuffer>   m_IndexBuffer;
+		// std::shared_ptr<VertexBuffer>  m_VertexBuffer;
+		std::shared_ptr<VertexArray>   m_VertexArray;
+		std::shared_ptr<Shader>        m_Shader;
 
+
+		std::shared_ptr<IndexBuffer>   m_SquareIndexBuffer;
+		std::shared_ptr<VertexBuffer>  m_SquareVertexBuffer;
+		std::shared_ptr<VertexArray>   m_SquareVertexArray;
+		std::shared_ptr<Shader>        m_SquareShader;
+
+		
 		NR_SET_NAME( "Application" );
 	};
 

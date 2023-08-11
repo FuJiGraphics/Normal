@@ -12,6 +12,7 @@
 
 #include <Normal/ImGui/ImGuiLevel.h>
 
+#include <Normal/Renderer/VertexArray.h>
 #include <Normal/Renderer/Buffer.h>
 #include <Normal/Renderer/Shader.h>
 
@@ -41,7 +42,13 @@ namespace Normal {
 			glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
 			glClear( GL_COLOR_BUFFER_BIT );
 
-			glDrawElements( GL_TRIANGLES, m_IndexBuffer->GetIndexCount(), GL_UNSIGNED_INT, 0);
+			m_SquareVertexArray->Bind();
+			const auto& squareIndexBuffer = m_SquareVertexArray->GetIndexBuffer();
+			glDrawElements( GL_TRIANGLES, squareIndexBuffer->GetIndexCount(), GL_UNSIGNED_INT, 0 );
+
+			m_VertexArray->Bind();
+			const auto& IndexBuffer = m_VertexArray->GetIndexBuffer();
+			glDrawElements( GL_TRIANGLES, IndexBuffer->GetIndexCount(), GL_UNSIGNED_INT, 0 );
 
 			// Start update a Level and Overlays
 			for ( auto level : *m_LevelContainer )
@@ -130,20 +137,53 @@ namespace Normal {
 
 		NRuint indices[3] = { 0, 1, 2 };
 
-		// Vertex Buffer
-		m_VertexBuffer.reset( VertexBuffer::Create( vertices, sizeof( vertices ) ) );
-
-
 		BufferLayout layout = {
 			{ ShaderDataType::Float3, "a_Position" },
 			{ ShaderDataType::Float4, "a_Color" }
 		};
 
-		m_VertexBuffer->SetLayout( layout );
+		// Vertex Array
+		m_VertexArray.reset( VertexArray::Create() );
+
+		// Vertex Buffer
+		std::shared_ptr< VertexBuffer > vertexBuffer;
+		vertexBuffer.reset( VertexBuffer::Create( vertices, sizeof( vertices ) ) );
+		
+		vertexBuffer->SetLayout( layout );
 
 		// Index Buffer
 		NRuint indexCount = sizeof( indices ) / sizeof( NRuint );
-		m_IndexBuffer.reset( IndexBuffer::Create( indices, indexCount ) );
+		std::shared_ptr<IndexBuffer> indexBuffer;
+		indexBuffer.reset( IndexBuffer::Create( indices, indexCount ) );
+
+		// Binding Vertex Buffer and Index Buffer in the Buffer Array
+		m_VertexArray->AddVertexBuffer( vertexBuffer );
+		m_VertexArray->SetIndexBuffer( indexBuffer );
+		
+
+		// Square logic
+		m_SquareVertexArray.reset( VertexArray::Create() );
+		float rec[4 * 7] = {
+			-0.7f, -0.7f, 0.0f, 0.0f, 0.5f, 0.0f, 1.0f,
+			+0.7f, -0.7f, 0.0f, 0.0f, 0.5f, 0.0f, 1.0f,
+			+0.7f, +0.7f, 0.0f, 0.0f, 0.5f, 0.0f, 1.0f,
+			-0.7f, +0.7f, 0.0f, 0.0f, 0.5f, 0.0f, 1.0f
+		};
+		BufferLayout SquareLayout = {
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float4, "a_Color" }
+		};
+
+		m_SquareVertexBuffer.reset( VertexBuffer::Create( rec, sizeof( rec ) ) );
+		m_SquareVertexBuffer->SetLayout( layout );
+
+		
+		NRuint recIndices[6] = { 0, 1, 2, 0, 2, 3 };
+		indexCount = sizeof( recIndices ) / sizeof( NRuint );
+		m_SquareIndexBuffer.reset( IndexBuffer::Create( recIndices, indexCount ) );
+
+		m_SquareVertexArray->AddVertexBuffer( m_SquareVertexBuffer );
+		m_SquareVertexArray->SetIndexBuffer( m_SquareIndexBuffer );
 
 		// Shader
 		std::string vertexShader = R"(
@@ -171,9 +211,37 @@ namespace Normal {
 		}
 		)";
 
+		// Square Shader
+		std::string squareVertexShader = R"(
+		#version 330 core
+		layout (location = 0) in vec3 aPos;
+		layout (location = 1) in vec4 aColor;
+		
+		out vec4 vertexColor;
+		
+		void main()
+		{
+			gl_Position = vec4(aPos, 1.0);
+			vertexColor = aColor;
+		}		
+		)";
+
+		std::string squareFragmentShader = R"(
+		#version 330 core
+		out vec4 FragColor;
+
+		in vec4 vertexColor;
+		void main()
+		{
+			FragColor = vertexColor;
+		}
+		)";
+
 		m_Shader.reset( Shader::Create( vertexShader, fragmentShader ) );
 		m_Shader->Bind();
 
+		m_SquareShader.reset( Shader::Create( squareVertexShader, squareFragmentShader ) );
+		m_SquareShader->Bind();
 	}
 
 	void Application::Destroy()
