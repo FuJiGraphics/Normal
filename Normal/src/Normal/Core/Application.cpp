@@ -5,13 +5,12 @@
 #include "Level.h"
 #include "LevelContainer.h"
 
-#include <glad/glad.h>
-
 #include <Normal/Events/Event.h>
 #include <Normal/InputManager/WindowInput.h>
 
 #include <Normal/ImGui/ImGuiLevel.h>
 
+#include <Normal/Renderer/Renderer.h>
 #include <Normal/Renderer/VertexArray.h>
 #include <Normal/Renderer/Buffer.h>
 #include <Normal/Renderer/Shader.h>
@@ -39,16 +38,16 @@ namespace Normal {
 	{
 		while ( m_Running )
 		{
-			glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
-			glClear( GL_COLOR_BUFFER_BIT );
+			{ // ------ Scene Rendering start -------
+				RenderCommand::SetClearColor( { 0.2f, 0.2f, 0.2f, 1.0f } );
+				RenderCommand::Clear();
 
-			m_SquareVertexArray->Bind();
-			const auto& squareIndexBuffer = m_SquareVertexArray->GetIndexBuffer();
-			glDrawElements( GL_TRIANGLES, squareIndexBuffer->GetIndexCount(), GL_UNSIGNED_INT, 0 );
+				Renderer::Submit( m_SquareVertexArray );
+				Renderer::Submit( m_VertexArray );
 
-			m_VertexArray->Bind();
-			const auto& IndexBuffer = m_VertexArray->GetIndexBuffer();
-			glDrawElements( GL_TRIANGLES, IndexBuffer->GetIndexCount(), GL_UNSIGNED_INT, 0 );
+				Renderer::EndScene();
+			} // ------ Scene Rendering end -------
+
 
 			// Start update a Level and Overlays
 			for ( auto level : *m_LevelContainer )

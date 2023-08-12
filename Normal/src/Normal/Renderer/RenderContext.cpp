@@ -9,13 +9,12 @@
 namespace Normal {
     RenderContext* RenderContext::Create( void* nativeWindow )
     {
-        const GraphicAPI& renderAPI = Renderer::GetGraphicAPI();
-        switch ( renderAPI )
+        switch ( Renderer::GetGraphicAPI() )
         {
-            case GraphicAPI::OpenGL: return new OpenGLContext( reinterpret_cast<GLFWwindow*>( nativeWindow ) );
-            case GraphicAPI::Vulkan:
-            case GraphicAPI::DirectX11:
-            case GraphicAPI::DirectX12:
+            case RendererAPI::API::OpenGL: return new OpenGLContext( reinterpret_cast<GLFWwindow*>( nativeWindow ) );
+            case RendererAPI::API::Vulkan:
+            case RendererAPI::API::DirectX11:
+            case RendererAPI::API::DirectX12:
                 NR_CORE_ASSERT( nullptr, "GraphicAPI::DirectX12 is currently not supported API." );
         }
 

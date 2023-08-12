@@ -1,15 +1,9 @@
 #pragma once
 
 #include <Normal/Core/Core.h>
+#include "RenderCommand.h"
 
 namespace Normal {
-
-	enum class GraphicAPI
-	{
-		none = 0,
-		OpenGL, Vulkan, 
-		DirectX11, DirectX12, 
-	};
 
 	class NORMAL_API Renderer 
 	{
@@ -19,10 +13,13 @@ namespace Normal {
 		~Renderer() = default;
 
 	public:
-		inline static GraphicAPI GetGraphicAPI() { return s_RenderAPI; }
+		static void BeginScene();
+		static void EndScene();
 
-	private:
-		static GraphicAPI s_RenderAPI;
+		static void Submit( const std::shared_ptr<VertexArray>& vertexArray );
+
+	public:
+		inline static RendererAPI::API GetGraphicAPI() { return RendererAPI::GetCurrentAPI(); }
 	};
 
 
