@@ -2,6 +2,7 @@
 #include "Rectangle.h"
 
 namespace Normal {
+	// TODO: 완성하기
 	Rectangle::Rectangle()
 		: m_Data()
 		, m_Indices()
@@ -43,7 +44,7 @@ namespace Normal {
 
 
 	}
-
+	
 	void Rectangle::OnUpdate(float deltaTime)
 	{
 		m_VertexArray->Bind();
