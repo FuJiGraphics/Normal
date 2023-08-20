@@ -1,20 +1,20 @@
 #include <NormalEngine.h>
-#include "Rectangle/Rectangle.h"
+#include "World/World.h"
 
 namespace Normal {
 
-	class Workspace : public Application
+	class NORMAL_API Workspace : public Application
 	{
 	public:
 		Workspace()
 		{
-			super::AttachLevel(new Rectangle);
+			super::AttachLevel( new World );
 		}
 		~Workspace()
 		{
-			super::DetachLevel(new Rectangle);
 		}
 
+	private:
 
 	};
 

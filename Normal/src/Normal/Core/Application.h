@@ -43,13 +43,13 @@ namespace Normal {
 
 		void OnWindowClose( WindowInputData input );
 
-	protected:
-		void Initialize();
-		void Destroy();
-
 	public:
 		inline static Application& GetInstance() { return *s_Instance; };
 		inline Window& GetWindow() const { return *m_Window; }
+
+	protected:
+		void Initialize();
+		void Destroy();
 
 	private:
 		double m_Time = 0.0;
@@ -63,16 +63,6 @@ namespace Normal {
 
 		std::unique_ptr<Window> m_Window;
 		std::unique_ptr<LevelContainer> m_LevelContainer;
-
-
-		// TODO: 물체를 그리는 코드를 모두 Application 레벨에서 작성해보기
-		std::shared_ptr<VertexArray>   m_VertexArray;
-		std::shared_ptr<Shader>        m_Shader;
-
-		std::shared_ptr<IndexBuffer>   m_SquareIndexBuffer;
-		std::shared_ptr<VertexBuffer>  m_SquareVertexBuffer;
-		std::shared_ptr<VertexArray>   m_SquareVertexArray;
-		std::shared_ptr<Shader>        m_SquareShader;
 		
 		NR_SET_NAME( "Application" );
 	};

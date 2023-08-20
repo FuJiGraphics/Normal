@@ -2,6 +2,7 @@
 
 #include <Normal/Core/Core.h>
 #include "RenderCommand.h"
+#include "Camera.h"
 
 namespace Normal {
 
@@ -13,7 +14,7 @@ namespace Normal {
 		~Renderer() = default;
 
 	public:
-		static void BeginScene();
+		static void BeginScene( Camera camera );
 		static void EndScene();
 
 		static void Submit( const std::shared_ptr<VertexArray>& vertexArray );

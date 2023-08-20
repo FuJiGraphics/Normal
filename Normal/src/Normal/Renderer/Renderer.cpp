@@ -3,7 +3,7 @@
 
 namespace Normal {
 
-	void Renderer::BeginScene()
+	void Renderer::BeginScene( const Camera& camera )
 	{
 
 	}
