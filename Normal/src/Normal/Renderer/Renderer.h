@@ -14,7 +14,7 @@ namespace Normal {
 		~Renderer() = default;
 
 	public:
-		static void BeginScene( Camera camera );
+		static void BeginScene( const Camera& camera );
 		static void EndScene();
 
 		static void Submit( const std::shared_ptr<VertexArray>& vertexArray );
