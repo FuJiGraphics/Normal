@@ -15,6 +15,9 @@
 #include <Normal/Core/Log.h>
 #include <glm/glm.hpp>
 
+#include <Normal/InputManager/KeyboardKeys.h>
+
+
 #ifdef NR_PLATFORM_WINDOWS
     #include <Windows.h>
 #endif

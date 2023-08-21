@@ -1,40 +1,32 @@
 #pragma once
 
 #include <Normal/Core/Core.h>
+#include <glm/glm.hpp>
 
 namespace Normal {
 
 	class NORMAL_API Camera
 	{
 	public:
-		enum class ProjType { None = 0, Ortho, Perspec };
-
-	public:
-		explicit Camera( const glm::vec3& eye, const glm::vec3& target, const glm::vec3& up,
-						 float _near, float _far, float _fov = 60.0f, ProjType type = ProjType::Perspec );
+		explicit Camera( float left, float right, float bottom, float top );
 		~Camera() = default ;
 
 	public:
-		inline glm::mat4& GetVPMatrix() { m_ViewProj; }
+		inline glm::mat4& GetVPMatrix() { return m_ViewProj; }
+
+		void AddPosition( const glm::vec3& pos );
+		void AddRotation( const float& pitch, const float& yaw, const float& roll );
 
 	private:
-		void SetView( const glm::vec3& eye, const glm::vec3& target, const glm::vec3& up );
-		void SetOrthoProj( float _near, float _far );
-		void SetPespecProj( float _near, float _far, float _fov = 60.0f );
+		void RecalculateViewProj();
+		void SetView();
 
 	private:
-		glm::vec3 m_EyePos;
-		glm::vec3 m_Target;
-		glm::vec3 m_Up;
-
-		float m_Near;
-		float m_Far;
-		float m_Fov;
+		glm::vec3 m_Pos;
 
 		glm::mat4 m_View;
 		glm::mat4 m_Proj;
 		glm::mat4 m_ViewProj;
-		ProjType m_ProjType;
 	};
 
 } // namespace Normal

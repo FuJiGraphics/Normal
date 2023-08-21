@@ -13,7 +13,7 @@ namespace Normal {
 #pragma endregion
 
 	struct KeyInputData {
-		int keycode;
+		int keycode;  // keycode in KeyboardKeys.h header 
 		int repeatCount;
 	};
 
