@@ -18,6 +18,7 @@ namespace Normal {
 		void UnBind() const; 
 
 		std::shared_ptr<VertexArray>& GetVertexArray() { return m_VertexArray; }
+		std::shared_ptr<Shader>& GetShader() { return m_Shader; }
 
 	private:
 		std::vector<float> m_Data;

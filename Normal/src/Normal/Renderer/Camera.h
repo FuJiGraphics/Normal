@@ -5,17 +5,38 @@
 
 namespace Normal {
 
+	enum class EularAngle { 
+		None = 0,
+		Pitch, Yaw, Roll 
+	};
+
+	// Camera Interface
 	class NORMAL_API Camera
 	{
 	public:
-		explicit Camera( float left, float right, float bottom, float top );
-		~Camera() = default ;
+		explicit Camera() = default;
+		~Camera() = default;
 
 	public:
-		inline glm::mat4& GetVPMatrix() { return m_ViewProj; }
+		inline virtual glm::mat4& GetVPMatrix() = 0;
 
-		void AddPosition( const glm::vec3& pos );
-		void AddRotation( const float& pitch, const float& yaw, const float& roll );
+		virtual void AddPosition( const glm::vec3& dir ) = 0;
+		virtual void SetPosition( const glm::vec3& pos ) = 0;
+		virtual void AddRotation( const float& angle, const EularAngle type ) = 0;
+	};
+
+	// Orthogonal Projection Camera
+	class NORMAL_API OrthogonalCamera : public Camera
+	{
+	public:
+		explicit OrthogonalCamera( float left, float right, float bottom, float top );
+		~OrthogonalCamera() = default ;
+
+	public:
+		inline virtual glm::mat4& GetVPMatrix() override { return m_ViewProj; }
+
+		virtual void AddPosition( const glm::vec3& dir ) override;
+		virtual void AddRotation( const float& angle, const EularAngle type ) override;
 
 	private:
 		void RecalculateViewProj();
@@ -23,6 +44,10 @@ namespace Normal {
 
 	private:
 		glm::vec3 m_Pos;
+
+		float m_Pitch = 0.0f;
+		float m_Yaw   = 0.0f;
+		float m_Roll  = 0.0f;
 
 		glm::mat4 m_View;
 		glm::mat4 m_Proj;
