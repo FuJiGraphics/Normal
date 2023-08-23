@@ -16,10 +16,16 @@ namespace Normal {
 		RecalculateViewProj();
 	}
 
-	void OrthogonalCamera::AddPosition( const glm::vec3& pos )
+	void OrthogonalCamera::AddPosition( const glm::vec3& move )
 	{
-		m_Pos += pos;
-		RecalculateViewProj( );
+		m_Pos += move;
+		RecalculateViewProj();
+	}
+
+	void OrthogonalCamera::SetPosition( const glm::vec3& pos )
+	{
+		m_Pos = pos;
+		RecalculateViewProj();
 	}
 
 	void OrthogonalCamera::AddRotation( const float& angle, const EularAngle type )
@@ -29,6 +35,19 @@ namespace Normal {
 			case EularAngle::Pitch: m_Pitch += glm::radians( angle ); break;
 			case EularAngle::Yaw:   m_Yaw   += glm::radians( angle ); break;
 			case EularAngle::Roll:  m_Roll  += glm::radians( angle ); break;
+			Default: NR_CORE_ASSERT( false, "Unexpected Error : Failed to binding EularAngle" );
+		}
+
+		RecalculateViewProj();
+	}
+
+	void OrthogonalCamera::SetRotation( const float& angle, const EularAngle type )
+	{
+		switch ( type )
+		{
+			case EularAngle::Pitch: m_Pitch = glm::radians( angle ); break;
+			case EularAngle::Yaw:   m_Yaw   = glm::radians( angle ); break;
+			case EularAngle::Roll:  m_Roll  = glm::radians( angle ); break;
 			Default: NR_CORE_ASSERT( false, "Unexpected Error : Failed to binding EularAngle" );
 		}
 
