@@ -6,24 +6,18 @@
 
 #include "Rectangle\Rectangle.h"
 
-namespace Normal {
-	class NORMAL_API World : public Level
-	{
-	public:
-		World();
-		virtual ~World() = default;
+class World : public Normal::Level
+{
+public:
+	World();
+	virtual ~World() = default;
 
-		virtual void OnEvent( Event& event ) override;
-		virtual void OnUpdate( float deltaTime ) override;
+	virtual void OnEvent( Normal::Event& event ) override;
+	virtual void OnUpdate( float deltaTime ) override;
 
-		virtual void OnKeyPressed( KeyInputData event );
+private:
+	Rec m_Rec;
 
-	private:
-		Rectangle m_Rec;
-
-
-		std::shared_ptr<Camera> m_Camera;
-	};
-
-}
+	std::shared_ptr<Normal::Camera> m_Camera;
+};
 

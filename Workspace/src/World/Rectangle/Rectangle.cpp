@@ -1,90 +1,87 @@
 #include "Nrpch.h"
 #include "Rectangle.h"
 
-namespace Normal {
-	Rectangle::Rectangle()
-		: m_Data()
-		, m_Indices()
+Rec::Rec()
+	: m_Data()
+	, m_Indices()
+{
+	m_Data = {
+		-0.5f, -0.5f, 0.0f, 1.0f, 0.5f, 0.0f, 0.0f, 1.0f,
+		+0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.0f, 1.0f,
+		+0.5f, +0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 1.0f,
+		-0.5f, +0.5f, 0.0f, 1.0f, 0.2f, 0.3f, 0.4f, 1.0f,
+	};
+
+	m_Indices = { 0, 1, 2, 0, 2, 3 };
+
 	{
-		m_Data = {
-			-0.5f, -0.5f, 0.0f, 1.0f, 0.5f, 0.0f, 0.0f, 1.0f,
-			+0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.5f, 0.0f, 1.0f,
-			+0.5f, +0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 1.0f,
-			-0.5f, +0.5f, 0.0f, 1.0f, 0.2f, 0.3f, 0.4f, 1.0f,
+		// Create a Vertex Array
+		m_VertexArray.reset( Normal::VertexArray::Create() );
+
+		// Created a VertexBuffer
+		std::shared_ptr<Normal::VertexBuffer> vertexBuffer;
+		vertexBuffer.reset( Normal::VertexBuffer::Create(m_Data.data(), sizeof(float) * m_Data.size()));
+
+		// Created a BufferLayout;
+		Normal::BufferLayout bufferLayout = {
+			{ Normal::ShaderDataType::Float4, "a_Position" },
+			{ Normal::ShaderDataType::Float4, "a_Color" }
 		};
+		// Set Buffer layout in VertexBuffer
+		vertexBuffer->SetLayout(bufferLayout);
 
-		m_Indices = { 0, 1, 2, 0, 2, 3 };
+		// Created a IndexBuffer
+		std::shared_ptr<Normal::IndexBuffer> indexBuffer;
+		indexBuffer.reset( Normal::IndexBuffer::Create(m_Indices.data(), m_Indices.size()));
+		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		{
-			// Create a Vertex Array
-			m_VertexArray.reset( VertexArray::Create() );
+		// Set Index, Vertex buffer in the VertexArray
+		m_VertexArray->AddVertexBuffer(vertexBuffer);
+		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-			// Created a VertexBuffer
-			std::shared_ptr<VertexBuffer> vertexBuffer;
-			vertexBuffer.reset(VertexBuffer::Create(m_Data.data(), sizeof(float) * m_Data.size()));
+		// Shader
+		m_VertexShader = R"(
+		#version 330 core
+		layout (location = 0) in vec3 aPos;
+		layout (location = 1) in vec4 aColor;
 
-			// Created a BufferLayout;
-			BufferLayout bufferLayout = {
-				{ ShaderDataType::Float4, "a_Position" },
-				{ ShaderDataType::Float4, "a_Color" }
-			};
-			// Set Buffer layout in VertexBuffer
-			vertexBuffer->SetLayout(bufferLayout);
+		uniform mat4 u_ViewProj;
 
-			// Created a IndexBuffer
-			std::shared_ptr<IndexBuffer> indexBuffer;
-			indexBuffer.reset(IndexBuffer::Create(m_Indices.data(), m_Indices.size()));
-			m_VertexArray->SetIndexBuffer(indexBuffer);
-
-			// Set Index, Vertex buffer in the VertexArray
-			m_VertexArray->AddVertexBuffer(vertexBuffer);
-			m_VertexArray->SetIndexBuffer(indexBuffer);
-
-			// Shader
-			m_VertexShader = R"(
-			#version 330 core
-			layout (location = 0) in vec3 aPos;
-			layout (location = 1) in vec4 aColor;
-
-			uniform mat4 u_ViewProj;
-
-			out vec4 vertexColor;
+		out vec4 vertexColor;
 		
-			void main()
-			{
-				gl_Position = u_ViewProj * vec4(aPos, 1.0);
-				vertexColor = aColor;
-			}		
-			)";
+		void main()
+		{
+			gl_Position = u_ViewProj * vec4(aPos, 1.0);
+			vertexColor = aColor;
+		}		
+		)";
 
-			m_IndexShader = R"(
-			#version 330 core
-			out vec4 FragColor;
+		m_IndexShader = R"(
+		#version 330 core
+		out vec4 FragColor;
 
-			in vec4 vertexColor;
-			void main()
-			{
-				FragColor = vertexColor;
-			}
-			)";
-
-			m_Shader.reset( Shader::Create( m_VertexShader, m_IndexShader ) );
+		in vec4 vertexColor;
+		void main()
+		{
+			FragColor = vertexColor;
 		}
-	}
-	Rectangle::~Rectangle()
-	{
-		m_Shader->UnBind();
-		m_VertexArray->UnBind();
-	}
+		)";
 
-	void Rectangle::Bind() const
-	{
-		m_VertexArray->Bind();
+		m_Shader.reset( Normal::Shader::Create( m_VertexShader, m_IndexShader ) );
 	}
+}
+Rec::~Rec()
+{
+	m_Shader->UnBind();
+	m_VertexArray->UnBind();
+}
 
-	void Rectangle::UnBind() const
-	{
-		m_VertexArray->UnBind();
-	}
+void Rec::Bind() const
+{
+	m_VertexArray->Bind();
+}
 
-} // namespace Normal 
+void Rec::UnBind() const
+{
+	m_VertexArray->UnBind();
+}

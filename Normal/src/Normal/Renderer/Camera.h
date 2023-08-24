@@ -10,6 +10,12 @@ namespace Normal {
 		Pitch, Yaw, Roll 
 	};
 
+	enum class RotSpace
+	{
+		None = 0,
+		Local, World
+	};
+
 	// Camera Interface
 	class NORMAL_API Camera
 	{
@@ -20,10 +26,8 @@ namespace Normal {
 	public:
 		inline virtual glm::mat4& GetVPMatrix() = 0;
 
-		virtual void AddPosition( const glm::vec3& dir ) = 0;
 		virtual void SetPosition( const glm::vec3& pos ) = 0;
-		virtual void AddRotation( const float& angle, const EularAngle type ) = 0;
-		virtual void SetRotation( const float& angle, const EularAngle type ) = 0;
+		virtual void SetRotation( const float& angle, const EularAngle& type ) = 0;
 	};
 
 	// Orthogonal Projection Camera
@@ -36,14 +40,11 @@ namespace Normal {
 	public:
 		inline virtual glm::mat4& GetVPMatrix() override { return m_ViewProj; }
 
-		virtual void AddPosition( const glm::vec3& dir ) override;
 		virtual void SetPosition( const glm::vec3& pos ) override;
-		virtual void AddRotation( const float& angle, const EularAngle type ) override;
-		virtual void SetRotation( const float& angle, const EularAngle type ) override;
+		virtual void SetRotation( const float& angle, const EularAngle& type ) override;
 
 	private:
-		void RecalculateViewProj();
-		void SetView();
+		void SetCalculateViewProj();
 
 	private:
 		glm::vec3 m_Pos;

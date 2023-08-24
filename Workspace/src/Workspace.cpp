@@ -1,27 +1,23 @@
 #include <NormalEngine.h>
 #include "World/World.h"
 
-namespace Normal {
-
-	class NORMAL_API Workspace : public Application
+class Workspace : public Normal::Application
+{
+public:
+	Workspace()
 	{
-	public:
-		Workspace()
-		{
-			super::AttachLevel( new World );
-		}
-		~Workspace()
-		{
-		}
-
-	private:
-
-	};
-
-	Normal::Application* Normal::CreateApplication()
+		super::AttachLevel( new World );
+	}
+	~Workspace()
 	{
-		return new Workspace();
 	}
 
+private:
 
-} // namespace Normal
+};
+
+Normal::Application* Normal::CreateApplication()
+{
+	return new Workspace();
+}
+

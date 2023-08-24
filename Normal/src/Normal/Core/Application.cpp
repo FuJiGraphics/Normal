@@ -38,17 +38,6 @@ namespace Normal {
 	{
 		while ( m_Running )
 		{
-			{ // ------ Scene Rendering start -------
-				/*RenderCommand::SetClearColor( { 0.2f, 0.2f, 0.2f, 1.0f } );
-				RenderCommand::Clear();
-
-				Renderer::Submit( m_SquareVertexArray );
-				Renderer::Submit( m_VertexArray );
-
-				Renderer::EndScene();*/
-			} // ------ Scene Rendering end -------
-
-
 			// Start update a Level and Overlays
 			for ( auto level : *m_LevelContainer )
 			{

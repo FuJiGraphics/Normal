@@ -38,16 +38,15 @@ namespace Normal {
 		m_Callbacks[indices] = nullptr;
 	}
 
-	bool KeyInput::IsKeyPreesed( NRuint keycode ) const
+	bool KeyInput::IsKeyPreesed( NRuint keycode ) // static
 	{
 		auto& app = Application::GetInstance();
 		auto nativeWindow = static_cast<GLFWwindow*>( app.GetWindow().GetNativeWindow() );
 		auto state = glfwGetKey( nativeWindow, keycode );
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
-		return false;
 	}
 
-	bool KeyInput::IsKeyPreesed( char keycode ) const
+	bool KeyInput::IsKeyPreesed( char keycode ) // static
 	{
 		return IsKeyPreesed( static_cast<NRuint>( keycode ) );
 	}
