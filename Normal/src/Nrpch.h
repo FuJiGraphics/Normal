@@ -13,6 +13,7 @@
 #include <unordered_set>
 
 #include <Normal/Core/Log.h>
+#include <Normal/Core/Timer.h>
 #include <glm/glm.hpp>
 
 #include <Normal/InputManager/KeyboardKeys.h>

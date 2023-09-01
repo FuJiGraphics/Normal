@@ -15,6 +15,7 @@ namespace Normal {
 	class Event;
 	class WindowInput;
 	class Shader;
+	class Timer;
 	struct WindowInputData;
 
 	class VertexArray;
@@ -52,17 +53,17 @@ namespace Normal {
 		void Destroy();
 
 	private:
-		double m_Time = 0.0;
-		bool m_Running = true;
+		bool		m_Running = true;
 		ImGuiLevel* m_ImGuiLevel = nullptr;
 
 		inline static Application* s_Instance = nullptr;
 
 	private:
-		static WindowInput& s_WindowInput;
+		static WindowInput&					s_WindowInput;
 
-		std::unique_ptr<Window> m_Window;
-		std::unique_ptr<LevelContainer> m_LevelContainer;
+		std::unique_ptr<Timer>				m_Timer;
+		std::unique_ptr<Window>				m_Window;
+		std::unique_ptr<LevelContainer>		m_LevelContainer;
 		
 		NR_SET_NAME( "Application" );
 	};

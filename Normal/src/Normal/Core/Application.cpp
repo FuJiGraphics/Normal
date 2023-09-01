@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "Level.h"
 #include "LevelContainer.h"
+#include "Timer.h"
 
 #include <Normal/Events/Event.h>
 #include <Normal/InputManager/WindowInput.h>
@@ -38,10 +39,16 @@ namespace Normal {
 	{
 		while ( m_Running )
 		{
+			// Timer update
+			m_Timer->Update();
+
+			NR_CORE_TRACE( "Delta Time = {0}s, {1}ms", 
+						   m_Timer->DeltaTime(Timer::Seconds), 
+						   m_Timer->DeltaTime(Timer::Milliseconds) );
 			// Start update a Level and Overlays
 			for ( auto level : *m_LevelContainer )
 			{
-				level->OnUpdate( 0 );
+				level->OnUpdate( m_Timer->DeltaTime(Timer::Seconds) );
 			}
 
 			// -- ImGui Start --
@@ -108,6 +115,7 @@ namespace Normal {
 	{
 		m_Window = std::unique_ptr<Window>( Window::Create() );
 		m_Window->SetEventCallback( BIND_EVENT_FUNC( Application::OnEvent ) );
+		m_Window->SetVSync( true );
 
 		m_LevelContainer = std::make_unique<LevelContainer>();
 
@@ -116,6 +124,9 @@ namespace Normal {
 
 		s_WindowInput.AttachCallback( BIND_EVENT_FUNC( Application::OnWindowClose ), 
 									  WindowInput::Type::IsClosed );
+
+		// Create Timer
+		m_Timer = std::make_unique<Timer>();
 	}
 
 	void Application::Destroy()

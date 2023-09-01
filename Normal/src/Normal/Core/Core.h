@@ -21,8 +21,8 @@
 
 #pragma region Asserts
 #ifdef NR_ENABLE_ASSERTS
-    #define NR_CLIENT_ASSERT(x, ...) { if(!(x)){ NR_CLIENT_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}
-    #define NR_CORE_ASSERT(x, ...) { if(!(x)){ NR_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}
+    #define NR_CLIENT_ASSERT(x, ...)	{ if(!(x)){ NR_CLIENT_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}
+    #define NR_CORE_ASSERT(x, ...)		{ if(!(x)){ NR_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}
 #else 
     #define NR_CLIENT_ASSERT(x, ...)
     #define NR_CORE_ASSERT(x, ...)

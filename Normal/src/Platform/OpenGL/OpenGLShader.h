@@ -22,7 +22,6 @@ namespace Normal {
 
 		NR_SET_NAME( "OpenGLShader" );
 	};
-	
-
 
 } // namespace Normal
+
