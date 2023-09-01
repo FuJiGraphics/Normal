@@ -14,10 +14,30 @@ void World::OnEvent( Event& event )
 {
 }
 
-void World::OnUpdate( float deltaTime )
+void World::OnUpdate( const float& dt )
 {
 	// InputKey Polling
-
+	static glm::vec3 moveLR{0.0f, 0.0f, 0.0f};
+	if ( KeyInput::IsKeyPreesed( NR_KEY_RIGHT ) )
+	{
+		moveLR += ( glm::vec3( 1.0f, 0.0f, 0.0f ) * dt );
+		m_Camera->SetPosition( moveLR );
+	}
+	if ( KeyInput::IsKeyPreesed( NR_KEY_LEFT ) )
+	{
+		moveLR += ( glm::vec3( -1.0f, 0.0f, 0.0f ) * dt );
+		m_Camera->SetPosition( moveLR );
+	}
+	if ( KeyInput::IsKeyPreesed( NR_KEY_UP ) )
+	{
+		moveLR += ( glm::vec3( 0.0f, 1.0f, 0.0f ) * dt );
+		m_Camera->SetPosition( moveLR );
+	}
+	if ( KeyInput::IsKeyPreesed( NR_KEY_DOWN ) )
+	{
+		moveLR += ( glm::vec3( 0.0f, -1.0f, 0.0f ) * dt );
+		m_Camera->SetPosition( moveLR );
+	}
 
 	// Renderering 
 	Renderer::BeginScene( m_Camera );

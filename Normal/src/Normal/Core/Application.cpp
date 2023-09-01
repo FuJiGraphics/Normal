@@ -6,8 +6,6 @@
 #include "LevelContainer.h"
 #include "Timer.h"
 
-#include <Normal/Events/Event.h>
-#include <Normal/InputManager/WindowInput.h>
 
 #include <Normal/ImGui/ImGuiLevel.h>
 
@@ -17,9 +15,6 @@
 #include <Normal/Renderer/Shader.h>
 
 namespace Normal {
-
-	WindowInput& Application::s_WindowInput = WindowInput::GetInstance();
-
 	Application::Application()
 	{
 		NR_CORE_ASSERT( !s_Instance, "Application already exists." );
@@ -42,13 +37,13 @@ namespace Normal {
 			// Timer update
 			m_Timer->Update();
 
-			NR_CORE_TRACE( "Delta Time = {0}s, {1}ms", 
-						   m_Timer->DeltaTime(Timer::Seconds), 
-						   m_Timer->DeltaTime(Timer::Milliseconds) );
+			//NR_CORE_TRACE( "Delta Time = {0}s, {1}ms",
+			//			   m_Timer->DeltaTime( Timer::Seconds ),
+			//			   m_Timer->DeltaTime( Timer::Milliseconds ) );
 			// Start update a Level and Overlays
 			for ( auto level : *m_LevelContainer )
 			{
-				level->OnUpdate( m_Timer->DeltaTime(Timer::Seconds) );
+				level->OnUpdate( m_Timer->DeltaTime( Timer::Seconds ) );
 			}
 
 			// -- ImGui Start --
@@ -67,7 +62,7 @@ namespace Normal {
 
 	void Application::OnEvent( Event& event )
 	{
-		s_WindowInput.OnEvent( event );
+		m_WindowInput.OnEvent( event );
 
 		for ( auto level = m_LevelContainer->end(); level != m_LevelContainer->begin(); )
 		{
@@ -111,19 +106,29 @@ namespace Normal {
 		m_Running = false;
 	}
 
+	void Application::OnWindowResize( WindowInputData input )
+	{
+		m_Window->SetWindowSize( input.width, input.height );
+	}
+
 	void Application::Initialize()
 	{
-		m_Window = std::unique_ptr<Window>( Window::Create() );
-		m_Window->SetEventCallback( BIND_EVENT_FUNC( Application::OnEvent ) );
-		m_Window->SetVSync( true );
-
+		// Create LevelContainer
 		m_LevelContainer = std::make_unique<LevelContainer>();
 
+		// Window Initialze and Set Callback Functions
+		m_Window = std::unique_ptr<Window>( Window::Create() );
+		m_Window->SetEventCallback( BIND_EVENT_FUNC( Application::OnEvent ) );
+		m_Window->SetWindowSize( 500, 500 );
+		m_Window->SetVSync( true );
+
+		m_WindowInput.AttachCallback( BIND_EVENT_FUNC( Application::OnWindowClose ), WindowInput::Type::IsClosed );
+		m_WindowInput.AttachCallback( BIND_EVENT_FUNC( Application::OnWindowResize ), WindowInput::Type::IsResized );
+
+		// Create Imgui
+		// Level Container에 메모리 관리 권한을 위임함
 		m_ImGuiLevel = new ImGuiLevel;
 		m_LevelContainer->InsertOverlay( m_ImGuiLevel );
-
-		s_WindowInput.AttachCallback( BIND_EVENT_FUNC( Application::OnWindowClose ), 
-									  WindowInput::Type::IsClosed );
 
 		// Create Timer
 		m_Timer = std::make_unique<Timer>();

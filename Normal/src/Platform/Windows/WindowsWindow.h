@@ -19,6 +19,7 @@ namespace Normal {
 		virtual inline void* GetNativeWindow() const override { return static_cast<void*>( m_Window ); }
 		virtual inline uint32_t GetWidth() const override { return m_Data.Width; }
 		virtual inline uint32_t GetHeight() const override { return m_Data.Height; }
+		virtual void SetWindowSize( float width, float height ) override;
 
 		// if you set many callback functions, maybe increase that overhead.
 		virtual inline void SetEventCallback( const EventCallbackFn& callback ) override

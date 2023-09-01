@@ -8,7 +8,6 @@ namespace Normal {
 		: m_Container()
 		, m_InsertIndex( 0 )
 	{
-		NR_CORE_INFO_CTOR;
 	}
 
 	LevelContainer::~LevelContainer()
@@ -21,7 +20,6 @@ namespace Normal {
 				delete level;
 			}
 		}
-		NR_CORE_INFO_DTOR;
 	}
 
 	bool LevelContainer::InsertLevel( Level* pLevel )

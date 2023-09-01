@@ -17,6 +17,7 @@
 #include <glm/glm.hpp>
 
 #include <Normal/InputManager/KeyboardKeys.h>
+#include <Normal/InputManager/MouseInput.h>
 
 
 #ifdef NR_PLATFORM_WINDOWS

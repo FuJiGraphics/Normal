@@ -3,6 +3,7 @@
 #include "Core.h"
 
 #include <iostream>
+#include <Normal/InputManager/WindowInput.h>
 
 namespace Normal {
 	
@@ -43,9 +44,10 @@ namespace Normal {
 		void DetachOverlay( Level* overlay );
 
 		void OnWindowClose( WindowInputData input );
+		void OnWindowResize( WindowInputData input );
 
 	public:
-		inline static Application& GetInstance() { return *s_Instance; };
+		inline static Application& GetInstance() { return *s_Instance; }
 		inline Window& GetWindow() const { return *m_Window; }
 
 	protected:
@@ -53,18 +55,17 @@ namespace Normal {
 		void Destroy();
 
 	private:
-		bool		m_Running = true;
-		ImGuiLevel* m_ImGuiLevel = nullptr;
-
 		inline static Application* s_Instance = nullptr;
-
-	private:
-		static WindowInput&					s_WindowInput;
+		
+		bool		m_Running	 = true;
+		ImGuiLevel* m_ImGuiLevel = nullptr;
 
 		std::unique_ptr<Timer>				m_Timer;
 		std::unique_ptr<Window>				m_Window;
 		std::unique_ptr<LevelContainer>		m_LevelContainer;
 		
+		WindowInput m_WindowInput;
+
 		NR_SET_NAME( "Application" );
 	};
 

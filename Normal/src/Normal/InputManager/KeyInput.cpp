@@ -11,9 +11,12 @@
 #include <Normal/Events/Event.h>
 #include <Normal/Events/KeyEvent.h>
 
+#include <imgui.h>
+
 namespace Normal {
 
 	KeyInput::KeyInput()
+		: m_Callbacks{ nullptr }
 	{
 		NR_CORE_INFO_CTOR;
 	}
@@ -40,6 +43,11 @@ namespace Normal {
 
 	bool KeyInput::IsKeyPreesed( NRuint keycode ) // static
 	{
+		if ( ImGui::GetIO().WantCaptureKeyboard ) 
+		{
+			// ImGui가 키 입력을 처리하고 있으므로 메인 창의 입력 처리를 스킵
+			return GLFW_FALSE;
+		}
 		auto& app = Application::GetInstance();
 		auto nativeWindow = static_cast<GLFWwindow*>( app.GetWindow().GetNativeWindow() );
 		auto state = glfwGetKey( nativeWindow, keycode );

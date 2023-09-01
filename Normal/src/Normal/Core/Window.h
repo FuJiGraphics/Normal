@@ -18,9 +18,7 @@ namespace Normal {
 					 NRuint width = 1280,
 					 NRuint height = 720 )
 			: Title(title), Width(width), Height(height), VSync(false)
-		{
-			// Empty
-		}
+		{ }
 	};
 
 
@@ -40,6 +38,7 @@ namespace Normal {
 		virtual void* GetNativeWindow() const = 0;
 		virtual NRuint GetWidth() const = 0;
 		virtual NRuint GetHeight() const = 0;
+		virtual void SetWindowSize( float width, float height ) = 0;
 
 		// Window attributes
 		virtual void SetEventCallback( const EventCallbackFn& callback ) = 0;

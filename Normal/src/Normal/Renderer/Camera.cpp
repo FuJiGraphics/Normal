@@ -47,9 +47,10 @@ namespace Normal {
 		const glm::mat4& translation = glm::translate( glm::mat4( 1.0f ), -m_Pos );
 
 		// --- Roll-Pitch-Yaw ¼ø¼­
-		const glm::mat4& Rotation = glm::rotate( glm::mat4( 1.0f ), m_Yaw, glm::vec3( 0.0f, 1.0f, 0.0f ) ) *
+		const glm::mat4& Rotation = 
+			glm::rotate( glm::mat4( 1.0f ), m_Yaw,   glm::vec3( 0.0f, 1.0f, 0.0f ) ) *
 			glm::rotate( glm::mat4( 1.0f ), m_Pitch, glm::vec3( 1.0f, 0.0f, 0.0f ) ) *
-			glm::rotate( glm::mat4( 1.0f ), m_Roll, glm::vec3( 0.0f, 0.0f, 1.0f ) );
+			glm::rotate( glm::mat4( 1.0f ), m_Roll,  glm::vec3( 0.0f, 0.0f, 1.0f ) );
 
 		const glm::mat4& transform = Rotation * translation;
 

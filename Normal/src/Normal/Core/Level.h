@@ -23,16 +23,12 @@ namespace Normal {
 		virtual void OnDetach() {};
 
 		virtual void OnEvent( Event& event ) {};
-		virtual void OnUpdate( float deltaTime ) {};
+		virtual void OnUpdate( const float& dt ) {};
 		virtual void OnGuiRender() {};
 
 		virtual std::string GetName() const { return std::string(); }
 
 	protected:
-		inline static WindowInput& s_WindowInput = WindowInput::GetInstance();
-		inline static MouseInput& s_MouseInput = MouseInput::GetInstance();
-		inline static KeyInput& s_KeyboardInput = KeyInput::GetInstance();
-
 		inline static NRuint GetLevelCount() { return s_NumOfLevels; }
 
 	private:

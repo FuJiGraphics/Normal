@@ -7,6 +7,7 @@
 namespace Normal {
 
 	WindowInput::WindowInput()
+		: m_Callbacks{ nullptr }
 	{
 		NR_CORE_INFO_CTOR;
 	}
@@ -56,9 +57,9 @@ namespace Normal {
 		if ( m_Callbacks[type] != nullptr )
 		{
 			WindowInputData data;
-			data.width = event.GetWidth();
-			data.height = event.GetHeight();
-			m_Callbacks[type]( data );
+			data.width = static_cast<float>( event.GetWidth() );
+			data.height = static_cast<float>( event.GetHeight() );
+			m_Callbacks[type]( { data.width, data.height } );
 			return true;
 		}
 		return false;

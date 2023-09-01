@@ -17,13 +17,11 @@ namespace Normal {
 	ImGuiLevel::ImGuiLevel()
 	{
 		CreateImGui();
-		NR_CORE_INFO_CTOR_N( super::GetLevelCount() );
 	}
 
 	ImGuiLevel::~ImGuiLevel()
 	{
 		CleanupImGui();
-		NR_CORE_INFO_DTOR_N( super::GetLevelCount() );
 	}
 
 	void ImGuiLevel::BeginFrame()

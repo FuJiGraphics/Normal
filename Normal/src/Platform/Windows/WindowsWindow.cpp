@@ -1,15 +1,14 @@
 #include "Nrpch.h"
 #include "WindowsWindow.h"
 
-#include "Normal/Events/Event.h"
-#include "Normal/Events/KeyEvent.h"
-#include "Normal/Events/MouseEvent.h"
-#include "Normal/Events/ApplicationEvent.h"
+#include <Normal/Events/Event.h>
+#include <Normal/Events/KeyEvent.h>
+#include <Normal/Events/MouseEvent.h>
+#include <Normal/Events/ApplicationEvent.h>
 
 #include "Normal/Renderer/RenderContext.h"
 
-#include <GLFW\glfw3.h>
-
+#include <GLFW/glfw3.h>
 
 namespace Normal {
 	// static function from Window.h
@@ -37,6 +36,12 @@ namespace Normal {
 	{
 		glfwPollEvents();
 		m_RenderContext->SwapBuffers();
+	}
+
+	void WindowsWindow::SetWindowSize( float width, float height )
+	{
+		NR_CORE_ASSERT( m_Window, "Memory Access Error : m_Window need to be initialized." );
+		glfwSetWindowSize( m_Window, width, height );
 	}
 
 	void WindowsWindow::SetVSync( bool enabled )
@@ -70,6 +75,7 @@ namespace Normal {
 		}
 
 		// Set Window
+		// glfwWindowHint( GLFW_FOCUSED, GLFW_FALSE );
 		m_Window = glfwCreateWindow( Width, Height, Title.c_str(), NULL, NULL );
 		glfwSetWindowUserPointer( m_Window, &m_Data );
 
@@ -99,7 +105,7 @@ namespace Normal {
 									   data.Width = width;
 									   data.Height = height;
 
-									   WindowResizeEvent event{ width, width };
+									   WindowResizeEvent event{ width, height };
 									   data.Callback( event );
 								   } );
 

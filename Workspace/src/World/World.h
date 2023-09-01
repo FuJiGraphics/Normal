@@ -13,7 +13,7 @@ public:
 	virtual ~World() = default;
 
 	virtual void OnEvent( Normal::Event& event ) override;
-	virtual void OnUpdate( float deltaTime ) override;
+	virtual void OnUpdate( const float& dt ) override;
 
 private:
 	Rec m_Rec;
