@@ -13,9 +13,11 @@ namespace Normal {
 	}
 
 	void Renderer::Submit( const std::shared_ptr<Shader>& shader, 
-						   const std::shared_ptr<VertexArray>& vertexArray )
+						   const std::shared_ptr<VertexArray>& vertexArray,
+						   const glm::mat4& transform )
 	{
 		shader->Bind();
+		shader->UploadUniformMat4( "u_Transform", transform );
 		shader->UploadUniformMat4( "u_ViewProj", m_SceneData.Camera->GetVPMatrix() );
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed( vertexArray );

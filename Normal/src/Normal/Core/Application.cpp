@@ -119,7 +119,7 @@ namespace Normal {
 		// Window Initialze and Set Callback Functions
 		m_Window = std::unique_ptr<Window>( Window::Create() );
 		m_Window->SetEventCallback( BIND_EVENT_FUNC( Application::OnEvent ) );
-		m_Window->SetWindowSize( 500, 500 );
+		m_Window->SetWindowSize( 1280, 720 );
 		m_Window->SetVSync( true );
 
 		m_WindowInput.AttachCallback( BIND_EVENT_FUNC( Application::OnWindowClose ), WindowInput::Type::IsClosed );

@@ -33,7 +33,6 @@ Rec::Rec()
 		// Created a IndexBuffer
 		std::shared_ptr<Normal::IndexBuffer> indexBuffer;
 		indexBuffer.reset( Normal::IndexBuffer::Create(m_Indices.data(), m_Indices.size()));
-		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		// Set Index, Vertex buffer in the VertexArray
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
@@ -45,13 +44,14 @@ Rec::Rec()
 		layout (location = 0) in vec3 aPos;
 		layout (location = 1) in vec4 aColor;
 
+		uniform mat4 u_Transform;
 		uniform mat4 u_ViewProj;
 
 		out vec4 vertexColor;
 		
 		void main()
 		{
-			gl_Position = u_ViewProj * vec4(aPos, 1.0);
+			gl_Position = u_ViewProj * u_Transform * vec4(aPos, 1.0);
 			vertexColor = aColor;
 		}		
 		)";
@@ -63,7 +63,7 @@ Rec::Rec()
 		in vec4 vertexColor;
 		void main()
 		{
-			FragColor = vertexColor;
+			FragColor = vec4(vec3(0.0f, 0.0f, 0.3f), 1.0f);
 		}
 		)";
 

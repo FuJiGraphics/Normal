@@ -6,7 +6,6 @@
 #include <Normal/Renderer/Renderer.h>
 #include <Normal/Renderer/Shader.h>
 
-
 class Rec
 {
 public:

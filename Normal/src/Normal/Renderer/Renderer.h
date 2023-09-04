@@ -19,8 +19,9 @@ namespace Normal {
 		static void BeginScene( const std::shared_ptr<Camera>& camera );
 		static void EndScene();
 
-		static void Submit( const std::shared_ptr<Shader>& shader, 
-							const std::shared_ptr<VertexArray>& vertexArray );
+		static void Submit( const std::shared_ptr<Shader>& shader,
+							const std::shared_ptr<VertexArray>& vertexArray,
+							const glm::mat4& transform = glm::mat4( 1.0f ) );
 
 	public:
 		inline static RendererAPI::API GetGraphicAPI() { return RendererAPI::GetCurrentAPI(); }
