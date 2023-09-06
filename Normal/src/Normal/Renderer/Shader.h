@@ -20,5 +20,4 @@ namespace Normal {
 		static Shader* Create( const std::string& vertexSrc, const std::string& fragmentSrc );
 	};
 
-
 } // namespace Normal
