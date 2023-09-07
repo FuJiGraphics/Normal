@@ -21,7 +21,8 @@ namespace Normal {
 
 		static void Submit( const std::shared_ptr<Shader>& shader,
 							const std::shared_ptr<VertexArray>& vertexArray,
-							const glm::mat4& transform = glm::mat4( 1.0f ) );
+							const glm::mat4& transform = glm::mat4( 1.0f ),
+							const glm::vec4& vec = glm::vec4( 0.5f, 0.5f, 0.5f, 1.0f ) );
 
 	public:
 		inline static RendererAPI::API GetGraphicAPI() { return RendererAPI::GetCurrentAPI(); }

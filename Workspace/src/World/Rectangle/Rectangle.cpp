@@ -60,10 +60,12 @@ Rec::Rec()
 		#version 330 core
 		out vec4 FragColor;
 
+		uniform vec4 u_SquareColor;
+
 		in vec4 vertexColor;
 		void main()
 		{
-			FragColor = vec4(vec3(0.0f, 0.0f, 0.3f), 1.0f);
+			FragColor = u_SquareColor;
 		}
 		)";
 
