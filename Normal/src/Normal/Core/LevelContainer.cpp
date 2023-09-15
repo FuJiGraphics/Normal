@@ -7,8 +7,7 @@ namespace Normal {
 	LevelContainer::LevelContainer()
 		: m_Container()
 		, m_InsertIndex( 0 )
-	{
-	}
+	{ }
 
 	LevelContainer::~LevelContainer()
 	{

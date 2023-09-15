@@ -41,6 +41,13 @@ void World::OnUpdate( const float& dt )
 		m_Camera->SetPosition( moveLR );
 	}
 
+	static float sangle = 0.0f;
+	if ( KeyInput::IsKeyPreesed( NR_KEY_W ) )
+	{
+		sangle += 1.0f;
+		m_Camera->SetRotation( sangle, Normal::EularAngle::Pitch );
+	}
+
 	// Renderering 
 	Renderer::BeginScene( m_Camera );
 	RenderCommand::Clear();

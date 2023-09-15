@@ -2,7 +2,7 @@
 
 #include "Core.h"
 
-#include <iostream>
+#include <Normal/Core/NrPointer.h>
 #include <Normal/InputManager/WindowInput.h>
 
 namespace Normal {
@@ -60,9 +60,9 @@ namespace Normal {
 		bool		m_Running	 = true;
 		ImGuiLevel* m_ImGuiLevel = nullptr;
 
-		std::unique_ptr<Timer>				m_Timer;
-		std::unique_ptr<Window>				m_Window;
-		std::unique_ptr<LevelContainer>		m_LevelContainer;
+		NrPtr<Timer>				m_Timer;
+		NrPtr<Window>				m_Window;
+		NrPtr<LevelContainer>		m_LevelContainer;
 		
 		WindowInput m_WindowInput;
 

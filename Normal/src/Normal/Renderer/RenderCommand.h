@@ -24,6 +24,11 @@ namespace Normal {
 		{
 			s_RendererAPI->DrawIndexed( vertexArray );
 		}
+		
+		inline static void DestroyRendererAPI()
+		{
+			delete s_RendererAPI;
+		}
 
 	private:
 		// TODO: 의도적인 1바이트 메모리 누수, 프로그램 수명이 다할 때 까지 남길 방법 강구 
