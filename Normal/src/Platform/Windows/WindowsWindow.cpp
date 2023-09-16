@@ -80,7 +80,7 @@ namespace Normal {
 		glfwSetWindowUserPointer( m_Window, &m_Data );
 
 		// Set Rendering Context
-		m_RenderContext.reset( RenderContext::Create( m_Window ) );
+		m_RenderContext = MakePtr( RenderContext::Create( m_Window ) );
 		m_RenderContext->InitContext();
 
 		SetVSync( VSync );

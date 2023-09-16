@@ -16,11 +16,11 @@ namespace Normal {
 		~Renderer() = default;
 
 	public:
-		static void BeginScene( const std::shared_ptr<Camera>& camera );
+		static void BeginScene( const NrPtr<Camera>& camera );
 		static void EndScene();
 
-		static void Submit( const std::shared_ptr<Shader>& shader,
-							const std::shared_ptr<VertexArray>& vertexArray,
+		static void Submit( const NrPtr<Shader>& shader,
+							const NrPtr<VertexArray>& vertexArray,
 							const glm::mat4& transform = glm::mat4( 1.0f ),
 							const glm::vec4& vec = glm::vec4( 0.5f, 0.5f, 0.5f, 1.0f ) );
 
@@ -29,7 +29,7 @@ namespace Normal {
 
 	private:
 		struct SceneData { 
-			std::shared_ptr<Camera> Camera;
+			NrPtr<Camera> Camera;
 		};
 
 		inline static SceneData m_SceneData{};

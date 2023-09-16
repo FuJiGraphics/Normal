@@ -48,7 +48,7 @@ namespace Normal {
 		GLFWwindow* m_Window = nullptr;
 
 	private:
-		std::unique_ptr<RenderContext> m_RenderContext;
+		NrPtr<RenderContext> m_RenderContext;
 
 		NR_SET_NAME( "WindowsWindow" );
 	};

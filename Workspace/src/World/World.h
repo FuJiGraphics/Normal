@@ -2,6 +2,7 @@
 
 #include <Normal/Core/Core.h>
 #include <Normal/Core/Level.h>
+#include <Normal/Core/NrPointer.h>
 #include <Normal/Renderer/Camera.h>
 
 #include "Rectangle\Rectangle.h"
@@ -20,6 +21,6 @@ private:
 	Rec m_Rec;
 
 	glm::vec4 m_SquareColor;
-	std::shared_ptr<Normal::Camera> m_Camera;
+	Normal::NrPtr<Normal::Camera> m_Camera;
 };
 

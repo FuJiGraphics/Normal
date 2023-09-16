@@ -1,6 +1,8 @@
 #include "Nrpch.h"
 #include "Rectangle.h"
 
+using namespace Normal;
+
 Rec::Rec()
 	: m_Data()
 	, m_Indices()
@@ -16,11 +18,11 @@ Rec::Rec()
 
 	{
 		// Create a Vertex Array
-		m_VertexArray.reset( Normal::VertexArray::Create() );
+		m_VertexArray = MakePtr<VertexArray>( VertexArray::Create() );
 
 		// Created a VertexBuffer
-		std::shared_ptr<Normal::VertexBuffer> vertexBuffer;
-		vertexBuffer.reset( Normal::VertexBuffer::Create(m_Data.data(), sizeof(float) * m_Data.size()));
+		NrPtr<VertexBuffer> vertexBuffer;
+		vertexBuffer = MakePtr<VertexBuffer>( VertexBuffer::Create( m_Data.data(), sizeof( float ) * m_Data.size() ) );
 
 		// Created a BufferLayout;
 		Normal::BufferLayout bufferLayout = {
@@ -31,8 +33,8 @@ Rec::Rec()
 		vertexBuffer->SetLayout(bufferLayout);
 
 		// Created a IndexBuffer
-		std::shared_ptr<Normal::IndexBuffer> indexBuffer;
-		indexBuffer.reset( Normal::IndexBuffer::Create(m_Indices.data(), m_Indices.size()));
+		NrPtr<IndexBuffer> indexBuffer;
+		indexBuffer = MakePtr<IndexBuffer>( IndexBuffer::Create( m_Indices.data(), m_Indices.size() ) );
 
 		// Set Index, Vertex buffer in the VertexArray
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
@@ -69,7 +71,7 @@ Rec::Rec()
 		}
 		)";
 
-		m_Shader.reset( Normal::Shader::Create( m_VertexShader, m_IndexShader ) );
+		m_Shader = MakePtr<Shader>( Shader::Create( m_VertexShader, m_IndexShader ) );
 	}
 }
 Rec::~Rec()

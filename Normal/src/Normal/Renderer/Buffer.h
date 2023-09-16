@@ -56,7 +56,7 @@ namespace Normal {
 		}
 
 		inline NRuint GetStride() const { return m_Stride; }
-		inline NRuint GetElementsSize() const { return m_Elements.size(); }
+		inline NRuint GetElementsSize() const { return static_cast<NRuint>( m_Elements.size() ); }
 
 		inline LayoutElements::iterator begin() { return m_Elements.begin(); }
 		inline LayoutElements::iterator end() { return m_Elements.end(); }

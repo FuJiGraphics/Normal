@@ -114,10 +114,10 @@ namespace Normal {
 	void Application::Initialize()
 	{
 		// Create LevelContainer
-		m_LevelContainer = NrPtr<LevelContainer>::MakePtr();
+		m_LevelContainer = MakePtr<LevelContainer>();
 
 		// Window Initialze and Set Callback Functions
-		m_Window = NrPtr<Window>::MakePtr( Window::Create() );
+		m_Window = MakePtr<Window>( Window::Create() );
 		m_Window->SetEventCallback( BIND_EVENT_FUNC( Application::OnEvent ) );
 		m_Window->SetWindowSize( 1280, 720 );
 		m_Window->SetVSync( true );
@@ -131,7 +131,7 @@ namespace Normal {
 		m_LevelContainer->InsertOverlay( m_ImGuiLevel );
 
 		// Create Timer
-		m_Timer = NrPtr<Timer>::MakePtr();
+		m_Timer = MakePtr<Timer>();
 	}
 
 	void Application::Destroy()

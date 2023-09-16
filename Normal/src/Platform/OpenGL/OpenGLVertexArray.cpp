@@ -27,6 +27,7 @@ namespace Normal {
 			case ShaderDataType::Int4:    return GL_INT;
 			case ShaderDataType::Bool:    return GL_BOOL;
 		}
+		return GL_FALSE;
 	}
 
 	OpenGLVertexArray::OpenGLVertexArray()
@@ -51,7 +52,7 @@ namespace Normal {
 		glBindVertexArray( 0 );
 	}
 
-	void OpenGLVertexArray::AddVertexBuffer( const std::shared_ptr<VertexBuffer>& vertexBuffer )
+	void OpenGLVertexArray::AddVertexBuffer( const NrPtr<VertexBuffer>& vertexBuffer )
 	{
 		glBindVertexArray( m_RenderID );
 		vertexBuffer->Bind();
@@ -75,7 +76,7 @@ namespace Normal {
 		m_VertexBuffers.push_back( vertexBuffer );
 	}
 
-	void OpenGLVertexArray::SetIndexBuffer( const std::shared_ptr<IndexBuffer>& indexBuffer )
+	void OpenGLVertexArray::SetIndexBuffer( const NrPtr<IndexBuffer>& indexBuffer )
 	{
 		indexBuffer->Bind();
 		m_IndexBuffer = indexBuffer;

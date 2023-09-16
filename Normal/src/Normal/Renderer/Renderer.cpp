@@ -3,7 +3,7 @@
 
 namespace Normal {
 
-	void Renderer::BeginScene( const std::shared_ptr<Camera>& camera )
+	void Renderer::BeginScene( const NrPtr<Camera>& camera )
 	{
 		m_SceneData.Camera = camera;
 	}
@@ -12,8 +12,8 @@ namespace Normal {
 
 	}
 
-	void Renderer::Submit( const std::shared_ptr<Shader>& shader, 
-						   const std::shared_ptr<VertexArray>& vertexArray,
+	void Renderer::Submit( const NrPtr<Shader>& shader,
+						   const NrPtr<VertexArray>& vertexArray,
 						   const glm::mat4& transform,
 						   const glm::vec4& vec )
 	{

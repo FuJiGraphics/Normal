@@ -27,7 +27,7 @@ namespace Normal {
 		virtual void Clear() = 0;
 
 		// Index Buffer를 이용해서 Scene에 Draw 명령을 수행하기 때문에 DrawIndexed라는 이름이 된다.
-		virtual void DrawIndexed( const std::shared_ptr<VertexArray>& vertexArray ) = 0;
+		virtual void DrawIndexed( const NrPtr<VertexArray>& vertexArray ) = 0;
 
 	public:
 		inline static API GetCurrentAPI() { return m_GraphicAPI; }
