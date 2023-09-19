@@ -2,6 +2,7 @@
 
 #include <Normal/Core/Core.h>
 #include <Normal/Core/Level.h>
+#include <Normal/Core/NrPointer.h>
 #include <Normal/Renderer/Camera.h>
 #include <Normal/Renderer/Texture.h>
 

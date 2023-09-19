@@ -34,7 +34,7 @@ namespace Normal {
 	class NORMAL_API OrthogonalCamera : public Camera
 	{
 	public:
-		explicit OrthogonalCamera( float left, float right, float bottom, float top );
+		OrthogonalCamera( float left, float right, float bottom, float top );
 		~OrthogonalCamera() = default ;
 
 	public:

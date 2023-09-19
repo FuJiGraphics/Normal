@@ -24,6 +24,11 @@ namespace Normal {
 		{
 			s_RendererAPI->DrawIndexed( vertexArray );
 		}
+		
+		inline static void DestroyRendererAPI()
+		{
+			delete s_RendererAPI;
+		}
 
 		inline static void DeleteRenderAPI()
 		{

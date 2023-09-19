@@ -8,7 +8,8 @@ World::World()
 {
 	// Create Orthogonal Camera
 	// 윈도우 화면 비에 맞게 생성한다. 16:9 == 1280:720
-	m_Camera = std::make_shared<Normal::OrthogonalCamera>( -1.6f, 1.6f, -0.9f, 0.9f );
+	
+	m_Camera.reset( new OrthogonalCamera( -1.6f, 1.6f, -0.9f, 0.9f ) );
 	m_SquareColor = glm::vec4( 0.7f, 0.7f, 0.7f, 1.0f );
 }
 void World::OnEvent( Event& event )
@@ -39,6 +40,13 @@ void World::OnUpdate( const float& dt )
 	{
 		moveLR += ( glm::vec3( 0.0f, -1.0f, 0.0f ) * dt );
 		m_Camera->SetPosition( moveLR );
+	}
+
+	static float sangle = 0.0f;
+	if ( KeyInput::IsKeyPreesed( NR_KEY_W ) )
+	{
+		sangle += 1.0f;
+		m_Camera->SetRotation( sangle, Normal::EularAngle::Pitch );
 	}
 
 	// Renderering 

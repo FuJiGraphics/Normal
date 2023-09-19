@@ -2,7 +2,7 @@
 
 #include "Core.h"
 
-#include <iostream>
+#include <Normal/Core/NrPointer.h>
 #include <Normal/InputManager/WindowInput.h>
 
 namespace Normal {
@@ -63,7 +63,7 @@ namespace Normal {
 		Own::Unit<Timer>				m_Timer;
 		Own::Unit<Window>				m_Window;
 		Own::Unit<LevelContainer>		m_LevelContainer;
-		
+
 		WindowInput m_WindowInput;
 
 		NR_SET_NAME( "Application" );

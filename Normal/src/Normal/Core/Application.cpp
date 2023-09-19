@@ -114,10 +114,10 @@ namespace Normal {
 	void Application::Initialize()
 	{
 		// Create LevelContainer
-		m_LevelContainer = std::make_unique<LevelContainer>();
+		m_LevelContainer.reset( new LevelContainer() );
 
 		// Window Initialze and Set Callback Functions
-		m_Window = std::unique_ptr<Window>( Window::Create() );
+		m_Window.reset( Window::Create() );
 		m_Window->SetEventCallback( BIND_EVENT_FUNC( Application::OnEvent ) );
 		m_Window->SetWindowSize( 1280, 720 );
 		m_Window->SetVSync( true );
@@ -131,13 +131,13 @@ namespace Normal {
 		m_LevelContainer->InsertOverlay( m_ImGuiLevel );
 
 		// Create Timer
-		m_Timer = std::make_unique<Timer>();
+		m_Timer.reset ( new Timer() );
 	}
 
 	void Application::Destroy()
 	{
 		// NR_CORE_DELETE( m_LevelContainer, "m_LevelContainer" );
-		// RenderCommand::DeleteRenderAPI();
+		RenderCommand::DestroyRendererAPI();
 	}
 
 } // namespace Normal

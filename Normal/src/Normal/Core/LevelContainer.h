@@ -35,7 +35,7 @@ namespace Normal {
 		iter end() { return m_Container.end(); }
 
 	private:
-		std::vector< Level* > m_Container;
+		std::vector<Level*> m_Container;
 		NRuint64 m_InsertIndex;
 
 		NR_SET_NAME( "LevelContainer" );

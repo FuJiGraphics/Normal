@@ -7,5 +7,4 @@ namespace Normal {
 
 	RendererAPI* RenderCommand::s_RendererAPI = new OpenGLRendererAPI();
 
-
-}
+} // namespace Normal

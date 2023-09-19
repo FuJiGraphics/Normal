@@ -1,6 +1,8 @@
 #include "Nrpch.h"
 #include "Rectangle.h"
 
+using namespace Normal;
+
 Rec::Rec()
 	: m_Data()
 	, m_Indices()
@@ -16,7 +18,7 @@ Rec::Rec()
 
 	{
 		// Create a Vertex Array
-		m_VertexArray.reset( Normal::VertexArray::Create() );
+		m_VertexArray.reset( VertexArray::Create() );
 
 		// Created a VertexBuffer
 		Own::Share<Normal::VertexBuffer> vertexBuffer;

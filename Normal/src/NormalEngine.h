@@ -2,6 +2,7 @@
 
 // ------ For use by Normal applications ------
 #include <Normal/Core/Log.h>
+#include <Normal/Core/NrPointer.h>
 #include <Normal/Core/Application.h>
 #include <Normal/Core/Level.h>
 #include <Normal/ImGui/ImGuiLevel.h>
@@ -17,6 +18,7 @@
 #include <Normal/Renderer/RenderContext.h>
 #include <Normal/Renderer/RenderCommand.h>
 #include <Normal/Renderer/RendererAPI.h>
+#include <Normal/Renderer/Texture.h>
 #include <Normal/Renderer/Camera.h>
 #include <Normal/Renderer/Buffer.h>
 #include <Normal/Renderer/VertexArray.h>
