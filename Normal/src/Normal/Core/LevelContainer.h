@@ -10,7 +10,7 @@ namespace Normal {
 
 	class NORMAL_API LevelContainer
 	{
-		using iter = std::vector< Level* >::iterator;
+		using iter = std::vector<Level*>::iterator;
 
 	public:
 		explicit LevelContainer();

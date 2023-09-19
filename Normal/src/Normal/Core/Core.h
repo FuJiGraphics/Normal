@@ -138,8 +138,19 @@ namespace Normal {
                 NR_CORE_LINE_INFO("[{0}] Successfully deallocated memory.", __VA_ARGS__);\
             }\
         } // NR_CORE_DELETE
-
-
 } // namespace Normal
+
+
+#include <memory>
+namespace Normal {
+	namespace Own
+	{
+		template <typename T>
+		using Share = std::shared_ptr<T>;
+
+		template <typename T>
+		using Unit = std::unique_ptr<T>;
+	}
+}
 
 #pragma endregion

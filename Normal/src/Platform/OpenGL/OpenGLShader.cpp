@@ -135,6 +135,12 @@ namespace Normal {
 		glUseProgram( 0 );
 	}
 
+	void OpenGLShader::UploadUniformInt( const std::string& name, const NRint int1 )
+	{
+		NRuint location = glGetUniformLocation( m_RenderID, name.c_str() );
+		glUniform1i( location, int1 );
+	}
+
 	void OpenGLShader::UploadUniformFloat4( const std::string& name, const glm::vec4 float4 )
 	{
 		NRuint location = glGetUniformLocation( m_RenderID, name.c_str() );

@@ -3,6 +3,7 @@
 #include <Normal/Core/Core.h>
 #include <Normal/Core/Level.h>
 #include <Normal/Renderer/Camera.h>
+#include <Normal/Renderer/Texture.h>
 
 #include "Rectangle\Rectangle.h"
 
@@ -18,8 +19,9 @@ public:
 
 private:
 	Rec m_Rec;
+	Own::Share<Normal::Texture> m_Texture;
 
 	glm::vec4 m_SquareColor;
-	std::shared_ptr<Normal::Camera> m_Camera;
+	Own::Share<Normal::Camera> m_Camera;
 };
 

@@ -20,9 +20,14 @@ namespace Normal {
 			s_RendererAPI->Clear();
 		}
 
-		inline static void DrawIndexed( const std::shared_ptr<VertexArray>& vertexArray )
+		inline static void DrawIndexed( const Own::Share<VertexArray>& vertexArray )
 		{
 			s_RendererAPI->DrawIndexed( vertexArray );
+		}
+
+		inline static void DeleteRenderAPI()
+		{
+			delete s_RendererAPI;
 		}
 
 	private:

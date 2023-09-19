@@ -17,6 +17,7 @@ IncludeDir["GLFW"] = "Normal/vendor/GLFW/include"
 IncludeDir["Glad"] = "Normal/vendor/Glad/include"
 IncludeDir["Imgui"] = "Normal/vendor/imgui"
 IncludeDir["GLM"] = "Normal/vendor/GLM"
+IncludeDir["STB_IMAGE"] = "Normal/vendor/stb_image"
 
 -- this code is include a premake5 file
 include "Normal/vendor/GLFW"
@@ -40,7 +41,9 @@ project "Normal"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/stb_image/stb_image.cpp",
+        "%{prj.name}/vendor/stb_image/stb_image.h",
     }
 
     includedirs
@@ -49,6 +52,7 @@ project "Normal"
         "%{IncludeDir.Glad}",
         "%{IncludeDir.Imgui}",
         "%{IncludeDir.GLM}",
+        "%{IncludeDir.STB_IMAGE}",
         "Normal/vendor/spdlog/include",
         "Normal/src"
     }

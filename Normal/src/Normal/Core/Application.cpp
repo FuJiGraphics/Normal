@@ -137,6 +137,7 @@ namespace Normal {
 	void Application::Destroy()
 	{
 		// NR_CORE_DELETE( m_LevelContainer, "m_LevelContainer" );
+		// RenderCommand::DeleteRenderAPI();
 	}
 
 } // namespace Normal

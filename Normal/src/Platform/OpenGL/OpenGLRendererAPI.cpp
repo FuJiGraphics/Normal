@@ -20,7 +20,7 @@ namespace Normal {
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 	}
 
-	void OpenGLRendererAPI::DrawIndexed( const std::shared_ptr<VertexArray>& vertexArray )
+	void OpenGLRendererAPI::DrawIndexed( const Own::Share<VertexArray>& vertexArray )
 	{
 		const auto& indexBuffer = vertexArray->GetIndexBuffer();
 		glDrawElements( GL_TRIANGLES, indexBuffer->GetIndexCount(), GL_UNSIGNED_INT, 0);

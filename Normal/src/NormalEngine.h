@@ -23,8 +23,6 @@
 #include <Normal/Renderer/Shader.h>
 // -------------------------------------------
 
-
-
 // ----------------Entry Point----------------
 #include <Normal/Core/EntryPoint.h>
 // -------------------------------------------

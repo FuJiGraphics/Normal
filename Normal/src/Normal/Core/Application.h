@@ -60,9 +60,9 @@ namespace Normal {
 		bool		m_Running	 = true;
 		ImGuiLevel* m_ImGuiLevel = nullptr;
 
-		std::unique_ptr<Timer>				m_Timer;
-		std::unique_ptr<Window>				m_Window;
-		std::unique_ptr<LevelContainer>		m_LevelContainer;
+		Own::Unit<Timer>				m_Timer;
+		Own::Unit<Window>				m_Window;
+		Own::Unit<LevelContainer>		m_LevelContainer;
 		
 		WindowInput m_WindowInput;
 
