@@ -94,7 +94,7 @@ namespace Normal {
 			glfwDestroyWindow( m_Window );
 			glfwTerminate();
 		}
-	}
+	}  
 
 	void WindowsWindow::SetCallbacks() const
 	{
