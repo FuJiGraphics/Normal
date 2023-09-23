@@ -21,6 +21,7 @@ public:
 private:
 	Rec m_Rec;
 	Own::Share<Normal::Texture> m_Texture;
+	Own::Share<Normal::Texture> m_BlendTexture;
 
 	glm::vec4 m_SquareColor;
 	Own::Share<Normal::Camera> m_Camera;

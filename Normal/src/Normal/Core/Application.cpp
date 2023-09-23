@@ -6,13 +6,8 @@
 #include "LevelContainer.h"
 #include "Timer.h"
 
-
 #include <Normal/ImGui/ImGuiLevel.h>
-
 #include <Normal/Renderer/Renderer.h>
-#include <Normal/Renderer/VertexArray.h>
-#include <Normal/Renderer/Buffer.h>
-#include <Normal/Renderer/Shader.h>
 
 namespace Normal {
 	Application::Application()
@@ -124,6 +119,9 @@ namespace Normal {
 
 		m_WindowInput.AttachCallback( BIND_EVENT_FUNC( Application::OnWindowClose ), WindowInput::Type::IsClosed );
 		m_WindowInput.AttachCallback( BIND_EVENT_FUNC( Application::OnWindowResize ), WindowInput::Type::IsResized );
+
+		// Set Blend
+		RenderCommand::SetBlend( true );
 
 		// Create Imgui
 		// Level Container에 메모리 관리 권한을 위임함

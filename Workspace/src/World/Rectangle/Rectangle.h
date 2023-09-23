@@ -31,6 +31,7 @@ private:
 
 	Own::Share<Normal::Shader> m_Shader;
 
+	bool m_IsBlend = false;
 	NR_SET_NAME("Rectangle");
 };
 

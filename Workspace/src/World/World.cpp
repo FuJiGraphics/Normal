@@ -80,6 +80,11 @@ void World::OnUpdate( const float& dt )
 	Renderer::Submit( m_Rec.GetShader(), m_Rec.GetVertexArray(), 
 					  glm::scale( glm::mat4( 1.0f ), glm::vec3( 1.5f ) ), 
 					  m_SquareColor );
+	m_BlendTexture.reset( Texture2D::Create( "C:\/Dev/Normal/Asset/yuyuko2.png" ) );
+	m_BlendTexture->Bind();
+	Renderer::Submit( m_Rec.GetShader(), m_Rec.GetVertexArray(),
+					  glm::scale( glm::mat4( 1.0f ), glm::vec3( 1.0f ) ), 
+					  m_SquareColor );
 
 	Renderer::EndScene();
 }

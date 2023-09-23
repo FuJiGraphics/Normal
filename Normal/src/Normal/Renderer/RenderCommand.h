@@ -10,6 +10,11 @@ namespace Normal {
 	class NORMAL_API RenderCommand 
 	{
 	public:
+		inline static void SetBlend( bool enable )
+		{
+			s_RendererAPI->SetBlend( enable );
+		}
+
 		inline static void SetClearColor( const glm::vec4& clearColor )
 		{
 			s_RendererAPI->SetClearColor( clearColor );

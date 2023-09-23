@@ -23,6 +23,7 @@ namespace Normal {
 		};
 
 	public:
+		virtual void SetBlend( bool enable ) = 0;
 		virtual void SetClearColor( const glm::vec4& clearColor ) = 0;
 		virtual void Clear() = 0;
 

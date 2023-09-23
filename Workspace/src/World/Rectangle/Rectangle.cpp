@@ -73,7 +73,7 @@ Rec::Rec()
 			FragColor = u_SquareColor * texture( u_Texture, TexCoord );
 		}
 		)";
-
+		
 		m_Shader.reset( Normal::Shader::Create( m_TexVertexShader, m_TexFragmentShader ) );
 	}
 }

@@ -15,6 +15,17 @@ namespace Normal {
 					  static_cast<GLfloat>( clearColor.a ) );
 	}
 
+	void OpenGLRendererAPI::SetBlend( bool enable )
+	{
+		if ( enable == true )
+		{
+			glEnable( GL_BLEND );
+			glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+		}
+		else
+			glDisable( GL_BLEND );
+	}
+
 	void OpenGLRendererAPI::Clear()
 	{
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
