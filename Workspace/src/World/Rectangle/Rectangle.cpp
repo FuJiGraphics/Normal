@@ -41,40 +41,10 @@ Rec::Rec()
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		// Shader
-		m_TexVertexShader = R"(
-		#version 330 core
-		layout (location = 0) in vec3 a_Pos;
-		layout (location = 1) in vec2 a_TexCoord;
-
-		uniform mat4 u_Transform;
-		uniform mat4 u_ViewProj;
-
-		out vec2 TexCoord;
-		
-		void main()
-		{
-			gl_Position = u_ViewProj * u_Transform * vec4( a_Pos, 1.0 );
-			TexCoord = a_TexCoord;
-		}		
-		)";
-
-		m_TexFragmentShader = R"(
-		#version 330 core
-
-		in vec2 TexCoord;
-
-		uniform vec4 u_SquareColor;
-		uniform sampler2D u_Texture;
-
-		out vec4 FragColor;
-
-		void main()
-		{
-			FragColor = u_SquareColor * texture( u_Texture, TexCoord );
-		}
-		)";
-		
-		m_Shader.reset( Normal::Shader::Create( m_TexVertexShader, m_TexFragmentShader ) );
+		ShaderPaths paths;
+		paths.VertPath = "asset/shaders/texture/Vertex.glsl";
+		paths.FragPath = "asset/shaders/texture/Fragment.glsl";
+		m_Shader.reset( Normal::Shader::Create( paths ) );
 	}
 }
 Rec::~Rec()

@@ -4,6 +4,12 @@
 
 namespace Normal {
 
+	struct ShaderPaths
+	{
+		std::string VertPath;
+		std::string FragPath;
+	};
+
 	class NORMAL_API Shader
 	{
 	protected:
@@ -19,6 +25,7 @@ namespace Normal {
 		virtual void UploadUniformFloat4( const std::string& name, const glm::vec4 float4 ) = 0;
 		virtual void UploadUniformMat4( const std::string& name, const glm::mat4 mat ) = 0;
 
+		static Shader* Create( const ShaderPaths& paths );
 		static Shader* Create( const std::string& vertexSrc, const std::string& fragmentSrc );
 	};
 

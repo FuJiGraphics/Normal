@@ -44,7 +44,7 @@ namespace Normal {
 
 	void OrthogonalCamera::SetCalculateViewProj()
 	{
-		const glm::mat4& translation = glm::translate( glm::mat4( 1.0f ), -m_Pos );
+		const glm::mat4& translation = glm::translate( glm::mat4( 1.0f ), m_Pos );
 
 		// --- Roll-Pitch-Yaw ¼ø¼­
 		const glm::mat4& Rotation = 

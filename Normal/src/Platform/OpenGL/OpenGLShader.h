@@ -8,6 +8,7 @@ namespace Normal {
 	class NORMAL_API OpenGLShader : public Shader
 	{
 	public:
+		explicit OpenGLShader( const ShaderPaths& paths );
 	    explicit OpenGLShader( const std::string& vertexSrc, const std::string& fragmentSrc );
 		virtual ~OpenGLShader();
 
@@ -19,8 +20,16 @@ namespace Normal {
 		virtual void UploadUniformFloat4( const std::string& name, const glm::vec4 float4 ) override;
 		virtual void UploadUniformMat4( const std::string& name, const glm::mat4 mat ) override;
 
+	protected:
+		void Load( const ShaderPaths& paths );
+		void Complie();
+
+
 	private:
 		NRuint m_RenderID;
+
+		std::string m_VertShaderSource;
+		std::string m_FragShaderSource;
 
 		NR_SET_NAME( "OpenGLShader" );
 	};

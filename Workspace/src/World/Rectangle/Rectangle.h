@@ -24,12 +24,9 @@ private:
 	std::vector<float> m_Data;
 	std::vector<Normal::NRuint> m_Indices;
 
-	Own::Share<Normal::VertexArray> m_VertexArray;
-		
-	std::string m_TexVertexShader;
-	std::string m_TexFragmentShader;
 
-	Own::Share<Normal::Shader> m_Shader;
+	Own::Share<Normal::VertexArray>	m_VertexArray;
+	Own::Share<Normal::Shader>		m_Shader;
 
 	bool m_IsBlend = false;
 	NR_SET_NAME("Rectangle");

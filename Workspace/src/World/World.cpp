@@ -11,6 +11,12 @@ World::World()
 	
 	m_Camera.reset( new OrthogonalCamera( -1.6f, 1.6f, -0.9f, 0.9f ) );
 	m_SquareColor = glm::vec4( 0.7f, 0.7f, 0.7f, 1.0f );
+
+	m_Rec.GetShader()->Bind();
+	m_Rec.GetShader()->UploadUniformInt( "u_Texture", 0 );
+
+	m_Texture.reset( Texture2D::Create( "asset/textures/tiles.png" ) );
+	m_BlendTexture.reset( Texture2D::Create( "asset/textures/yuyuko2.png" ) );
 }
 void World::OnEvent( Event& event )
 {
@@ -72,15 +78,13 @@ void World::OnUpdate( const float& dt )
 	//	}
 	//}
 
-	m_Rec.GetShader()->Bind();
-	m_Rec.GetShader()->UploadUniformInt( "u_Texture", 0 );
-	m_Texture.reset( Texture2D::Create( "C:\/Dev/Normal/Asset/tiles.png" ) );
-	m_Texture->Bind();
 	glm::mat4 transform2 = glm::translate( glm::mat4( 1.0f ), glm::vec3( 0.0f, -0.3f, 0.0f ) );
+
+	m_Texture->Bind();
 	Renderer::Submit( m_Rec.GetShader(), m_Rec.GetVertexArray(), 
 					  glm::scale( glm::mat4( 1.0f ), glm::vec3( 1.5f ) ), 
 					  m_SquareColor );
-	m_BlendTexture.reset( Texture2D::Create( "C:\/Dev/Normal/Asset/yuyuko2.png" ) );
+
 	m_BlendTexture->Bind();
 	Renderer::Submit( m_Rec.GetShader(), m_Rec.GetVertexArray(),
 					  glm::scale( glm::mat4( 1.0f ), glm::vec3( 1.0f ) ), 

@@ -4,17 +4,87 @@
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <fstream>
+
 namespace Normal {
+	OpenGLShader::OpenGLShader( const ShaderPaths& paths )
+		: m_RenderID( 0 ) 
+	{
+		Load( paths );
+		Complie();
+	}
 
 	OpenGLShader::OpenGLShader( const std::string& vertexSrc, const std::string& fragmentSrc )
 		: m_RenderID( 0 )
+	{
+		m_VertShaderSource = vertexSrc;
+		m_FragShaderSource = fragmentSrc;
+		Complie();
+	}
+
+	OpenGLShader::~OpenGLShader()
+	{
+		glDeleteShader( m_RenderID );
+	}
+
+	void OpenGLShader::Bind() const
+	{
+		glUseProgram( m_RenderID );
+	}
+
+	void OpenGLShader::UnBind() const
+	{
+		glUseProgram( 0 );
+	}
+
+	void OpenGLShader::UploadUniformInt( const std::string& name, const NRint int1 )
+	{
+		NRuint location = glGetUniformLocation( m_RenderID, name.c_str() );
+		glUniform1i( location, int1 );
+	}
+
+	void OpenGLShader::UploadUniformFloat4( const std::string& name, const glm::vec4 float4 )
+	{
+		NRuint location = glGetUniformLocation( m_RenderID, name.c_str() );
+		glUniform4f( location, float4.x, float4.y, float4.z, float4.w );
+	}
+
+	void OpenGLShader::UploadUniformMat4( const std::string& name, const glm::mat4 mat )
+	{
+		NRuint location = glGetUniformLocation( m_RenderID, name.c_str() );
+		glUniformMatrix4fv( location, 1, GL_FALSE, glm::value_ptr( mat ) );
+	}
+
+	void OpenGLShader::Load( const ShaderPaths& paths )
+	{
+		if ( paths.VertPath.empty() == false )
+		{
+			std::ifstream ifs( paths.VertPath.c_str(), std::ios::binary );
+			NR_CORE_ASSERT( ifs.is_open(), "Could not open shader file! \"{0}\"", paths.VertPath );
+			std::stringstream ss;
+			ss << ifs.rdbuf();
+			m_VertShaderSource = ss.str();
+			ifs.close();
+		}
+		if ( paths.FragPath.empty() == false )
+		{
+			std::ifstream ifs( paths.FragPath.c_str(), std::ios::binary );
+			NR_CORE_ASSERT( ifs.is_open(), "Could not open shader file! \"{0}\"", paths.FragPath );
+			std::stringstream ss;
+			ss << ifs.rdbuf();
+			m_FragShaderSource = ss.str();
+			ifs.close();
+		}
+	}
+
+	void OpenGLShader::Complie()
 	{
 		// Create an empty vertex shader handle
 		NRuint vertexShader = glCreateShader( GL_VERTEX_SHADER );
 
 		// Send the vertex shader source code to GL
 		// Note that std::string's .c_str is NULL character terminated.
-		const NRchar* source = (const NRchar*)vertexSrc.c_str();
+		const NRchar* source = (const NRchar*)m_VertShaderSource.c_str();
 		glShaderSource( vertexShader, 1, &source, 0 );
 
 		// Compile the vertex shader
@@ -47,7 +117,7 @@ namespace Normal {
 
 		// Send the fragment shader source code to GL
 		// Note that std::string's .c_str is NULL character terminated.
-		source = (const NRchar*)fragmentSrc.c_str();
+		source = (const NRchar*)m_FragShaderSource.c_str();
 		glShaderSource( fragmentShader, 1, &source, 0 );
 
 		// Compile the fragment shader
@@ -119,39 +189,5 @@ namespace Normal {
 		glDetachShader( program, vertexShader );
 		glDetachShader( program, fragmentShader );
 	}
-
-	OpenGLShader::~OpenGLShader()
-	{
-		glDeleteShader( m_RenderID );
-	}
-
-	void OpenGLShader::Bind() const
-	{
-		glUseProgram( m_RenderID );
-	}
-
-	void OpenGLShader::UnBind() const
-	{
-		glUseProgram( 0 );
-	}
-
-	void OpenGLShader::UploadUniformInt( const std::string& name, const NRint int1 )
-	{
-		NRuint location = glGetUniformLocation( m_RenderID, name.c_str() );
-		glUniform1i( location, int1 );
-	}
-
-	void OpenGLShader::UploadUniformFloat4( const std::string& name, const glm::vec4 float4 )
-	{
-		NRuint location = glGetUniformLocation( m_RenderID, name.c_str() );
-		glUniform4f( location, float4.x, float4.y, float4.z, float4.w );
-	}
-
-	void OpenGLShader::UploadUniformMat4( const std::string& name, const glm::mat4 mat )
-	{
-		NRuint location = glGetUniformLocation( m_RenderID, name.c_str() );
-		glUniformMatrix4fv( location, 1, GL_FALSE, glm::value_ptr( mat ) );
-	} 
-
 
 } // namespace Normal
