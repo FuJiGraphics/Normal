@@ -24,7 +24,6 @@ namespace Normal {
 		void Load( const ShaderPaths& paths );
 		void Complie();
 
-
 	private:
 		NRuint m_RenderID;
 

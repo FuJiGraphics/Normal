@@ -36,4 +36,15 @@ namespace Normal {
         return nullptr;
 	}
 
+    void ShaderManager::Add( const std::string& name, Shader* shader )
+    {
+        NR_CORE_ASSERT( !this->Exist( name ), "Shader data already exists! " );
+        m_Shaders.insert( std::make_pair( name, Own::Share<Shader>( shader ) ) );
+    }
+
+    bool ShaderManager::Exist( const std::string& name ) const
+    {
+        return m_Shaders.find( name ) != m_Shaders.end();
+    }
+
 } // namespace Normal

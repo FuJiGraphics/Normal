@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Normal/Core/Core.h>
+#include <unordered_map>
 
 namespace Normal {
 
@@ -29,4 +30,21 @@ namespace Normal {
 		static Shader* Create( const std::string& vertexSrc, const std::string& fragmentSrc );
 	};
 
+	class NORMAL_API ShaderManager
+	{
+	public:
+		ShaderManager() = default;
+		~ShaderManager() = default;
+
+		void Add( const std::string& name, Shader* shader );
+		bool Exist( const std::string& name ) const;
+
+		inline Own::Share<Shader>& Get( const std::string name ) 
+		{ 
+			return m_Shaders[name]; 
+		}
+		
+	private:
+		std::unordered_map<const std::string, Own::Share<Shader> > m_Shaders;
+	};
 } // namespace Normal
