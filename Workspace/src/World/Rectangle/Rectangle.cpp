@@ -44,12 +44,11 @@ Rec::Rec()
 		ShaderPaths paths;
 		paths.VertPath = "asset/shaders/texture/Vertex.glsl";
 		paths.FragPath = "asset/shaders/texture/Fragment.glsl";
-		m_Shader.reset( Normal::Shader::Create( paths ) );
+		m_ShaderManager.Add( "Rectangle", Normal::Shader::Create( paths ) );
 	}
 }
 Rec::~Rec()
 {
-	m_Shader->UnBind();
 	m_VertexArray->UnBind();
 }
 

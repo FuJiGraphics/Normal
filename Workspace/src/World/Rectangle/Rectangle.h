@@ -18,15 +18,15 @@ public:
 	void UnBind() const; 
 
 	Own::Share<Normal::VertexArray>& GetVertexArray() { return m_VertexArray; }
-	Own::Share<Normal::Shader>& GetShader() { return m_Shader; }
+	Own::Share<Normal::Shader>& GetShader() { return m_ShaderManager.Get("Rectangle"); }
 
 private:
 	std::vector<float> m_Data;
 	std::vector<Normal::NRuint> m_Indices;
 
 
+	ShaderManager m_ShaderManager;
 	Own::Share<Normal::VertexArray>	m_VertexArray;
-	Own::Share<Normal::Shader>		m_Shader;
 
 	bool m_IsBlend = false;
 	NR_SET_NAME("Rectangle");
