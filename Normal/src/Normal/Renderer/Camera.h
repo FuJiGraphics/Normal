@@ -28,6 +28,7 @@ namespace Normal {
 
 		virtual void SetPosition( const glm::vec3& pos ) = 0;
 		virtual void SetRotation( const float& angle, const EularAngle& type ) = 0;
+		virtual void SetScale( const float scale ) = 0;
 	};
 
 	// Orthogonal Projection Camera
@@ -42,6 +43,8 @@ namespace Normal {
 
 		virtual void SetPosition( const glm::vec3& pos ) override;
 		virtual void SetRotation( const float& angle, const EularAngle& type ) override;
+		virtual void SetScale( const float scale ) override;
+
 
 	private:
 		void SetCalculateViewProj();
@@ -53,6 +56,7 @@ namespace Normal {
 		float m_Yaw   = 0.0f;
 		float m_Roll  = 0.0f;
 
+		float m_Scale = 1.0f;
 		glm::mat4 m_View;
 		glm::mat4 m_Proj;
 		glm::mat4 m_ViewProj;

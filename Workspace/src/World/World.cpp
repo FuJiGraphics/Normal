@@ -5,11 +5,10 @@
 using namespace Normal;
 
 World::World()
+	: m_CameraManager( 1280.0f / 720.0f )
 {
 	// Create Orthogonal Camera
 	// 윈도우 화면 비에 맞게 생성한다. 16:9 == 1280:720
-	
-	m_Camera.reset( new OrthogonalCamera( -1.6f, 1.6f, -0.9f, 0.9f ) );
 	m_SquareColor = glm::vec4( 0.7f, 0.7f, 0.7f, 1.0f );
 
 	m_Rec.GetShader()->Bind();
@@ -20,43 +19,16 @@ World::World()
 }
 void World::OnEvent( Event& event )
 {
-
+	m_CameraManager.OnEvent( event );
 }
 
 void World::OnUpdate( const float& dt )
 {
-	// InputKey Polling
-	static glm::vec3 moveLR{0.0f, 0.0f, 0.0f};
-	if ( KeyInput::IsKeyPreesed( NR_KEY_RIGHT ) )
-	{
-		moveLR += ( glm::vec3( 1.0f, 0.0f, 0.0f ) * dt );
-		m_Camera->SetPosition( moveLR );
-	}
-	if ( KeyInput::IsKeyPreesed( NR_KEY_LEFT ) )
-	{
-		moveLR += ( glm::vec3( -1.0f, 0.0f, 0.0f ) * dt );
-		m_Camera->SetPosition( moveLR );
-	}
-	if ( KeyInput::IsKeyPreesed( NR_KEY_UP ) )
-	{
-		moveLR += ( glm::vec3( 0.0f, 1.0f, 0.0f ) * dt );
-		m_Camera->SetPosition( moveLR );
-	}
-	if ( KeyInput::IsKeyPreesed( NR_KEY_DOWN ) )
-	{
-		moveLR += ( glm::vec3( 0.0f, -1.0f, 0.0f ) * dt );
-		m_Camera->SetPosition( moveLR );
-	}
-
-	static float sangle = 0.0f;
-	if ( KeyInput::IsKeyPreesed( NR_KEY_W ) )
-	{
-		sangle += 1.0f;
-		m_Camera->SetRotation( sangle, Normal::EularAngle::Pitch );
-	}
+	// Camera Manager
+	m_CameraManager.OnUpdate( dt );
 
 	// Renderering 
-	Renderer::BeginScene( m_Camera );
+	Renderer::BeginScene( m_CameraManager.GetCamera() );
 	RenderCommand::Clear();
 	RenderCommand::SetClearColor( { 0.2f, 0.2f, 0.2f, 1.0f } );
 

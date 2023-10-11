@@ -3,8 +3,8 @@
 #include <Normal/Core/Core.h>
 #include <Normal/Core/Level.h>
 #include <Normal/Core/NrPointer.h>
-#include <Normal/Renderer/Camera.h>
 #include <Normal/Renderer/Texture.h>
+#include <Normal/Renderer/CameraManager.h>
 
 #include "Rectangle\Rectangle.h"
 
@@ -20,10 +20,11 @@ public:
 
 private:
 	Rec m_Rec;
+	Normal::CameraManager m_CameraManager;
+
 	Own::Share<Normal::Texture> m_Texture;
 	Own::Share<Normal::Texture> m_BlendTexture;
 
 	glm::vec4 m_SquareColor;
-	Own::Share<Normal::Camera> m_Camera;
 };
 

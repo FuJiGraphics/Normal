@@ -2,6 +2,7 @@
 
 #include <Normal/Core/Core.h>
 #include <unordered_map>
+#include <string>
 
 namespace Normal {
 
@@ -39,12 +40,11 @@ namespace Normal {
 		void Add( const std::string& name, Shader* shader );
 		bool Exist( const std::string& name ) const;
 
-		inline Own::Share<Shader>& Get( const std::string name ) 
-		{ 
-			return m_Shaders[name]; 
+		inline Own::Share<Shader>& Get( const std::string name ) { 
+			return m_Shaders[name];
 		}
-		
+
 	private:
-		std::unordered_map<const std::string, Own::Share<Shader> > m_Shaders;
+		std::unordered_map< std::string, Own::Share<Shader> > m_Shaders;
 	};
 } // namespace Normal
