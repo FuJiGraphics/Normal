@@ -58,6 +58,7 @@ namespace Normal {
 		inline static Application* s_Instance = nullptr;
 		
 		bool		m_Running	 = true;
+		bool		m_Minimized  = false;
 		ImGuiLevel* m_ImGuiLevel = nullptr;
 
 		Own::Unit<Timer>				m_Timer;

@@ -59,7 +59,7 @@ namespace Normal {
 			glm::rotate( glm::mat4( 1.0f ), m_Pitch, glm::vec3( 1.0f, 0.0f, 0.0f ) ) *
 			glm::rotate( glm::mat4( 1.0f ), m_Roll,  glm::vec3( 0.0f, 0.0f, 1.0f ) );
 
-		const glm::mat4& transform = scale * rotation * translation;
+		const glm::mat4& transform = rotation * translation * scale;
 
 		m_View = glm::inverse( transform );
 

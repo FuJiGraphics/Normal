@@ -36,20 +36,22 @@ namespace Normal {
 			//			   m_Timer->DeltaTime( Timer::Seconds ),
 			//			   m_Timer->DeltaTime( Timer::Milliseconds ) );
 			// Start update a Level and Overlays
-			for ( auto level : *m_LevelContainer )
+			if ( m_Minimized == false )
 			{
-				level->OnUpdate( m_Timer->DeltaTime( Timer::Seconds ) );
-			}
+				for ( auto level : *m_LevelContainer )
+				{
+					level->OnUpdate( m_Timer->DeltaTime( Timer::Seconds ) );
+				}
 
-			// -- ImGui Start --
-			m_ImGuiLevel->BeginFrame();
-			for ( auto level : *m_LevelContainer )
-			{
-				level->OnGuiRender();
+				// -- ImGui Start --
+				m_ImGuiLevel->BeginFrame();
+				for ( auto level : *m_LevelContainer )
+				{
+					level->OnGuiRender();
+				}
+				m_ImGuiLevel->EndFrame();
+				// -- ImGui End --
 			}
-			m_ImGuiLevel->EndFrame();
-			// -- ImGui End --
-
 			// Update a Window and Renderer
 			m_Window->OnUpdate();
 		}
@@ -103,7 +105,13 @@ namespace Normal {
 
 	void Application::OnWindowResize( WindowInputData input )
 	{
-		m_Window->SetWindowSize( input.width, input.height );
+		if ( input.width <= 0.001f && input.height <= 0.001f )
+			m_Minimized = true;
+		else
+		{
+			m_Minimized = false;
+			m_Window->SetWindowSize( input.width, input.height );
+		}
 	}
 
 	void Application::Initialize()
