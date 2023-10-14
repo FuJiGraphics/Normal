@@ -8,11 +8,11 @@
 
 namespace Normal {
 
-	VertexArray* VertexArray::Create()
+	Own::Share<VertexArray> VertexArray::Create()
 	{
 		switch ( Renderer::GetGraphicAPI() )
 		{
-			case RendererAPI::API::OpenGL: return new OpenGLVertexArray();
+			case RendererAPI::API::OpenGL: return Own::Share<VertexArray>( new OpenGLVertexArray() );
 			case RendererAPI::API::Vulkan:
 			case RendererAPI::API::DirectX11:
 			case RendererAPI::API::DirectX12:

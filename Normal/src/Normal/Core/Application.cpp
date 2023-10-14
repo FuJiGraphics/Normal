@@ -131,6 +131,9 @@ namespace Normal {
 		// Set Blend
 		RenderCommand::SetBlend( true );
 
+		// Init Renderer
+		Renderer::Initialize();
+
 		// Create Imgui
 		// Level Container에 메모리 관리 권한을 위임함
 		m_ImGuiLevel = new ImGuiLevel;
@@ -144,6 +147,7 @@ namespace Normal {
 	{
 		// NR_CORE_DELETE( m_LevelContainer, "m_LevelContainer" );
 		RenderCommand::DestroyRendererAPI();
+		Renderer::Finalize();
 	}
 
 } // namespace Normal

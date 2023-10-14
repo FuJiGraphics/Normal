@@ -9,11 +9,15 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <array>
 #include <unordered_map>
 #include <unordered_set>
 
+// Normal
 #include <Normal/Core/Log.h>
 #include <Normal/Core/Timer.h>
+#include <Normal/Renderer/Renderer.h>
+#include <Normal/Renderer/Renderer2D.h>
 
 // Math Libraries
 #include <glm/glm.hpp>

@@ -54,11 +54,11 @@ namespace Normal {
 	/*___________________________________________________________________________________
 	 *   Vertex Buffer
 	 *__________________________________________________________________________________*/
-	VertexBuffer* VertexBuffer::Create( float* vertices, NRuint size )
+	Own::Share<VertexBuffer> VertexBuffer::Create( float* vertices, NRuint size )
 	{
 		switch ( Renderer::GetGraphicAPI() )
 		{
-			case RendererAPI::API::OpenGL: return new OpenGLVertexBuffer( vertices, size );
+			case RendererAPI::API::OpenGL: return Own::Share<VertexBuffer>( new OpenGLVertexBuffer( vertices, size ) );
 			case RendererAPI::API::Vulkan:
 			case RendererAPI::API::DirectX11:
 			case RendererAPI::API::DirectX12:
@@ -72,11 +72,11 @@ namespace Normal {
 	/*___________________________________________________________________________________
 	 *   Index Buffer
 	 *__________________________________________________________________________________*/
-	IndexBuffer* IndexBuffer::Create( NRuint* indices, NRuint count )
+	Own::Share<IndexBuffer> IndexBuffer::Create( NRuint* indices, NRuint count )
 	{
 		switch ( Renderer::GetGraphicAPI() )
 		{
-			case RendererAPI::API::OpenGL: return new OpenGLIndexBuffer( indices, count );
+			case RendererAPI::API::OpenGL: return Own::Share<IndexBuffer>( new OpenGLIndexBuffer( indices, count ) );
 			case RendererAPI::API::Vulkan:
 			case RendererAPI::API::DirectX11:
 			case RendererAPI::API::DirectX12:

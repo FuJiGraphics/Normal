@@ -22,7 +22,6 @@ namespace Normal {
 		virtual void AddVertexBuffer( const Own::Share<VertexBuffer>& vertexBuffer ) override;
 		virtual void SetIndexBuffer( const Own::Share<IndexBuffer>& indexBuffer ) override;
 
-		virtual const std::vector<Own::Share<VertexBuffer>>& GetVertexBuffers() const { return m_VertexBuffers; }
 		virtual const Own::Share<IndexBuffer>& GetIndexBuffer() const { return m_IndexBuffer; }
 
 	private:

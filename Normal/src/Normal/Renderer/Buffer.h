@@ -79,7 +79,7 @@ namespace Normal {
 
 	private:
 		std::vector<LayoutElement> m_Elements;
-		NRuint m_Stride; 
+		NRuint m_Stride = 0; 
 	};
 
 
@@ -101,7 +101,7 @@ namespace Normal {
 		virtual const BufferLayout& GetLayout() const = 0;
 
 	public:
-		static VertexBuffer* Create( float* vertices, NRuint size );
+		static Own::Share<VertexBuffer> Create( float* vertices, NRuint size );
 
 	};
 
@@ -124,7 +124,7 @@ namespace Normal {
 		virtual NRuint GetIndexCount() const = 0;
 
 	public:
-		static IndexBuffer* Create( NRuint* indices, NRuint count );
+		static Own::Share<IndexBuffer> Create( NRuint* indices, NRuint count );
 	};
 
 

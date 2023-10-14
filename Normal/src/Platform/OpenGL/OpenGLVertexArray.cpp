@@ -72,7 +72,6 @@ namespace Normal {
 			glEnableVertexAttribArray( index );
 			++index;
 		}
-
 		m_VertexBuffers.push_back( vertexBuffer );
 	}
 

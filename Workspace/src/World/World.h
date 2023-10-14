@@ -2,11 +2,8 @@
 
 #include <Normal/Core/Core.h>
 #include <Normal/Core/Level.h>
-#include <Normal/Core/NrPointer.h>
 #include <Normal/Renderer/Texture.h>
 #include <Normal/Renderer/CameraManager.h>
-
-#include "Rectangle\Rectangle.h"
 
 class World : public Normal::Level
 {
@@ -19,11 +16,7 @@ public:
 	virtual void OnGuiRender() override;
 
 private:
-	Rec m_Rec;
 	Normal::CameraManager m_CameraManager;
-
-	Own::Share<Normal::Texture> m_Texture;
-	Own::Share<Normal::Texture> m_BlendTexture;
 
 	glm::vec4 m_SquareColor;
 };

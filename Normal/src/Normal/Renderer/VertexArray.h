@@ -22,10 +22,9 @@ namespace Normal {
 		virtual void AddVertexBuffer( const Own::Share<VertexBuffer>& vertexBuffer ) = 0;
 		virtual void SetIndexBuffer( const Own::Share<IndexBuffer>& indexBuffer ) = 0;
 
-		virtual const std::vector<Own::Share<VertexBuffer>>& GetVertexBuffers() const = 0;
 		virtual const Own::Share<IndexBuffer>& GetIndexBuffer() const = 0;
 
-		static VertexArray* Create();
+		static Own::Share<VertexArray> Create();
 	};
 
 }  // namespace Normal

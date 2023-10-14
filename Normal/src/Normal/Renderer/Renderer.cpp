@@ -1,7 +1,18 @@
 #include "Nrpch.h"
 #include "Renderer.h"
+#include "Renderer2D.h"
 
 namespace Normal {
+
+	void Renderer::Initialize()
+	{
+		Renderer2D::Initialze();
+	}
+
+	void Renderer::Finalize()
+	{
+		Renderer2D::Finalize();
+	}
 
 	void Renderer::BeginScene( const Own::Share<Camera>& camera )
 	{

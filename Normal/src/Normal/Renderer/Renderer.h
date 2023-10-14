@@ -10,12 +10,9 @@ namespace Normal {
 
 	class NORMAL_API Renderer 
 	{
-	protected:
-		explicit Renderer() = default;
 	public:
-		~Renderer() = default;
-
-	public:
+		static void Initialize();
+		static void Finalize();
 		static void BeginScene( const Own::Share<Camera>& camera );
 		static void EndScene();
 

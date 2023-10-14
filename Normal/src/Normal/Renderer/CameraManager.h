@@ -16,6 +16,8 @@ namespace Normal {
 		void OnEvent( Event& event );
 		void OnUpdate( const float& dt );
 		
+		inline void ActivateRotation( bool enable ) { m_OnRotation = enable; }
+
 		inline Own::Share<Normal::Camera>& GetCamera() { return m_Camera; }
 		inline const Own::Share<Normal::Camera>& GetCamera() const { return m_Camera; }
 
