@@ -16,9 +16,9 @@ namespace Normal {
 		virtual void Bind() const override;
 		virtual void UnBind() const override;
 
-		virtual void UploadUniformInt( const std::string& name, const NRint int1 ) override;
-		virtual void UploadUniformFloat4( const std::string& name, const glm::vec4 float4 ) override;
-		virtual void UploadUniformMat4( const std::string& name, const glm::mat4 mat ) override;
+		virtual void SetInt( const std::string& name, const NRint& int1 ) override;
+		virtual void SetFloat4( const std::string& name, const glm::vec4& float4 ) override;
+		virtual void SetMat4( const std::string& name, const glm::mat4& mat4 ) override;
 
 	protected:
 		void Load( const ShaderPaths& paths );

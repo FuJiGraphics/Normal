@@ -38,11 +38,24 @@ namespace Normal {
 		// TODO : End Scene ±¸Çö
 	}
 
-	void Renderer2D::DrawQuad( const glm::vec3& pos, const glm::vec4& color )
+	void Renderer2D::DrawQuad( const glm::vec3& pos, const glm::vec2& scale, const glm::vec4& color )
 	{
+		glm::mat4 transform = 
+			glm::scale( glm::mat4( 1.0f ), glm::vec3( scale, 1.0f ) ) * 
+			glm::translate( glm::mat4( 1.0f ), pos );
+
 		Renderer::Submit( s_Quad->GetShader(), s_Quad->GetVertexArray(),
-						  glm::scale( glm::mat4( 1.0f ), glm::vec3( 1.5f ) ),
-						  color );
+						  transform, color );
+	}
+
+	void Renderer2D::DrawQuad( const glm::vec2& pos, const glm::vec2& scale, const glm::vec4& color )
+	{
+		glm::mat4 transform =
+			glm::translate( glm::mat4( 1.0f ), glm::vec3( pos, 1.0f ) ) *
+			glm::scale( glm::mat4( 1.0f ), glm::vec3( scale, 1.0f ) );
+
+		Renderer::Submit( s_Quad->GetShader(), s_Quad->GetVertexArray(),
+						  transform, color );
 	}
 
 } // namespace Normal

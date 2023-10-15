@@ -37,19 +37,19 @@ namespace Normal {
 		glUseProgram( 0 );
 	}
 
-	void OpenGLShader::UploadUniformInt( const std::string& name, const NRint int1 )
+	void OpenGLShader::SetInt( const std::string& name, const NRint& int1 )
 	{
 		NRuint location = glGetUniformLocation( m_RenderID, name.c_str() );
 		glUniform1i( location, int1 );
 	}
 
-	void OpenGLShader::UploadUniformFloat4( const std::string& name, const glm::vec4 float4 )
+	void OpenGLShader::SetFloat4( const std::string& name, const glm::vec4& float4 )
 	{
 		NRuint location = glGetUniformLocation( m_RenderID, name.c_str() );
 		glUniform4f( location, float4.x, float4.y, float4.z, float4.w );
 	}
 
-	void OpenGLShader::UploadUniformMat4( const std::string& name, const glm::mat4 mat )
+	void OpenGLShader::SetMat4( const std::string& name, const glm::mat4& mat )
 	{
 		NRuint location = glGetUniformLocation( m_RenderID, name.c_str() );
 		glUniformMatrix4fv( location, 1, GL_FALSE, glm::value_ptr( mat ) );

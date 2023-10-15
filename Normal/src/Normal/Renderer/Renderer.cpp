@@ -29,9 +29,9 @@ namespace Normal {
 						   const glm::vec4& color )
 	{
 		shader->Bind();
-		shader->UploadUniformMat4( "u_Transform", transform );
-		shader->UploadUniformMat4( "u_ViewProj", m_SceneData.Camera->GetVPMatrix() );
-		shader->UploadUniformFloat4( "u_SquareColor", color );
+		shader->SetMat4( "u_Transform", transform );
+		shader->SetMat4( "u_ViewProj", m_SceneData.Camera->GetVPMatrix() );
+		shader->SetFloat4( "u_SquareColor", color );
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed( vertexArray );
 	}

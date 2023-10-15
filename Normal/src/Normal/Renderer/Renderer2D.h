@@ -18,7 +18,8 @@ namespace Normal {
 		static void BeginScene( const Own::Share<CameraManager>& cameraManager );
 		static void EndScene();
 
-		static void DrawQuad( const glm::vec3& pos, const glm::vec4& color );
+		static void DrawQuad( const glm::vec3& pos, const glm::vec2& scale, const glm::vec4& color );
+		static void DrawQuad( const glm::vec2& pos, const glm::vec2& scale, const glm::vec4& color );
 	};
 
 
