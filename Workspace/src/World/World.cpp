@@ -7,6 +7,7 @@ World::World()
 	: m_CameraManager( 1280.0f / 720.0f )
 	, m_Tex_Yuyuko1( Texture2D::Create( "asset/textures/yuyuko1.png" ) )
 	, m_Tex_Yuyuko2( Texture2D::Create( "asset/textures/yuyuko2.png" ) )
+	, m_Tex_Yuyuko3( Texture2D::Create( "asset/textures/yuyuko3.png" ) )
 	, m_Tex_Tile( Texture2D::Create( "asset/textures/tile.png" ) )
 {
 	// Create Orthogonal Camera
@@ -14,6 +15,7 @@ World::World()
 	m_CameraManager.ActivateRotation( true );
 	m_SquareColor = glm::vec4( 1.7f, 0.7f, 0.7f, 1.0f );
 }
+
 void World::OnEvent( Event& event )
 {
 	m_CameraManager.OnEvent( event );
@@ -43,10 +45,12 @@ void World::OnUpdate( const float& dt )
 	// Renderering 
 	Renderer2D::BeginScene( m_CameraManager );
 	
-	Renderer2D::DrawQuad( movement - glm::vec2( 0.5f, 0.5f ), scale, m_SquareColor );
+
+	Renderer2D::DrawQuad( movement - glm::vec2( 0.5f, 0.5f ), scale, m_Tex_Yuyuko1 );
 	Renderer2D::DrawQuad( movement, scale, m_Tex_Tile );
 	Renderer2D::DrawQuad( movement + glm::vec2( 0.5f, 0.0f ), scale, m_Tex_Yuyuko1 );
-	Renderer2D::DrawQuad( movement + glm::vec2( -0.5f, 0.0f ), scale, m_Tex_Yuyuko2 );
+	Renderer2D::DrawQuad( movement + glm::vec2( -0.5f, -1.0f ), scale, m_Tex_Yuyuko2 );
+	Renderer2D::DrawQuad( movement + glm::vec2( -1.5f, -1.0f ), scale, m_Tex_Yuyuko3 );
 
 	Renderer2D::EndScene();
 }
