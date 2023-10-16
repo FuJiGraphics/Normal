@@ -18,6 +18,10 @@ public:
 private:
 	Normal::CameraManager m_CameraManager;
 
+	Normal::Own::Share<Normal::Texture2D> m_Tex_Yuyuko2;
+	Normal::Own::Share<Normal::Texture2D> m_Tex_Yuyuko1;
+	Normal::Own::Share<Normal::Texture2D> m_Tex_Tile;
+
 	glm::vec4 m_SquareColor;
 };
 

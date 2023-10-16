@@ -21,12 +21,12 @@ namespace Normal {
 		virtual void Bind() const override;
 		virtual void UnBind() const override;
 
-		virtual void SetLayout( const BufferLayout& layout ) override { m_Layout = layout; }
-		inline virtual const BufferLayout& GetLayout() const override { return m_Layout; }
+		virtual void SetLayout( const Own::Share<BufferLayout>& layout ) override { m_Layout = layout; }
+		inline virtual const BufferLayout& GetLayout() const override { return *m_Layout; }
 
 	private:
 		NRuint m_RenderID;
-		BufferLayout m_Layout;
+		Own::Share<BufferLayout> m_Layout;
 
 		NR_SET_NAME( "OpenGLVertexBuffer" );
 	};

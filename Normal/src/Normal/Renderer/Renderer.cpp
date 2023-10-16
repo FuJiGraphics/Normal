@@ -24,17 +24,12 @@ namespace Normal {
 	}
 
 	void Renderer::Submit( const Own::Share<Shader>& shader, 
-						   const Own::Share<VertexArray>& vertexArray,
-						   const glm::mat4& transform,
-						   const glm::vec4& color )
+						   const Own::Share<VertexArray>& vertexArray )
 	{
 		shader->Bind();
-		shader->SetMat4( "u_Transform", transform );
 		shader->SetMat4( "u_ViewProj", m_SceneData.Camera->GetVPMatrix() );
-		shader->SetFloat4( "u_SquareColor", color );
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed( vertexArray );
 	}
-
 
 } // namespace Normal

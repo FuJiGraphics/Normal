@@ -34,13 +34,16 @@ namespace Normal {
 	class NORMAL_API ShaderManager
 	{
 	public:
-		ShaderManager() = default;
-		~ShaderManager() = default;
-
 		void Add( const std::string& name, Shader* shader );
 		bool Exist( const std::string& name ) const;
 
-		inline Own::Share<Shader>& Get( const std::string name ) { 
+		inline Own::Share<Shader>& Get( const std::string& name ) { 
+			return m_Shaders.at( name );
+		}
+		inline const Own::Share<Shader>& Get( const std::string& name ) const {
+			return m_Shaders.at( name );
+		}
+		inline Own::Share<Shader>& operator[]( const std::string& name ) {
 			return m_Shaders[name];
 		}
 

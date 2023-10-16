@@ -140,7 +140,6 @@ namespace Normal {
 
 			// Use the infoLog as you see fit.
 			NR_CORE_ERROR( "Fragment Shader Error: {0}", infoLog.data() );
-			NR_CORE_ASSERT( NULL, "Failed to Load a Fragment Shader." );
 
 			// In this simple program, we'll just leave
 			return;
@@ -179,7 +178,6 @@ namespace Normal {
 
 			// Use the infoLog as you see fit.
 			NR_CORE_ERROR( "Shader Program Error: {0}", infoLog.data() );
-			NR_CORE_ASSERT( NULL, "Failed to Create a Shader Program." );
 
 			// In this simple program, we'll just leave
 			return;

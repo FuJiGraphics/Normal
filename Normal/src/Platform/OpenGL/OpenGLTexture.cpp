@@ -10,6 +10,9 @@ namespace Normal {
 	OpenGLTexture2D::OpenGLTexture2D( const std::string& path )
 		: m_RenderID( 0 ), m_Width( 0 ), m_Height( 0 )
 	{
+		// to reverse image
+		stbi_set_flip_vertically_on_load( true );
+
 		int	width, height, channels;
 
 		stbi_uc* data = stbi_load( path.c_str(), &width, &height, &channels, 0 );
@@ -35,13 +38,13 @@ namespace Normal {
 		// 텍스처 타입, 생성할 텍스처 개수, 대상 Render ID
 		glCreateTextures( GL_TEXTURE_2D, 1, &m_RenderID );
 		glTextureStorage2D( m_RenderID, 1, storFormat, width, height );
-		glTexParameteri( m_RenderID, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-		glTexParameteri( m_RenderID, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+		// glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+		// glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 		// https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexSubImage2D.xhtml
 		glTextureSubImage2D( m_RenderID, 0, 0, 0, width, height, subFormat, GL_UNSIGNED_BYTE, data );
 
-		// to reverse image
-		stbi_set_flip_vertically_on_load( true );
 		stbi_image_free( data );
 	}
 

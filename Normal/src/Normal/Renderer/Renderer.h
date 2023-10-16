@@ -5,6 +5,7 @@
 #include "RenderCommand.h"
 #include "Shader.h"
 #include "Camera.h"
+#include "Texture.h"
 
 namespace Normal {
 
@@ -17,9 +18,8 @@ namespace Normal {
 		static void EndScene();
 
 		static void Submit( const Own::Share<Shader>& shader,
-							const Own::Share<VertexArray>& vertexArray,
-							const glm::mat4& transform = glm::mat4( 1.0f ),
-							const glm::vec4& color = glm::vec4( 0.5f, 0.5f, 0.5f, 1.0f ) );
+							const Own::Share<VertexArray>& vertexArray );
+
 
 	public:
 		inline static RendererAPI::API GetGraphicAPI() { return RendererAPI::GetCurrentAPI(); }
