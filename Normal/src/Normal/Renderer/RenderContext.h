@@ -15,7 +15,7 @@ namespace Normal {
 		virtual void InitContext() = 0;
 		virtual void SwapBuffers() = 0;
 
-	    static RenderContext* Create( void* nativeWindow );
+	    static Own::Share<RenderContext> Create( void* nativeWindow );
 
 	};
 

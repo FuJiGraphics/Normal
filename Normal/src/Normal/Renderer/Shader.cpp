@@ -6,11 +6,11 @@
 
 namespace Normal {
 
-    Shader* Shader::Create( const ShaderPaths& paths )
+    Own::Share<Shader> Shader::Create( const ShaderPaths& paths )
     {
         switch ( Renderer::GetGraphicAPI() )
         {
-            case RendererAPI::API::OpenGL: return new OpenGLShader( paths );
+            case RendererAPI::API::OpenGL: return Own::CreateShare<OpenGLShader>( paths );
             case RendererAPI::API::Vulkan:
             case RendererAPI::API::DirectX11:
             case RendererAPI::API::DirectX12:
@@ -21,11 +21,11 @@ namespace Normal {
         return nullptr;
     }
 
-	Shader* Shader::Create( const std::string& vertexSrc, const std::string& fragmentSrc )
+    Own::Share<Shader> Shader::Create( const std::string& vertexSrc, const std::string& fragmentSrc )
 	{
         switch ( Renderer::GetGraphicAPI() )
         {
-            case RendererAPI::API::OpenGL: return new OpenGLShader( vertexSrc, fragmentSrc );
+            case RendererAPI::API::OpenGL: return Own::CreateShare<OpenGLShader>( vertexSrc, fragmentSrc );
             case RendererAPI::API::Vulkan:
             case RendererAPI::API::DirectX11:
             case RendererAPI::API::DirectX12:
@@ -36,10 +36,10 @@ namespace Normal {
         return nullptr;
 	}
 
-    void ShaderManager::Add( const std::string& name, Shader* shader )
+    void ShaderManager::Add( const std::string& name, const Own::Share<Shader>& shader )
     {
         NR_CORE_ASSERT( !this->Exist( name ), "Shader data already exists! " );
-        m_Shaders.insert( std::make_pair( name, Own::Share<Shader>( shader ) ) );
+        m_Shaders.insert( std::make_pair( name, shader ) );
     }
 
     bool ShaderManager::Exist( const std::string& name ) const

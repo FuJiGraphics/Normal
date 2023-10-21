@@ -8,7 +8,7 @@ namespace Normal {
 	class NORMAL_API OpenGLContext : public RenderContext
 	{
 	public:
-		explicit OpenGLContext( GLFWwindow* window );
+		explicit OpenGLContext( void* window );
 		virtual ~OpenGLContext();
 
 	public:

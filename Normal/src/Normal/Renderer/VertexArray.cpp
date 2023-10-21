@@ -12,7 +12,7 @@ namespace Normal {
 	{
 		switch ( Renderer::GetGraphicAPI() )
 		{
-			case RendererAPI::API::OpenGL: return Own::Share<VertexArray>( new OpenGLVertexArray() );
+			case RendererAPI::API::OpenGL: return Own::CreateShare<OpenGLVertexArray>();
 			case RendererAPI::API::Vulkan:
 			case RendererAPI::API::DirectX11:
 			case RendererAPI::API::DirectX12:

@@ -142,14 +142,25 @@ namespace Normal {
 
 
 #include <memory>
+#include <utility>
 namespace Normal {
 	namespace Own
 	{
 		template <typename T>
 		using Share = std::shared_ptr<T>;
+		template <typename T, typename ... Args>
+		constexpr Share<T> CreateShare( Args&& ... args )
+		{
+			return std::make_shared<T>( std::forward<Args>( args )... );
+		}
 
 		template <typename T>
 		using Unit = std::unique_ptr<T>;
+		template <typename T, typename ... Args>
+		constexpr Unit<T> CreateUnit( Args&& ... args )
+		{
+			return std::make_unique<T>( std::forward<Args>( args )... );
+		}
 	}
 }
 

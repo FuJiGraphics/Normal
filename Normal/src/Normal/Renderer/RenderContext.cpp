@@ -7,11 +7,11 @@
 #include <Platform/OpenGL/OpenGLContext.h>
 
 namespace Normal {
-    RenderContext* RenderContext::Create( void* nativeWindow )
+    Own::Share<RenderContext> RenderContext::Create( void* nativeWindow )
     {
         switch ( Renderer::GetGraphicAPI() )
         {
-            case RendererAPI::API::OpenGL: return new OpenGLContext( reinterpret_cast<GLFWwindow*>( nativeWindow ) );
+            case RendererAPI::API::OpenGL: return Own::CreateShare<OpenGLContext>( nativeWindow );
             case RendererAPI::API::Vulkan:
             case RendererAPI::API::DirectX11:
             case RendererAPI::API::DirectX12:

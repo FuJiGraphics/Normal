@@ -8,8 +8,7 @@ namespace Normal {
 	struct NORMAL_API Quad2D
 	{
 	public:
-		explicit Quad2D(	const bool enableTextureMode = false,
-							const glm::vec3& v0 = glm::vec3( -0.5f, -0.5f, 0.0f ),
+		explicit Quad2D(	const glm::vec3& v0 = glm::vec3( -0.5f, -0.5f, 0.0f ),
 							const glm::vec3& v1 = glm::vec3( +0.5f, -0.5f, 0.0f ),
 							const glm::vec3& v2 = glm::vec3( +0.5f, +0.5f, 0.0f ),
 							const glm::vec3& v3 = glm::vec3( -0.5f, +0.5f, 0.0f ),

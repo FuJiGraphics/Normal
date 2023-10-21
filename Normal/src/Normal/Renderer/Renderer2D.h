@@ -13,8 +13,8 @@ namespace Normal {
 	struct Render2DStorage
 	{
 		ShaderManager				ShaderManager;
-		Own::Share<VertexArray>		ColorVAO;
-		Own::Share<VertexArray>		TextureVAO;
+		Own::Share<VertexArray>		ShaderVAO;
+		Own::Share<Texture2D>		BlankTexture;
 	};
 
 	class Renderer2D : public Renderer
@@ -31,6 +31,10 @@ namespace Normal {
 		static void DrawQuad( const glm::vec3& pos, const glm::vec2& scale, const glm::vec4& color );
 		static void DrawQuad( const glm::vec2& pos, const glm::vec2& scale, const Own::Share<Texture2D>& texture );
 		static void DrawQuad( const glm::vec3& pos, const glm::vec2& scale, const Own::Share<Texture2D>& texture );
+		static void DrawQuad( const glm::vec2& pos, const glm::vec2& scale,
+							  const glm::vec4& color, const Own::Share<Texture2D>& texture );
+		static void DrawQuad( const glm::vec3& pos, const glm::vec2& scale, 
+							  const glm::vec4& color, const Own::Share<Texture2D>& texture );
 	};
 
 

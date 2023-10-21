@@ -41,7 +41,7 @@ namespace Normal {
 	void WindowsWindow::SetWindowSize( float width, float height )
 	{
 		NR_CORE_ASSERT( m_Window, "Memory Access Error : m_Window need to be initialized." );
-		glfwSetWindowSize( m_Window, width, height );
+		glfwSetWindowSize( m_Window, static_cast<int>( width ), static_cast<int>( height ) );
 	}
 
 	void WindowsWindow::SetVSync( bool enabled )
@@ -80,7 +80,7 @@ namespace Normal {
 		glfwSetWindowUserPointer( m_Window, &m_Data );
 
 		// Set Rendering Context
-		m_RenderContext.reset( RenderContext::Create( m_Window ) );
+		m_RenderContext = RenderContext::Create( m_Window );
 		m_RenderContext->InitContext();
 
 		SetVSync( VSync );

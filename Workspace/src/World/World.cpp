@@ -28,6 +28,7 @@ void World::OnUpdate( const float& dt )
 
 	static glm::vec2 movement( 0.0f );
 	static glm::vec2 scale( 1.5f );
+	static glm::vec4 alphaColor( 1.0f, 1.0f, 1.0f, 0.8f );
 	// Move Quad
 	if ( KeyInput::IsKeyPreesed( NR_KEY_I ) )
 		movement += dt * glm::vec2( 0.0f, +1.0f );
@@ -50,7 +51,8 @@ void World::OnUpdate( const float& dt )
 	Renderer2D::DrawQuad( movement, scale, m_Tex_Tile );
 	Renderer2D::DrawQuad( movement + glm::vec2( 0.5f, 0.0f ), scale, m_Tex_Yuyuko1 );
 	Renderer2D::DrawQuad( movement + glm::vec2( -0.5f, -1.0f ), scale, m_Tex_Yuyuko2 );
-	Renderer2D::DrawQuad( movement + glm::vec2( -1.5f, -1.0f ), scale, m_Tex_Yuyuko3 );
+	Renderer2D::DrawQuad( movement + glm::vec2( -1.5f, -1.0f ), scale, alphaColor, m_Tex_Yuyuko3);
+	Renderer2D::DrawQuad( movement, scale, glm::vec4( 1.0f, 1.0f, 0.0f, 1.0f ) );
 
 	Renderer2D::EndScene();
 }

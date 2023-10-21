@@ -23,11 +23,13 @@ namespace Normal {
 		virtual ~Texture2D() = default;
 
 		virtual void Bind() = 0;
+		virtual void SetData( void* data, NRuint size ) = 0;
 
 		inline virtual NRuint GetWidth() const = 0;
 		inline virtual NRuint GetHeight() const = 0;
 
-		static Texture2D* Create( const std::string& path );
+		static Own::Share<Texture2D> Create( NRint width, NRint height );
+		static Own::Share<Texture2D> Create( const std::string& path );
 	};
 
 } // namespace Normal

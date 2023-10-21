@@ -7,8 +7,8 @@
 namespace Normal {
 
 
-	OpenGLContext::OpenGLContext( GLFWwindow* window )
-		: m_Window( window )
+	OpenGLContext::OpenGLContext( void* window )
+		: m_Window( reinterpret_cast<GLFWwindow*>( window ) )
 	{
 		NR_CORE_ASSERT( window, "Window Handle is NULL." );
 		NR_CORE_INFO_CTOR;

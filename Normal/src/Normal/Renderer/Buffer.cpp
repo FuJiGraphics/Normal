@@ -58,7 +58,7 @@ namespace Normal {
 	{
 		switch ( Renderer::GetGraphicAPI() )
 		{
-			case RendererAPI::API::OpenGL: return Own::Share<VertexBuffer>( new OpenGLVertexBuffer( vertices, size ) );
+			case RendererAPI::API::OpenGL: return Own::CreateShare<OpenGLVertexBuffer>( vertices, size );
 			case RendererAPI::API::Vulkan:
 			case RendererAPI::API::DirectX11:
 			case RendererAPI::API::DirectX12:
@@ -76,7 +76,7 @@ namespace Normal {
 	{
 		switch ( Renderer::GetGraphicAPI() )
 		{
-			case RendererAPI::API::OpenGL: return Own::Share<IndexBuffer>( new OpenGLIndexBuffer( indices, count ) );
+			case RendererAPI::API::OpenGL: return Own::CreateShare<OpenGLIndexBuffer>( indices, count );
 			case RendererAPI::API::Vulkan:
 			case RendererAPI::API::DirectX11:
 			case RendererAPI::API::DirectX12:

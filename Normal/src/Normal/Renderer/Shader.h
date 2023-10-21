@@ -27,14 +27,14 @@ namespace Normal {
 		virtual void SetFloat4( const std::string& name, const glm::vec4& float4 ) = 0;
 		virtual void SetMat4( const std::string& name, const glm::mat4& mat4 ) = 0;
 
-		static Shader* Create( const ShaderPaths& paths );
-		static Shader* Create( const std::string& vertexSrc, const std::string& fragmentSrc );
+		static Own::Share<Shader> Create( const ShaderPaths& paths );
+		static Own::Share<Shader> Create( const std::string& vertexSrc, const std::string& fragmentSrc );
 	};
 
 	class NORMAL_API ShaderManager
 	{
 	public:
-		void Add( const std::string& name, Shader* shader );
+		void Add( const std::string& name, const Own::Share<Shader>& shader );
 		bool Exist( const std::string& name ) const;
 
 		inline Own::Share<Shader>& Get( const std::string& name ) { 
