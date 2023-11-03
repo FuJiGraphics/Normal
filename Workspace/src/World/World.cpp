@@ -9,11 +9,13 @@ World::World()
 	, m_Tex_Yuyuko2( Texture2D::Create( "asset/textures/yuyuko2.png" ) )
 	, m_Tex_Yuyuko3( Texture2D::Create( "asset/textures/yuyuko3.png" ) )
 	, m_Tex_Tile( Texture2D::Create( "asset/textures/tile.png" ) )
+	, m_Timer( "Rendering" )
 {
 	// Create Orthogonal Camera
 	// 윈도우 화면 비에 맞게 생성한다. 16:9 == 1280:720
 	m_CameraManager.ActivateRotation( true );
 	m_SquareColor = glm::vec4( 1.7f, 0.7f, 0.7f, 1.0f );
+	m_Timer.SetTimeStep( &m_TimeStep );
 }
 
 void World::OnEvent( Event& event )
@@ -23,10 +25,11 @@ void World::OnEvent( Event& event )
 
 void World::OnUpdate( const float& dt )
 {
+
 	// Camera Manager
 	m_CameraManager.OnUpdate( dt );
 
-	static glm::vec2 movement( 0.0f );
+	static glm::vec2 movement( 0.0f ); 
 	static glm::vec2 scale( 1.5f );
 	static glm::vec4 alphaColor( 1.0f, 1.0f, 1.0f, 0.8f );
 	// Move Quad
@@ -43,10 +46,10 @@ void World::OnUpdate( const float& dt )
 	if ( KeyInput::IsKeyPreesed( NR_KEY_O ) )
 		scale += dt * glm::vec2( +1.0f, +1.0f );
 
-	// Renderering 
+	// Rendering 
+	m_Timer.Start();
 	Renderer2D::BeginScene( m_CameraManager );
 	
-
 	Renderer2D::DrawQuad( movement - glm::vec2( 0.5f, 0.5f ), scale, m_Tex_Yuyuko1 );
 	Renderer2D::DrawQuad( movement, scale, m_Tex_Tile );
 	Renderer2D::DrawQuad( movement + glm::vec2( 0.5f, 0.0f ), scale, m_Tex_Yuyuko1 );
@@ -54,10 +57,14 @@ void World::OnUpdate( const float& dt )
 	Renderer2D::DrawQuad( movement + glm::vec2( -1.5f, -1.0f ), scale, alphaColor, m_Tex_Yuyuko3);
 	Renderer2D::DrawQuad( movement, scale, glm::vec4( 1.0f, 1.0f, 0.0f, 1.0f ) );
 
+	m_Timer.End();
 	Renderer2D::EndScene();
 }
 
 void World::OnGuiRender()
 {
+	std::string text( m_TimeStep.Name );
+	text += " DeltaTime = %.3f, Frame = %.3f";
 	ImGui::ColorEdit4( "Color", glm::value_ptr( m_SquareColor ) );
+	ImGui::Text( text.c_str(), m_TimeStep.DeltaTime, m_TimeStep.Frame );
 }

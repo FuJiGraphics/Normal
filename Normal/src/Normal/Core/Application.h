@@ -61,7 +61,6 @@ namespace Normal {
 		bool		m_Minimized  = false;
 		ImGuiLevel* m_ImGuiLevel = nullptr;
 
-		Own::Unit<Timer>				m_Timer;
 		Own::Unit<Window>				m_Window;
 		Own::Unit<LevelContainer>		m_LevelContainer;
 

@@ -2,6 +2,7 @@
 
 #include <Normal/Core/Core.h>
 #include <Normal/Core/Level.h>
+#include <Normal/Core/Timer.h>
 #include <Normal/Renderer/Texture.h>
 #include <Normal/Renderer/CameraManager.h>
 
@@ -22,6 +23,9 @@ private:
 	Normal::Own::Share<Normal::Texture2D> m_Tex_Yuyuko2;
 	Normal::Own::Share<Normal::Texture2D> m_Tex_Yuyuko3;
 	Normal::Own::Share<Normal::Texture2D> m_Tex_Tile;
+	
+	Normal::TimeStep m_TimeStep;
+	Normal::Timer m_Timer;
 
 	glm::vec4 m_SquareColor;
 };

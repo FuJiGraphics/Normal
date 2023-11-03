@@ -27,22 +27,20 @@ namespace Normal {
 
 	void Application::Run()
 	{
+		static Timer timer( "Delta Time" );
 		while ( m_Running )
 		{
 			// Timer update
-			m_Timer->Update();
+			timer.Update( true );
 
-			//NR_CORE_TRACE( "Delta Time = {0}s, {1}ms",
-			//			   m_Timer->DeltaTime( Timer::Seconds ),
-			//			   m_Timer->DeltaTime( Timer::Milliseconds ) );
 			// Start update a Level and Overlays
 			if ( m_Minimized == false )
 			{
+				// Set a Refresh Rate
 				for ( auto level : *m_LevelContainer )
 				{
-					level->OnUpdate( m_Timer->DeltaTime( Timer::Seconds ) );
+					level->OnUpdate( timer.ElapsedTime( Timer::Seconds ) );
 				}
-
 				// -- ImGui Start --
 				m_ImGuiLevel->BeginFrame();
 				for ( auto level : *m_LevelContainer )
@@ -138,9 +136,6 @@ namespace Normal {
 		// Level Container에 메모리 관리 권한을 위임함
 		m_ImGuiLevel = new ImGuiLevel;
 		m_LevelContainer->InsertOverlay( m_ImGuiLevel );
-
-		// Create Timer
-		m_Timer.reset ( new Timer() );
 	}
 
 	void Application::Destroy()

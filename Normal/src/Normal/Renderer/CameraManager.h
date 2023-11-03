@@ -25,10 +25,10 @@ namespace Normal {
 		bool OnMouseScrolled( MouseInputData event );
 
 	private:
-		float	m_Angle;
-		float	m_Zoom;
-		bool	m_OnRotation;
-		glm::vec3 m_CameraPos;
+		float		m_Angle;
+		float		m_Zoom;
+		bool		m_OnRotation;
+		glm::vec3	m_CameraPos;
 
 		float	m_MoveSpeed = 1.0f;
 		float	m_RotSpeed = 1.0f;
@@ -37,8 +37,8 @@ namespace Normal {
 		Own::Share<Normal::Camera> m_Camera;
 
 	private:
-		WindowInput m_WindowInput;
-		MouseInput m_MouseInput;
+		WindowInput	m_WindowInput;
+		MouseInput	m_MouseInput;
 	};
 
 	
