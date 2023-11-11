@@ -38,9 +38,6 @@ namespace Normal {
 
 		// Rendering
 		ImGui::Render();
-		int display_w, display_h;
-		glfwGetFramebufferSize( m_Window, &display_w, &display_h );
-		glViewport( 0, 0, display_w, display_h );
 		ImGui_ImplOpenGL3_RenderDrawData( ImGui::GetDrawData() );
 
 		// Update and Render additional Platform Windows

@@ -64,6 +64,6 @@ namespace Normal {
 		m_View = glm::inverse( transform );
 
 		// Create a VP Matrix
-		m_ViewProj = m_Proj * m_View;
+		m_ViewProj = m_View * m_Proj;
 	}
 } // namespace Normal

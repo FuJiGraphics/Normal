@@ -109,6 +109,7 @@ namespace Normal {
 		{
 			m_Minimized = false;
 			m_Window->SetWindowSize( input.width, input.height );
+			// RenderCommand::SetViewport( 0, 0, input.width, input.height );
 		}
 	}
 
@@ -128,6 +129,8 @@ namespace Normal {
 
 		// Set Blend
 		RenderCommand::SetBlend( true );
+		// Set Viewport
+		RenderCommand::SetViewport( 0, 0, 1280, 720 );
 
 		// Init Renderer
 		Renderer::Initialize();

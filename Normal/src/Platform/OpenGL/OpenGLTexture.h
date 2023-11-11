@@ -16,14 +16,16 @@ namespace Normal {
 		virtual void Bind() override;
 		virtual void SetData( void* data, NRuint size ) override;
 
+		inline virtual Own::Share<VertexArray>& GetVAO() override { return m_VertexArrayObject; }
 		inline virtual NRuint GetWidth() const override { return m_Width; }
 		inline virtual NRuint GetHeight() const override { return m_Height; }
 		
 	private:
-		NRuint	m_RenderID;
-		NRint	m_Width;
-		NRint	m_Height;
-		GLenum	m_StorFormat, m_SubFormat;
+		NRuint						m_RenderID;
+		NRint						m_Width;
+		NRint						m_Height;
+		GLenum						m_StorFormat, m_SubFormat;
+		Own::Share<VertexArray>		m_VertexArrayObject;
 	};
 
 

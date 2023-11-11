@@ -1,5 +1,6 @@
 #include <Nrpch.h>
 #include <stb_image.h>
+#include <Normal/Diagram/PrimitiveGeometry.h>
 #include "OpenGLTexture.h"
 
 // impl ref : https://heinleinsgame.tistory.com/9
@@ -46,6 +47,9 @@ namespace Normal {
 		// glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 		// https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexSubImage2D.xhtml
 		glTextureSubImage2D( m_RenderID, 0, 0, 0, m_Width, m_Height, m_SubFormat, GL_UNSIGNED_BYTE, data );
+
+		Quad2D quad( 0, 0, m_Width, m_Height );
+		m_VertexArrayObject = quad.GetVertexArray();
 
 		stbi_image_free( data );
 	}

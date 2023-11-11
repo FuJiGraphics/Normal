@@ -5,10 +5,7 @@ using namespace Normal;
 
 World::World()
 	: m_CameraManager( 1280.0f / 720.0f )
-	, m_Tex_Yuyuko1( Texture2D::Create( "asset/textures/yuyuko1.png" ) )
-	, m_Tex_Yuyuko2( Texture2D::Create( "asset/textures/yuyuko2.png" ) )
-	, m_Tex_Yuyuko3( Texture2D::Create( "asset/textures/yuyuko3.png" ) )
-	, m_Tex_Tile( Texture2D::Create( "asset/textures/tile.png" ) )
+	, m_Tex_Tile( Texture2D::Create( "asset/textures/checkerboard.png" ) )
 	, m_Timer( "Rendering" )
 {
 	// Create Orthogonal Camera
@@ -50,11 +47,7 @@ void World::OnUpdate( const float& dt )
 	m_Timer.Start();
 	Renderer2D::BeginScene( m_CameraManager );
 	
-	Renderer2D::DrawQuad( movement - glm::vec2( 0.5f, 0.5f ), scale, m_Tex_Yuyuko1 );
-	Renderer2D::DrawQuad( movement, scale, m_Tex_Tile );
-	Renderer2D::DrawQuad( movement + glm::vec2( 0.5f, 0.0f ), scale, m_Tex_Yuyuko1 );
-	Renderer2D::DrawQuad( movement + glm::vec2( -0.5f, -1.0f ), scale, m_Tex_Yuyuko2 );
-	Renderer2D::DrawQuad( movement + glm::vec2( -1.5f, -1.0f ), scale, alphaColor, m_Tex_Yuyuko3);
+	Renderer2D::DrawQuad( {0.0f, 0.0f, 0.0f}, {10.0f, 10.0f}, m_Tex_Tile);
 	Renderer2D::DrawQuad( movement, scale, glm::vec4( 1.0f, 1.0f, 0.0f, 1.0f ) );
 
 	m_Timer.End();

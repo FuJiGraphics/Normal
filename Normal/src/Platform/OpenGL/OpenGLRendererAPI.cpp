@@ -26,6 +26,12 @@ namespace Normal {
 			glDisable( GL_BLEND );
 	}
 
+	void OpenGLRendererAPI::SetViewport( NRint x, NRint y, NRuint width, NRuint height )
+	{
+		glViewport( static_cast<GLint>( x ), static_cast<GLint>( y ),
+					static_cast<GLsizei>( width ), static_cast<GLsizei>( height ) );
+	}
+
 	void OpenGLRendererAPI::Clear()
 	{
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );

@@ -4,7 +4,6 @@
 #include "CameraManager.h"
 #include "Shader.h"
 #include "Texture.h"
-#include <Normal/Diagram/PrimitiveGeometry.h>
 
 namespace Normal {
 
@@ -12,10 +11,7 @@ namespace Normal {
 
 	void Renderer2D::Initialze()
 	{
-		Quad2D quad;
-
 		s_Storage = new Render2DStorage();
-		s_Storage->ShaderVAO = quad.GetVertexArray();
 
 		ShaderPaths paths;
 		paths.VertPath = "asset/shaders/default/Vertex.glsl";
@@ -53,12 +49,14 @@ namespace Normal {
 		// TODO : End Scene ±¸Çö
 	}
 
-	void Renderer2D::DrawQuad( const glm::vec2& pos, const glm::vec2& scale, const glm::vec4& color )
+	void Renderer2D::DrawQuad( const glm::vec2& pos, const glm::vec2& scale, 
+							   const glm::vec4& color, const Quad2D& quad )
 	{
-		DrawQuad( glm::vec3{pos, 0.0f}, scale, color );
+		DrawQuad( glm::vec3{pos, 0.0f}, scale, color, quad );
 	}
 
-	void Renderer2D::DrawQuad( const glm::vec3& pos, const glm::vec2& scale, const glm::vec4& color )
+	void Renderer2D::DrawQuad( const glm::vec3& pos, const glm::vec2& scale, 
+							   const glm::vec4& color, const Quad2D& quad )
 	{
 		glm::mat4 transform =
 			glm::translate( glm::mat4( 1.0f ), pos ) *
@@ -70,7 +68,7 @@ namespace Normal {
 		shader->SetFloat4( "u_SquareColor", color );
 		shader->SetInt( "u_Texture", 0 ); 
 		s_Storage->BlankTexture->Bind();
-		Renderer::Submit( shader, s_Storage->ShaderVAO );
+		Renderer::Submit( shader, quad.GetVertexArray() );
 	}
 
 	void Renderer2D::DrawQuad( const glm::vec2& pos, const glm::vec2& scale, const Own::Share<Texture2D>& texture )
@@ -80,6 +78,7 @@ namespace Normal {
 
 	void Renderer2D::DrawQuad( const glm::vec3& pos, const glm::vec2& scale, const Own::Share<Texture2D>& texture )
 	{
+
 		glm::mat4 transform = 
 			glm::translate( glm::mat4( 1.0f ), pos ) * 
 			glm::scale( glm::mat4( 1.0f ), glm::vec3( scale, 1.0f ) );
@@ -90,7 +89,7 @@ namespace Normal {
 		shader->SetFloat4( "u_SquareColor", glm::vec4( 1.0f ) );
 		shader->SetInt( "u_Texture", 0 );
 		texture->Bind();
-		Renderer::Submit( shader, s_Storage->ShaderVAO );
+		Renderer::Submit( shader, texture->GetVAO() );
 	}
 
 	void Renderer2D::DrawQuad( const glm::vec2& pos, const glm::vec2& scale,
@@ -112,7 +111,7 @@ namespace Normal {
 		shader->SetFloat4( "u_SquareColor", color );
 		shader->SetInt( "u_Texture", 0 );
 		texture->Bind();
-		Renderer::Submit( shader, s_Storage->ShaderVAO );
+		Renderer::Submit( shader, texture->GetVAO() );
 	}
 
 } // namespace Normal

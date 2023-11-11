@@ -25,6 +25,7 @@ namespace Normal {
 	public:
 		virtual void SetBlend( bool enable ) = 0;
 		virtual void SetClearColor( const glm::vec4& clearColor ) = 0;
+		virtual void SetViewport( NRint x, NRint y, NRuint width, NRuint height ) = 0;
 		virtual void Clear() = 0;
 
 		// Index Buffer를 이용해서 Scene에 Draw 명령을 수행하기 때문에 DrawIndexed라는 이름이 된다.
