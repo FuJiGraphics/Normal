@@ -48,9 +48,6 @@ namespace Normal {
 		// https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexSubImage2D.xhtml
 		glTextureSubImage2D( m_RenderID, 0, 0, 0, m_Width, m_Height, m_SubFormat, GL_UNSIGNED_BYTE, data );
 
-		Quad2D quad( 0, 0, m_Width, m_Height );
-		m_VertexArrayObject = quad.GetVertexArray();
-
 		stbi_image_free( data );
 	}
 

@@ -13,6 +13,9 @@ namespace Normal {
 	{
 		s_Storage = new Render2DStorage();
 
+		Quad2D quad;
+		s_Storage->BasicQuadVAO = quad.GetVertexArray();
+
 		ShaderPaths paths;
 		paths.VertPath = "asset/shaders/default/Vertex.glsl";
 		paths.FragPath = "asset/shaders/default/Fragment.glsl";
@@ -50,13 +53,13 @@ namespace Normal {
 	}
 
 	void Renderer2D::DrawQuad( const glm::vec2& pos, const glm::vec2& scale, 
-							   const glm::vec4& color, const Quad2D& quad )
+							   const glm::vec4& color )
 	{
-		DrawQuad( glm::vec3{pos, 0.0f}, scale, color, quad );
+		DrawQuad( glm::vec3{pos, 0.0f}, scale, color );
 	}
 
 	void Renderer2D::DrawQuad( const glm::vec3& pos, const glm::vec2& scale, 
-							   const glm::vec4& color, const Quad2D& quad )
+							   const glm::vec4& color )
 	{
 		glm::mat4 transform =
 			glm::translate( glm::mat4( 1.0f ), pos ) *
@@ -68,7 +71,7 @@ namespace Normal {
 		shader->SetFloat4( "u_SquareColor", color );
 		shader->SetInt( "u_Texture", 0 ); 
 		s_Storage->BlankTexture->Bind();
-		Renderer::Submit( shader, quad.GetVertexArray() );
+		Renderer::Submit( shader, s_Storage->BasicQuadVAO );
 	}
 
 	void Renderer2D::DrawQuad( const glm::vec2& pos, const glm::vec2& scale, const Own::Share<Texture2D>& texture )
@@ -89,7 +92,7 @@ namespace Normal {
 		shader->SetFloat4( "u_SquareColor", glm::vec4( 1.0f ) );
 		shader->SetInt( "u_Texture", 0 );
 		texture->Bind();
-		Renderer::Submit( shader, texture->GetVAO() );
+		Renderer::Submit( shader, s_Storage->BasicQuadVAO );
 	}
 
 	void Renderer2D::DrawQuad( const glm::vec2& pos, const glm::vec2& scale,
@@ -111,7 +114,7 @@ namespace Normal {
 		shader->SetFloat4( "u_SquareColor", color );
 		shader->SetInt( "u_Texture", 0 );
 		texture->Bind();
-		Renderer::Submit( shader, texture->GetVAO() );
+		Renderer::Submit( shader, s_Storage->BasicQuadVAO );
 	}
 
 } // namespace Normal

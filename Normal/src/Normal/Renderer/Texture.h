@@ -24,7 +24,6 @@ namespace Normal {
 
 		virtual void Bind() = 0;
 		virtual void SetData( void* data, NRuint size ) = 0;
-		virtual Own::Share<VertexArray>& GetVAO() = 0;
 
 		inline virtual NRuint GetWidth() const = 0;
 		inline virtual NRuint GetHeight() const = 0;
