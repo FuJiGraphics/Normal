@@ -4,7 +4,7 @@
 using namespace Normal;
 
 World::World()
-	: m_CameraManager( 1280.0f / 720.0f )
+	: m_CameraManager( 1280.0f, 720.0f )
 	, m_Tex_Tile( Texture2D::Create( "asset/textures/checkerboard.png" ) )
 	, m_Timer( "Rendering" )
 {
@@ -22,13 +22,9 @@ void World::OnEvent( Event& event )
 
 void World::OnUpdate( const float& dt )
 {
-
-	// Camera Manager
-	m_CameraManager.OnUpdate( dt );
-
 	static glm::vec2 movement( 0.0f ); 
-	static glm::vec2 scale( 1.5f );
-	static glm::vec4 alphaColor( 1.0f, 1.0f, 1.0f, 0.8f );
+	static glm::vec2 scale( { 300.0f, 1.0f } );
+
 	// Move Quad
 	if ( KeyInput::IsKeyPreesed( NR_KEY_I ) )
 		movement += dt * glm::vec2( 0.0f, +1.0f );
@@ -43,9 +39,18 @@ void World::OnUpdate( const float& dt )
 	if ( KeyInput::IsKeyPreesed( NR_KEY_O ) )
 		scale += dt * glm::vec2( +1.0f, +1.0f );
 
+
+	// Camera Manager
+	static glm::vec2 prevMovement;
+	if (prevMovement != movement)
+	{
+		prevMovement = movement;
+		m_CameraManager.OnUpdate( prevMovement );
+	}
+
 	// Rendering 
 	m_Timer.Start();
-	Renderer2D::BeginScene( m_CameraManager );
+ 	Renderer2D::BeginScene( m_CameraManager );
 	
 	Renderer2D::DrawQuad( {0.0f, 0.0f, 0.0f}, {10.0f, 10.0f}, m_Tex_Tile);
 	Renderer2D::DrawQuad( movement, scale, glm::vec4( 1.0f, 1.0f, 0.0f, 1.0f ) );
@@ -61,3 +66,5 @@ void World::OnGuiRender()
 	ImGui::ColorEdit4( "Color", glm::value_ptr( m_SquareColor ) );
 	ImGui::Text( text.c_str(), m_TimeStep.DeltaTime, m_TimeStep.Frame );
 }
+
+// GENERATE_LAYER(World)

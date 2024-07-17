@@ -36,6 +36,8 @@ namespace Normal {
 							  const glm::vec4& color, const Own::Share<Texture2D>& texture );
 		static void DrawQuad( const glm::vec3& pos, const glm::vec2& scale, 
 							  const glm::vec4& color, const Own::Share<Texture2D>& texture );
+
+		static bool IsInitialized();
 	};
 
 

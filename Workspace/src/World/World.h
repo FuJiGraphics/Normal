@@ -5,6 +5,7 @@
 #include <Normal/Core/Timer.h>
 #include <Normal/Renderer/Texture.h>
 #include <Normal/Renderer/CameraManager.h>
+#include <LevelGenerator.h>
 
 class World : public Normal::Level
 {

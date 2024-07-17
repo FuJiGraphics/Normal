@@ -10,46 +10,15 @@ namespace Normal {
 	class NORMAL_API RenderCommand 
 	{
 	public:
-		inline static void SetBlend( bool enable )
-		{
-			s_RendererAPI->SetBlend( enable );
-		}
+		static void SetBlend( bool enable );
 
-		inline static void SetClearColor( const glm::vec4& clearColor )
-		{
-			s_RendererAPI->SetClearColor( clearColor );
-		}
+		static void SetClearColor( const glm::vec4& clearColor );
+		static void SetViewport( NRint x, NRint y, NRuint width, NRuint height );
+		static void Clear();
 
-		inline static void SetViewport( NRint x, NRint y, NRuint width, NRuint height )
-		{
-			if ( width <= 0 || height <= 0 || width < x || height < y )
-			{
-				NR_CORE_ERROR( "ERROR INFO -> inline static void SetViewport( {0}, {1}, {2}, {3} )"
-							   , x, y, width, height );
-				NR_CORE_ASSERT( false, "ERROR: Non-allowed parameter in function!" );
-			}
-			s_RendererAPI->SetViewport( x, y, width, height );
-		}
-
-		inline static void Clear()
-		{
-			s_RendererAPI->Clear();
-		}
-
-		inline static void DrawIndexed( const Own::Share<VertexArray>& vertexArray )
-		{
-			s_RendererAPI->DrawIndexed( vertexArray );
-		}
-		
-		inline static void DestroyRendererAPI()
-		{
-			delete s_RendererAPI;
-		}
-
-		inline static void DeleteRenderAPI()
-		{
-			delete s_RendererAPI;
-		}
+		static void DrawIndexed( const Own::Share<VertexArray>& vertexArray );
+		static void DestroyRendererAPI();
+		static void DeleteRenderAPI();
 
 	private:
 		// TODO: 의도적인 1바이트 메모리 누수, 프로그램 수명이 다할 때 까지 남길 방법 강구 

@@ -8,9 +8,11 @@
 namespace Normal {
 
 	static Render2DStorage* s_Storage = nullptr;
+	static bool				s_Initialized = false;
 
 	void Renderer2D::Initialze()
 	{
+		s_Initialized = true;
 		s_Storage = new Render2DStorage();
 
 		Quad2D quad;
@@ -31,8 +33,13 @@ namespace Normal {
 
 	void Renderer2D::Finalize()
 	{
+		if (s_Initialized == false)
+			return;
+
 		NR_CORE_ASSERT( s_Storage, "Did not found s_Quad Memory!!" );
+		s_Initialized = false;
 		delete s_Storage;
+		s_Storage = nullptr;
 	}
 
 	void Renderer2D::BeginScene( const CameraManager& cameraManager )
@@ -115,6 +122,11 @@ namespace Normal {
 		shader->SetInt( "u_Texture", 0 );
 		texture->Bind();
 		Renderer::Submit( shader, s_Storage->BasicQuadVAO );
+	}
+
+	bool Renderer2D::IsInitialized()
+	{
+		return s_Initialized;
 	}
 
 } // namespace Normal

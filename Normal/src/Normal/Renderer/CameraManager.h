@@ -10,11 +10,12 @@ namespace Normal {
 	class NORMAL_API CameraManager
 	{
 	public:
-		CameraManager( const float aspectRatio, bool rotation = false );
+		CameraManager( float width, float height, bool rotation = false );
 		~CameraManager() = default;
 
 		void OnEvent( Event& event );
 		void OnUpdate( const float& dt );
+		void OnUpdate( const glm::vec2& target_pos );
 		
 		inline void ActivateRotation( bool enable ) { m_OnRotation = enable; }
 
@@ -25,6 +26,11 @@ namespace Normal {
 		bool OnMouseScrolled( MouseInputData event );
 
 	private:
+		// »ç¾ç
+		float		m_AspectRatio;
+		float		m_Width;
+		float		m_Height;
+
 		float		m_Angle;
 		float		m_Zoom;
 		bool		m_OnRotation;

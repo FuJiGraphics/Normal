@@ -114,10 +114,11 @@ project "Workspace"
 
     includedirs
     {
+        "%{prj.name}/src/",
+        "Normal/src",
         "Normal/vendor/spdlog/include",
         "%{IncludeDir.Imgui}",
         "%{IncludeDir.GLM}",
-        "Normal/src"
     }
 
     links

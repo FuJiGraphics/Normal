@@ -10,6 +10,9 @@ namespace Normal {
 		: m_RenderID( 0 ), m_Width( width ), m_Height( height )
 		, m_StorFormat( GL_RGBA16 ), m_SubFormat( GL_RGBA )
 	{
+		if (Renderer2D::IsInitialized() == false)
+			Renderer2D::Initialize();
+
 		GLenum storFormat, subFormat;
 
 		// 텍스처 타입, 생성할 텍스처 개수, 대상 Render ID
@@ -23,6 +26,9 @@ namespace Normal {
 		: m_RenderID( 0 ), m_Width( 0 ), m_Height( 0 )
 		, m_StorFormat( GL_RGBA16 ), m_SubFormat( GL_RGBA )
 	{
+		if (Renderer2D::IsInitialized() == false)
+			Renderer2D::Initialize();
+
 		// to reverse image
 		stbi_set_flip_vertically_on_load( true );
 

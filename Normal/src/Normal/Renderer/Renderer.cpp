@@ -6,7 +6,8 @@ namespace Normal {
 
 	void Renderer::Initialize()
 	{
-		Renderer2D::Initialze();
+		if (Renderer2D::IsInitialized() == false)
+			Renderer2D::Initialze();
 	}
 
 	void Renderer::Finalize()
