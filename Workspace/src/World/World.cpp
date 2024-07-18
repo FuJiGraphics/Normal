@@ -1,4 +1,3 @@
-#include "Nrpch.h"
 #include "World.h"
 
 using namespace Normal;
@@ -67,4 +66,4 @@ void World::OnGuiRender()
 	ImGui::Text( text.c_str(), m_TimeStep.DeltaTime, m_TimeStep.Frame );
 }
 
-// GENERATE_LAYER(World)
+GENERATE_LAYER(World)

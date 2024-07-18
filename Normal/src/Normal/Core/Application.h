@@ -2,7 +2,6 @@
 
 #include "Core.h"
 
-#include <Normal/Core/NrPointer.h>
 #include <Normal/InputManager/WindowInput.h>
 
 namespace Normal {

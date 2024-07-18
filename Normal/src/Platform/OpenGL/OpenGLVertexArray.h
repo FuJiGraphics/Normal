@@ -2,7 +2,6 @@
 
 #include <Normal/Core/Core.h>
 #include <Normal/Renderer/VertexArray.h>
-#include <Normal/Core/NrPointer.h>
 
 #include <vector>
 #include <memory>

@@ -1,9 +1,6 @@
 #pragma once
 
 #pragma region LevelGenerator
-#include "Normal/Core/Core.h"
-#include "Normal/Core/Application.h"
-#include <vector>
 
 // export defines
 #define GENERATE_LAYER(level)\
@@ -34,6 +31,4 @@ public:\
 #define DESTROY_LAYER(level) { Normal::Application::DetachLevel(level); }
 #pragma endregion
 
-// GUI Headers
-// #include "LevelHeaders.h"
 

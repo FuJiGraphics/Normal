@@ -1,19 +1,12 @@
 #pragma once
+#include <NormalEngine.h>
 
-#ifdef NR_PLATFORM_WINDOWS
+#ifndef __ENTRY_POINT_H__
+#define __ENTRY_POINT_H__
 
-extern Normal::Application* Normal::CreateApplication();
+	#ifdef NR_PLATFORM_WINDOWS
 
-int main( int argc, char** argv )
-{
-	auto app = Normal::CreateApplication();
+	extern Normal::Application* Normal::CreateApplication();
 
-	app->Run();
-	
-	delete app;
-#ifdef _DEBUG
-	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-#endif
-}
-
-#endif 
+	#endif /*NR_PLATFORM_WINDOWS*/
+#endif /*__ENTRY_POINT_H__*/
