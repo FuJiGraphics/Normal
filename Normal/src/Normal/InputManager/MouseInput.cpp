@@ -8,7 +8,6 @@
 namespace Normal {
 
 	MouseInput::MouseInput()
-		: m_Callbacks{ nullptr }
 	{
 		NR_CORE_INFO_CTOR;
 	}

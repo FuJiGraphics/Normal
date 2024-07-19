@@ -1,7 +1,7 @@
 #include <Nrpch.h>
 #include "Renderer2D.h"
 #include "Renderer.h"
-#include "CameraManager.h"
+#include "../Managers/CameraManager.h"
 #include "Shader.h"
 #include "Texture.h"
 
@@ -44,14 +44,14 @@ namespace Normal {
 
 	void Renderer2D::BeginScene( const CameraManager& cameraManager )
 	{
-		Renderer::BeginScene( cameraManager.GetCamera() );
-		RenderCommand::Clear();
+		Renderer::BeginScene( cameraManager.GetDisplayCamera() );
+		// RenderCommand::Clear();
 	}
 
 	void Renderer2D::BeginScene( const Own::Share<CameraManager>& cameraManager )
 	{
-		Renderer::BeginScene( cameraManager->GetCamera() );
-		RenderCommand::Clear();
+		Renderer::BeginScene( cameraManager->GetDisplayCamera() );
+		// RenderCommand::Clear();
 	}
 
 	void Renderer2D::EndScene()

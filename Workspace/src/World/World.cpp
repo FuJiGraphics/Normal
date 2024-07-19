@@ -3,20 +3,15 @@
 using namespace Normal;
 
 World::World()
-	: m_CameraManager( 1280.0f, 720.0f )
-	, m_Tex_Tile( Texture2D::Create( "asset/textures/checkerboard.png" ) )
+	: m_Tex_Tile( Texture2D::Create( "asset/textures/checkerboard.png" ) )
 	, m_Timer( "Rendering" )
 {
-	// Create Orthogonal Camera
-	// 윈도우 화면 비에 맞게 생성한다. 16:9 == 1280:720
-	m_CameraManager.ActivateRotation( true );
 	m_SquareColor = glm::vec4( 1.7f, 0.7f, 0.7f, 1.0f );
 	m_Timer.SetTimeStep( &m_TimeStep );
 }
 
 void World::OnEvent( Event& event )
 {
-	m_CameraManager.OnEvent( event );
 }
 
 void World::OnUpdate( const float& dt )
@@ -40,19 +35,19 @@ void World::OnUpdate( const float& dt )
 
 
 	// Camera Manager
+	auto& camera = CameraManager::GetInstance();
 	static glm::vec2 prevMovement;
 	if (prevMovement != movement)
 	{
 		prevMovement = movement;
-		m_CameraManager.OnUpdate( prevMovement );
+		camera.SetPosition( movement );
 	}
 
 	// Rendering 
 	m_Timer.Start();
- 	Renderer2D::BeginScene( m_CameraManager );
-	
+ 	Renderer2D::BeginScene( camera );
+
 	Renderer2D::DrawQuad( {0.0f, 0.0f, 0.0f}, {10.0f, 10.0f}, m_Tex_Tile);
-	Renderer2D::DrawQuad( movement, scale, glm::vec4( 1.0f, 1.0f, 0.0f, 1.0f ) );
 
 	m_Timer.End();
 	Renderer2D::EndScene();
@@ -66,4 +61,4 @@ void World::OnGuiRender()
 	ImGui::Text( text.c_str(), m_TimeStep.DeltaTime, m_TimeStep.Frame );
 }
 
-GENERATE_LAYER(World)
+GENERATE_OVERLAY(World)

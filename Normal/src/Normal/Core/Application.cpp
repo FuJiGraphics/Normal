@@ -8,6 +8,7 @@
 
 #include <Normal/ImGui/ImGuiLevel.h>
 #include <Normal/Renderer/Renderer.h>
+#include <Normal/Managers/CameraManager.h>
 
 namespace Normal {
 	Application::Application()
@@ -28,10 +29,15 @@ namespace Normal {
 	void Application::Run()
 	{
 		static Timer timer( "Delta Time" );
+		auto& camera = CameraManager::GetInstance();
 		while ( m_Running )
 		{
+			RenderCommand::Clear();
+			float elapsed_time = timer.ElapsedTime( Timer::Seconds );
+
 			// Timer update
 			timer.Update( true );
+			camera.OnUpdate( elapsed_time );
 
 			// Start update a Level and Overlays
 			if ( m_Minimized == false )
@@ -39,8 +45,9 @@ namespace Normal {
 				// Set a Refresh Rate
 				for ( auto level : *m_LevelContainer )
 				{
-					level->OnUpdate( timer.ElapsedTime( Timer::Seconds ) );
+					level->OnUpdate( elapsed_time );
 				}
+
 				// -- ImGui Start --
 				m_ImGuiLevel->BeginFrame();
 				for ( auto level : *m_LevelContainer )
@@ -57,7 +64,9 @@ namespace Normal {
 
 	void Application::OnEvent( Event& event )
 	{
+		auto& camera = CameraManager::GetInstance();
 		m_WindowInput.OnEvent( event );
+		camera.OnEvent( event );
 
 		for ( auto level = m_LevelContainer->end(); level != m_LevelContainer->begin(); )
 		{
@@ -139,6 +148,14 @@ namespace Normal {
 		// Level Container에 메모리 관리 권한을 위임함
 		m_ImGuiLevel = new ImGuiLevel;
 		m_LevelContainer->InsertOverlay( m_ImGuiLevel );
+
+		// Create Orthogonal Camera
+		// 윈도우 화면 비에 맞게 생성한다. 16:9 == 1280:720
+		auto& camera = CameraManager::GetInstance();
+		if (camera.CreateCamera( "Main", 1280, 720, true ) == false)
+		{
+			NR_CORE_ERROR( "카메라 생성에 실패하였습니다." );
+		}
 	}
 
 	void Application::Destroy()

@@ -22,10 +22,15 @@ private:\
 class ClassGenerate##level\
 {\
 public:\
-	ClassGenerate##layer(){\
+	ClassGenerate##level(){\
 		Normal::CreateApplication();\
 		Application::GetInstance().AttachOverlay(new ##(level));\
 	}\
+};\
+class ClassGenerateObject##level\
+{\
+private:\
+	inline static ClassGenerate##level CLASSGENERATE##level; \
 };
 
 #define DESTROY_LAYER(level) { Normal::Application::DetachLevel(level); }

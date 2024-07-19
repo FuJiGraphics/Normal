@@ -54,11 +54,11 @@ namespace Normal {
 		void Destroy();
 
 	private:
-		inline static Application* s_Instance = nullptr;
+		inline static Application*		s_Instance = nullptr;
 		
-		bool		m_Running	 = true;
-		bool		m_Minimized  = false;
-		ImGuiLevel* m_ImGuiLevel = nullptr;
+		bool							m_Running	 = true;
+		bool							m_Minimized  = false;
+		ImGuiLevel*						m_ImGuiLevel = nullptr;
 
 		Own::Unit<Window>				m_Window;
 		Own::Unit<LevelContainer>		m_LevelContainer;

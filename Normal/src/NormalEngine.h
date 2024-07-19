@@ -45,10 +45,12 @@
 #include <Normal/Renderer/RendererAPI.h>
 #include <Normal/Renderer/Texture.h>
 #include <Normal/Renderer/Camera.h>
-#include <Normal/Renderer/CameraManager.h>
 #include <Normal/Renderer/Buffer.h>
 #include <Normal/Renderer/VertexArray.h>
 #include <Normal/Renderer/Shader.h>
+
+// For use by Management
+#include <Normal/Managers/CameraManager.h>
 // -------------------------------------------
 
 #include <Normal/Core/EntryPoint.h>

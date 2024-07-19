@@ -23,13 +23,12 @@ namespace Normal {
 
 	bool LevelContainer::InsertLevel( Level* pLevel )
 	{
-		NR_CORE_ASSERT( pLevel, "Unexpected Error : Failed to called a emplace" );
+		NR_CORE_ASSERT( pLevel, "Unexpected Error : Failed to called a emplace_back" );
 
 		auto findLevel = FindLevel( pLevel );
-		if ( findLevel == m_Container.end() )
+		if (findLevel == m_Container.end())
 		{
-			m_Container.emplace( m_Container.begin() + m_InsertIndex, pLevel );
-			++m_InsertIndex;
+			m_Container.emplace_back( pLevel );
 			return true;
 		}
 		return false;
@@ -37,12 +36,13 @@ namespace Normal {
 
 	bool LevelContainer::InsertOverlay( Level* pOverlay )
 	{
-		NR_CORE_ASSERT( pOverlay, "Unexpected Error : Failed to called a emplace_back" );
-		
+		NR_CORE_ASSERT( pOverlay, "Unexpected Error : Failed to called a emplace" );
+
 		auto findOverlay = FindLevel( pOverlay );
-		if ( findOverlay == m_Container.end() )
+		if (findOverlay == m_Container.end())
 		{
-			m_Container.emplace_back( pOverlay );
+			m_Container.emplace( m_Container.begin() + m_InsertIndex, pOverlay );
+			++m_InsertIndex;
 			return true;
 		}
 		return false;
